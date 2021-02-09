@@ -19,7 +19,7 @@ namespace HeartlandArtifact
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            await NavigationService.NavigateAsync("NavigationPage/SignInPage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -28,6 +28,7 @@ namespace HeartlandArtifact
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+            containerRegistry.RegisterForNavigation<SignInPage, SignInPageViewModel>();
         }
     }
 }

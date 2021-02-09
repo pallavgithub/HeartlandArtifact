@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:custom="clr-namespace:HeartlandArtifact.CustomRenderers"
+             x:Class="HeartlandArtifact.Views.SignInPage"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <StackLayout Margin="25,30,25,30" VerticalOptions="FillAndExpand">
+            <StackLayout VerticalOptions="FillAndExpand" Spacing="30">
+                <Label Text="Sign In" FontSize="30" TextColor="Black" HorizontalTextAlignment="Center"/>
+                <StackLayout Orientation="Horizontal" HeightRequest="80" HorizontalOptions="CenterAndExpand">
+                    <Grid>
+                        <Image Source="BlueCircle.png"/>
+                        <Image Source="facebook.png" Margin="30,22,30,30"/>
+                    </Grid>
+                    <Grid>
+                        <Image Source="GoogleCircle.png"/>
+                    </Grid>
+                    <Grid>
+                        <Image Source="AppleCircle.png"/>
+                        <Image Source="apple.png" Margin="30,22,30,30"/>
+                    </Grid>
+                </StackLayout>
+                <StackLayout Spacing="0" Margin="0,20,0,0">
+                <Label Text="Email" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                    <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
+                           HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
+                        <custom:BorderLessEntry Text=""  
+                                          Placeholder="Enter your Email" PlaceholderColor="#979797"
+                                          HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                                          FontSize="14" TextColor="Black"/>
+                    </Frame>
+                </StackLayout>
+                <StackLayout Spacing="0">
+                    <Label Text="Password" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                    <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
+                           HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
+                        <StackLayout Orientation="Horizontal">
+                            <custom:BorderLessEntry Text="" IsPassword="True" x:Name="PasswordEntry" 
+                                          Placeholder="Enter your Password" PlaceholderColor="#979797"
+                                          HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                                          FontSize="14" Focused="PasswordEntry_Focused" Unfocused="PasswordEntry_Unfocused"/>
+                            <Image Source="eye.png" IsVisible="{Binding ShowPassword}"/>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+                <Button Text="Continue" TextColor="Black" TextTransform="None" BackgroundColor="Transparent" BorderColor="Black" BorderWidth="1" 
+                        CornerRadius="30"/>
+                <Label Text="Forgot Password" TextColor="#823E21" FontSize="20" HorizontalTextAlignment="Center"/>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                    <Label Text="Don't have an existing account?" TextColor="Black" FontSize="17" HorizontalTextAlignment="End"/>
+                    <Label Text="Sign-up" TextColor="#823E21" FontSize="17" HorizontalTextAlignment="Start"/>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
