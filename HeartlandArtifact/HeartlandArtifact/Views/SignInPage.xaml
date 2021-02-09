@@ -48,7 +48,11 @@
                 <Label Text="Forgot Password" TextColor="#823E21" FontSize="20" HorizontalTextAlignment="Center"/>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
                     <Label Text="Don't have an existing account?" TextColor="Black" FontSize="17" HorizontalTextAlignment="End"/>
-                    <Label Text="Sign-up" TextColor="#823E21" FontSize="17" HorizontalTextAlignment="Start"/>
+                    <Label Text="Sign-up" TextColor="#823E21" FontSize="17" HorizontalTextAlignment="Start">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoToSignUpPageCommand}"/>
+                        </Label.GestureRecognizers>
+                    </Label>
                 </StackLayout>
             </StackLayout>
         </StackLayout>

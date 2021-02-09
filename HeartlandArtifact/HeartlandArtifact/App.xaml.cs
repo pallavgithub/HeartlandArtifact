@@ -25,10 +25,10 @@ namespace HeartlandArtifact
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
-
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<SignInPage, SignInPageViewModel>();
+            containerRegistry.RegisterForNavigation<SignUpPage, SignUpPageViewModel>();
         }
     }
 }
