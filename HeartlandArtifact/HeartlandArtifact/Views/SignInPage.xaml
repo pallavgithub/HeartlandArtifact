@@ -45,7 +45,11 @@
                 </StackLayout>
                 <Button Text="Continue" TextColor="Black" TextTransform="None" BackgroundColor="Transparent" BorderColor="Black" BorderWidth="1" 
                         CornerRadius="30"/>
-                <Label Text="Forgot Password" TextColor="#823E21" FontSize="20" HorizontalTextAlignment="Center"/>
+                <Label Text="Forgot Password" TextColor="#823E21" FontSize="20" HorizontalTextAlignment="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoToForgotPasswordPageCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
                     <Label Text="Don't have an existing account?" TextColor="Black" FontSize="17" HorizontalTextAlignment="End"/>
                     <Label Text="Sign-up" TextColor="#823E21" FontSize="17" HorizontalTextAlignment="Start">
