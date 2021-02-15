@@ -82,7 +82,7 @@
                     </Label>
                 </StackLayout>
                 <Button Text="Submit" TextColor="Black" TextTransform="None" BackgroundColor="Transparent" BorderColor="Black" BorderWidth="1" 
-                        CornerRadius="30"/>
+                        CornerRadius="30" Command="{Binding SubmitBtnCommand}"/>
                 <Label Text="Sign up using" FontSize="12" HorizontalTextAlignment="Center" TextColor="Black"/>
                     <StackLayout Orientation="Horizontal" HeightRequest="80" HorizontalOptions="CenterAndExpand">
                         <Grid>

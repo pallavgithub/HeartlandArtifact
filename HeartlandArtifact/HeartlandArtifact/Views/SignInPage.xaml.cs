@@ -17,6 +17,7 @@ namespace HeartlandArtifact.Views
         {
             InitializeComponent();
         }
+        protected override bool OnBackButtonPressed() => true;
 
         private void PasswordEntry_Unfocused(object sender, FocusEventArgs e)
         {

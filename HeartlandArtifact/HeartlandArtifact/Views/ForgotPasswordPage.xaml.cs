@@ -16,5 +16,6 @@ namespace HeartlandArtifact.Views
         {
             InitializeComponent();
         }
+        protected override bool OnBackButtonPressed() => true;
     }
 }

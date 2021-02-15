@@ -30,6 +30,7 @@ namespace HeartlandArtifact
             containerRegistry.RegisterForNavigation<SignInPage, SignInPageViewModel>();
             containerRegistry.RegisterForNavigation<SignUpPage, SignUpPageViewModel>();
             containerRegistry.RegisterForNavigation<ForgotPasswordPage, ForgotPasswordPageViewModel>();
+            containerRegistry.RegisterForNavigation<EnterOtpPage, EnterOtpPageViewModel>();
         }
     }
 }
