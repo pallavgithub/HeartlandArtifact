@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HeartlandArtifact.Views.HomePageMaster"
+             Title="Master" 
+             FlowDirection="LeftToRight">
+    <StackLayout>
+        <ListView x:Name="MenuItemsListView"
+              SeparatorVisibility="None"
+              HasUnevenRows="true"
+              ItemsSource="{Binding MenuItems}">
+            <ListView.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="10"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="MenuIcon.png"  Grid.Column="1" Grid.Row="1" HeightRequest="20" WidthRequest="25" HorizontalOptions="End"/>
+                </Grid>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                            <Image Source="{Binding IconImage}" HorizontalOptions="Start" HeightRequest="25" WidthRequest="25"/>
+                            <Label VerticalOptions="FillAndExpand" HorizontalOptions="StartAndExpand" VerticalTextAlignment="Center" 
+                           Text="{Binding Title}" FontSize="24" TextColor="Black"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackLayout Padding="25" Spacing="20">
+        <Label Text="Terms &amp; Conditions" TextColor="Black" FontSize="20"/>
+            <Label Text="Privacy Policy" TextColor="Black" FontSize="20"/>
+            <StackLayout Orientation="Horizontal">
+                <Image Source="Logout.png" HeightRequest="20" WidthRequest="20"/>
+                <Label Text="Logout" TextColor="#823E21" FontSize="20"/>
+            </StackLayout>
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

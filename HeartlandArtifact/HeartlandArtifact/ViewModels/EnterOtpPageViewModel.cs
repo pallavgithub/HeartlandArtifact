@@ -2,7 +2,7 @@
 using Prism.Navigation;
 namespace HeartlandArtifact.ViewModels
 {
-    public class EnterOtpPageViewModel:ViewModelBase
+    public class EnterOtpPageViewModel : ViewModelBase
     {
         private bool _isFromForgotPassword;
         public bool IsFromForgotPassword
@@ -41,9 +41,11 @@ namespace HeartlandArtifact.ViewModels
             set { SetProperty(ref _timerText, value); }
         }
         public DelegateCommand GoBackCommand { get; set; }
-        public EnterOtpPageViewModel(INavigationService navigationService):base(navigationService)
+        public DelegateCommand SubmitBtnCommand { get; set; }
+        public EnterOtpPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             GoBackCommand = new DelegateCommand(GoBack);
+            SubmitBtnCommand = new DelegateCommand(SubmitButtonClicked);
         }
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
@@ -53,6 +55,13 @@ namespace HeartlandArtifact.ViewModels
         {
             NavigationService.GoBackAsync();
         }
-      
+        public void SubmitButtonClicked()
+        {
+            if (IsFromForgotPassword)
+                NavigationService.NavigateAsync("ChangePasswordPage");
+            else
+                NavigationService.NavigateAsync("HomePage");
+        }
+
     }
 }

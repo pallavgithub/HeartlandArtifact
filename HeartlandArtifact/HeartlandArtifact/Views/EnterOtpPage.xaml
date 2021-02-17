@@ -32,7 +32,7 @@
                     <Label Text="{Binding TimerText }"  FontSize="20" TextColor="Black" HorizontalOptions="StartAndExpand"/>
                 </StackLayout>
                 <Button Text="Submit" TextColor="Black" TextTransform="None" BackgroundColor="Transparent" BorderColor="Black" BorderWidth="1" 
-                        CornerRadius="30" FontSize="20" Command="{Binding ContinueBtnCommand}"/>
+                        CornerRadius="30" FontSize="20" Command="{Binding SubmitBtnCommand}"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
