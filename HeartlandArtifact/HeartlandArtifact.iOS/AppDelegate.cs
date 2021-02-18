@@ -1,8 +1,11 @@
-﻿using Foundation;
+﻿using Facebook.CoreKit;
+using Foundation;
+using Google.SignIn;
+using HeartlandArtifact.Services.Contracts;
 using Prism;
 using Prism.Ioc;
 using UIKit;
-
+using Xamarin.Forms;
 
 namespace HeartlandArtifact.iOS
 {
@@ -22,9 +25,29 @@ namespace HeartlandArtifact.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+            DependencyService.Register<IFacebookManager, FacebookManager>();
+
+            DependencyService.Register<IGoogleManager, GoogleManager>();
+            // var googleServiceDictionary = NSDictionary.FromFile("GoogleService-Info.plist");
+            // SignIn.SharedInstance.ClientId = googleServiceDictionary["CLIENT_ID"].ToString();
+
+
+            SignIn.SharedInstance.ClientId = @"554175844065-dpgmkp1fmtldk9afno3gc2i158tr9b0s.apps.googleusercontent.com";
             LoadApplication(new App(new iOSInitializer()));
 
             return base.FinishedLaunching(app, options);
+        }
+        public override void OnActivated(UIApplication uiApplication)
+        {
+            base.OnActivated(uiApplication);
+            AppEvents.ActivateApp();
+        }
+
+        public override bool OpenUrl(UIApplication application, NSUrl url, string sourceApplication, NSObject annotation)
+        {
+            //return base.OpenUrl(application, url, sourceApplication, annotation);
+
+            return ApplicationDelegate.SharedInstance.OpenUrl(application, url, sourceApplication, annotation);
         }
     }
 

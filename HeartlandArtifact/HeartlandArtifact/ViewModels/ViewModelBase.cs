@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using HeartlandArtifact.Services.Contracts;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
 using System;
@@ -18,7 +19,15 @@ namespace HeartlandArtifact.ViewModels
             set { SetProperty(ref _title, value); }
         }
 
+        public ViewModelBase()
+        {
+
+        }
         public ViewModelBase(INavigationService navigationService)
+        {
+            NavigationService = navigationService;
+        }
+        public ViewModelBase(IFacebookManager facebookManager, IGoogleManager googleManager, INavigationService navigationService)
         {
             NavigationService = navigationService;
         }

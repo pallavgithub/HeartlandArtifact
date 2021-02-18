@@ -10,10 +10,10 @@
                 <StackLayout Orientation="Horizontal" HeightRequest="80" HorizontalOptions="CenterAndExpand">
                     <Grid>
                         <Image Source="BlueCircle.png"/>
-                        <Image Source="facebook.png" Margin="30,22,30,30"/>
+                        <ImageButton Source="facebook.png" Margin="20,10,20,10" Command="{Binding FacebookLoginCommand}"/>
                     </Grid>
                     <Grid>
-                        <Image Source="GoogleCircle.png"/>
+                        <ImageButton Source="GoogleCircle.png" Command="{Binding GoogleLoginCommand}"/>
                     </Grid>
                     <Grid>
                         <Image Source="AppleCircle.png"/>
