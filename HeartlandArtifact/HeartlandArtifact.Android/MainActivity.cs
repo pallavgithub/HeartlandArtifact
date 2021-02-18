@@ -1,6 +1,10 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Content.PM;
+using Android.Gms.Auth.Api;
+using Android.Gms.Auth.Api.SignIn;
 using Android.OS;
+using HeartlandArtifact.Services.Contracts;
 using Prism;
 using Prism.Ioc;
 using Xamarin.Facebook;
@@ -14,8 +18,8 @@ namespace HeartlandArtifact.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            TabLayoutResource = Resource.Layout.Tabbar;
-            ToolbarResource = Resource.Layout.Toolbar;
+           // TabLayoutResource = Resource.Layout.Tabbar;
+            //ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
 
