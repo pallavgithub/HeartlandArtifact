@@ -5,30 +5,30 @@
              >
     <ContentView.Content>
         <StackLayout Padding="40,0,40,50"  VerticalOptions="FillAndExpand">
-            <Label Text="Home" HorizontalTextAlignment="Center" TextColor="Black" FontSize="25"/>
+            <Label Text="Home" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" TextColor="Black" FontSize="30"/>
             <StackLayout Spacing="15" VerticalOptions="StartAndExpand">
                 <Frame BorderColor="Black" HasShadow="True" CornerRadius="35" HeightRequest="50" Padding="0">
-                    <Label Text="+ Add Item" TextColor="Black" FontSize="25" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
+                    <Label Text="+ Add Item" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="25" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
                 </Frame>
                 <Frame BorderColor="Black" HasShadow="True" CornerRadius="35" HeightRequest="50" Padding="0">
-                    <Label Text="My Collection" TextColor="Black" FontSize="25" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
+                    <Label Text="My Collection" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="25" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
                 </Frame>
                 <Frame BorderColor="Black" HasShadow="True" CornerRadius="35" HeightRequest="50" Padding="0">
-                    <Label Text="My Profile" TextColor="Black" FontSize="25" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
+                    <Label Text="My Profile" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="25" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
                     <Frame.GestureRecognizers>
                         <!--<TapGestureRecognizer Command="{Binding MyProfileCommand}"/>-->
                     </Frame.GestureRecognizers>
                 </Frame>
                 <Frame BorderColor="Black" HasShadow="True" CornerRadius="35" HeightRequest="50" Padding="0">
-                    <Label Text="Request Certificate" TextColor="Black" FontSize="25" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
+                    <Label Text="Request Certificate" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="25" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
                 </Frame>
                 <Frame BorderColor="Black" HasShadow="True" CornerRadius="35" HeightRequest="50" Padding="0">
-                    <Label Text="Data Reports" TextColor="Black" FontSize="25" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
+                    <Label Text="Data Reports" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="25" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
                 </Frame>
             </StackLayout>
             <Image Source="SplashImg.png" HeightRequest="50" VerticalOptions="End"/>
             <Frame HasShadow="True" CornerRadius="35" HeightRequest="50" Padding="0" VerticalOptions="End" BackgroundColor="#823E21">
-                <Label Text="View Auctions" TextColor="White" FontSize="25" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
+                <Label Text="View Auctions" FontFamily="{StaticResource HelveticaRegular}" TextColor="White" FontSize="25" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
             </Frame>
         </StackLayout>
     </ContentView.Content>

@@ -30,7 +30,7 @@
                     <ViewCell>
                         <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
                             <Image Source="{Binding IconImage}" HorizontalOptions="Start" HeightRequest="25" WidthRequest="25"/>
-                            <Label VerticalOptions="FillAndExpand" HorizontalOptions="StartAndExpand" VerticalTextAlignment="Center" 
+                            <Label FontFamily="{StaticResource HelveticaRegular}" VerticalOptions="FillAndExpand" HorizontalOptions="StartAndExpand" VerticalTextAlignment="Center" 
                            Text="{Binding Title}" FontSize="24" TextColor="Black"/>
                         </StackLayout>
                     </ViewCell>
@@ -38,11 +38,11 @@
             </ListView.ItemTemplate>
         </ListView>
         <StackLayout Padding="25" Spacing="20">
-        <Label Text="Terms &amp; Conditions" TextColor="Black" FontSize="20"/>
-            <Label Text="Privacy Policy" TextColor="Black" FontSize="20"/>
+            <Label Text="Terms &amp; Conditions" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="20"/>
+            <Label Text="Privacy Policy" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="20"/>
             <StackLayout Orientation="Horizontal">
                 <Image Source="Logout.png" HeightRequest="20" WidthRequest="20"/>
-                <Label Text="Logout" TextColor="#823E21" FontSize="20"/>
+                <Label Text="Logout" FontFamily="{StaticResource HelveticaRegular}" TextColor="#823E21" FontSize="20"/>
             </StackLayout>
         </StackLayout>
     </StackLayout>

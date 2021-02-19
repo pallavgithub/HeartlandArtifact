@@ -6,7 +6,7 @@
     <ContentPage.Content>
         <StackLayout Margin="25,30,25,30" VerticalOptions="FillAndExpand">
             <StackLayout VerticalOptions="FillAndExpand" Spacing="30">
-                <Label Text="Sign In" FontSize="30" TextColor="Black" HorizontalTextAlignment="Center"/>
+                <Label Text="Sign In" FontFamily="{StaticResource HelveticaRegular}" FontSize="30" TextColor="Black" HorizontalTextAlignment="Center"/>
                 <StackLayout Orientation="Horizontal" HeightRequest="80" HorizontalOptions="CenterAndExpand">
                     <Grid>
                         <Image Source="BlueCircle.png"/>
@@ -28,7 +28,7 @@
                     </Grid>
                 </StackLayout>
                 <StackLayout Spacing="0" Margin="0,20,0,0">
-                <Label Text="Email" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                    <Label Text="Email" FontFamily="{StaticResource HelveticaRegular}" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
                     <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
                         <custom:BorderLessEntry Text="" 
@@ -37,7 +37,7 @@
                     </Frame>
                 </StackLayout>
                 <StackLayout Spacing="0">
-                    <Label Text="Password" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                    <Label Text="Password" FontFamily="{StaticResource HelveticaRegular}" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
                     <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
                         <StackLayout Orientation="Horizontal">
@@ -48,16 +48,16 @@
                         </StackLayout>
                     </Frame>
                 </StackLayout>
-                <Button Text="Continue" TextColor="Black" TextTransform="None" BackgroundColor="Transparent" BorderColor="Black" BorderWidth="1" 
+                <Button Text="Continue" FontFamily="{StaticResource HelveticaBold}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent" BorderColor="Black" BorderWidth="1" 
                         CornerRadius="30"/>
-                <Label Text="Forgot Password" TextColor="#823E21" FontSize="20" HorizontalTextAlignment="Center">
+                <Label Text="Forgot Password" FontFamily="{StaticResource HelveticaRegular}" TextDecorations="Underline" TextColor="#823E21" FontSize="20" HorizontalTextAlignment="Center">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding GoToForgotPasswordPageCommand}"/>
                     </Label.GestureRecognizers>
                 </Label>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-                    <Label Text="Don't have an existing account?" TextColor="Black" FontSize="17" HorizontalTextAlignment="End"/>
-                    <Label Text="Sign-up" TextColor="#823E21" FontSize="17" HorizontalTextAlignment="Start">
+                    <Label Text="Don't have an existing account?" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="17" HorizontalTextAlignment="End"/>
+                    <Label Text="Sign-up" FontFamily="{StaticResource HelveticaRegular}" TextDecorations="Underline" TextColor="#823E21" FontSize="17" HorizontalTextAlignment="Start">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding GoToSignUpPageCommand}"/>
                         </Label.GestureRecognizers>

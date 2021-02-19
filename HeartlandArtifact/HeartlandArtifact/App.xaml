@@ -4,8 +4,23 @@
              xmlns:prism="http://prismlibrary.com"
              x:Class="HeartlandArtifact.App">
   <Application.Resources>
-
-    <!-- Application resource dictionary -->
-
+        <ResourceDictionary>
+            <OnPlatform x:TypeArguments="x:String" x:Key="ArialRegular">
+                <On Platform="Android" Value="ARIAL.TTF#Arial" />
+                <On Platform="iOS" Value="ARIAL" />
+            </OnPlatform>
+            <OnPlatform x:TypeArguments="x:String" x:Key="ArialBold">
+                <On Platform="Android" Value="ARIALBD.TTF#Arial" />
+                <On Platform="iOS" Value="ARIALBD" />
+            </OnPlatform>
+            <OnPlatform x:TypeArguments="x:String" x:Key="HelveticaRegular">
+                <On Platform="Android" Value="Helvetica.ttf#Helvetica" />
+                <On Platform="iOS" Value="Helvetica" />
+            </OnPlatform>
+            <OnPlatform x:TypeArguments="x:String" x:Key="HelveticaBold">
+                <On Platform="Android" Value="Helvetica-Bold.ttf#Helvetica" />
+                <On Platform="iOS" Value="Helvetica-Bold" />
+            </OnPlatform>
+        </ResourceDictionary>
   </Application.Resources>
 </prism:PrismApplication>

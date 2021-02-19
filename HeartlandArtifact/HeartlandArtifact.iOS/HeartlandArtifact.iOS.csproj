@@ -114,6 +114,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GoogleManager.cs" />
     <Compile Include="FacebookManager.cs" />
+    <BundleResource Include="Resources\ARIAL.TTF" />
+    <BundleResource Include="Resources\ARIALBD.TTF" />
+    <BundleResource Include="Resources\Helvetica-Bold.ttf" />
+    <BundleResource Include="Resources\Helvetica.ttf" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\Contents.json">

@@ -82,6 +82,10 @@
     <LinkDescription Include="LinkerSettings.xml" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidAsset Include="Assets\ARIAL.TTF" />
+    <AndroidAsset Include="Assets\ARIALBD.TTF" />
+    <AndroidAsset Include="Assets\Helvetica-Bold.ttf" />
+    <AndroidAsset Include="Assets\Helvetica.ttf" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
   </ItemGroup>
