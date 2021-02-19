@@ -10,10 +10,17 @@
                 <StackLayout Orientation="Horizontal" HeightRequest="80" HorizontalOptions="CenterAndExpand">
                     <Grid>
                         <Image Source="BlueCircle.png"/>
-                        <ImageButton Source="facebook.png" Margin="20,10,20,10" Command="{Binding FacebookLoginCommand}"/>
+                        <Image Source="facebook.png" Margin="30,22,30,30" />
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding FacebookLoginCommand}"/>
+                        </Grid.GestureRecognizers>
                     </Grid>
                     <Grid>
-                        <ImageButton Source="GoogleCircle.png" Command="{Binding GoogleLoginCommand}"/>
+                        <Image Source="GoogleCircle.png"/>
+                        <Image Source="GoogleIcon.png" Margin="30,22,30,30"/>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoogleLoginCommand}"/>
+                        </Grid.GestureRecognizers>
                     </Grid>
                     <Grid>
                         <Image Source="AppleCircle.png"/>
@@ -24,8 +31,7 @@
                 <Label Text="Email" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
                     <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
-                        <custom:BorderLessEntry Text=""  
-                                          Placeholder="Enter your Email" PlaceholderColor="#979797"
+                        <custom:BorderLessEntry Text="" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="14" TextColor="Black"/>
                     </Frame>
@@ -36,7 +42,6 @@
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
                         <StackLayout Orientation="Horizontal">
                             <custom:BorderLessEntry Text="" IsPassword="True" x:Name="PasswordEntry" 
-                                          Placeholder="Enter your Password" PlaceholderColor="#979797"
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="14" Focused="PasswordEntry_Focused" Unfocused="PasswordEntry_Unfocused"/>
                             <Image Source="eye.png" IsVisible="{Binding ShowPassword}"/>

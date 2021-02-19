@@ -17,8 +17,7 @@
                     <Label Text="First Name" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
                     <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
-                        <custom:BorderLessEntry Text=""  
-                                          Placeholder="Enter your First Name" PlaceholderColor="#979797"
+                        <custom:BorderLessEntry Text="" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="14" TextColor="Black"/>
                     </Frame>
@@ -28,7 +27,6 @@
                     <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
                             <custom:BorderLessEntry Text=""  
-                                          Placeholder="Enter your Last Name" PlaceholderColor="#979797"
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="14" />
                     </Frame>
@@ -38,7 +36,6 @@
                     <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
                         <custom:BorderLessEntry Text=""  
-                                          Placeholder="Enter your Email" PlaceholderColor="#979797"
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="14" TextColor="Black"/>
                     </Frame>
@@ -49,7 +46,6 @@
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
                         <StackLayout Orientation="Horizontal">
                                 <custom:BorderLessEntry Text="" IsPassword="True" x:Name="PasswordEntry"
-                                          Placeholder="Enter your Password" PlaceholderColor="#979797"
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="14" Focused="PasswordEntry_Focused" Unfocused="PasswordEntry_Unfocused"/>
                             <Image Source="eye.png" IsVisible="{Binding ShowPassword}"/>
@@ -62,7 +58,6 @@
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
                         <StackLayout Orientation="Horizontal">
                                 <custom:BorderLessEntry Text="" IsPassword="True"  x:Name="ConfirmPasswordEntry" 
-                                          Placeholder="Enter your Password" PlaceholderColor="#979797"
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="14" Focused="ConfirmPasswordEntry_Focused" Unfocused="ConfirmPasswordEntry_Unfocused"/>
                             <Image Source="eye.png" IsVisible="{Binding ShowPassword}"/>
@@ -91,6 +86,7 @@
                         </Grid>
                         <Grid>
                             <Image Source="GoogleCircle.png"/>
+                            <Image Source="GoogleIcon.png" Margin="30,22,30,30"/>
                         </Grid>
                         <Grid>
                             <Image Source="AppleCircle.png"/>

@@ -5,14 +5,43 @@
              xmlns:pages="clr-namespace:HeartlandArtifact.Views"
              FlowDirection="RightToLeft"
              NavigationPage.HasNavigationBar="False">
-  <MasterDetailPage.Master>
-    <pages:HomePageMaster x:Name="MasterPage"/>
-  </MasterDetailPage.Master>
+    <MasterDetailPage.Master>
+        <pages:HomePageMaster x:Name="MasterPage"/>
+    </MasterDetailPage.Master>
     <MasterDetailPage.Detail>
-        <NavigationPage BarBackgroundColor="Transparent" BarTextColor="Black"> 
+        <NavigationPage BarBackgroundColor="Transparent" BarTextColor="Black">
             <x:Arguments>
-                <pages:HomePageDetail/>
+                <ContentPage NavigationPage.HasNavigationBar="False" FlowDirection="LeftToRight">
+                    <ContentPage.Content>
+                        <StackLayout>
+                            <Grid Padding="20,10,20,20" HeightRequest="40" ColumnSpacing="15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="ProfileIcon.png" Grid.Column="0" HeightRequest="40" WidthRequest="40"/>
+                                <Label Text="Hi, Tucker" Grid.Column="1" VerticalOptions="CenterAndExpand" TextColor="Black" FontSize="20"/>
+                                <Image Source="BellIcon.png" Grid.Column="2" HeightRequest="30" WidthRequest="20"/>
+                                <Image Source="MenuIcon.png" Grid.Column="3" HeightRequest="20" WidthRequest="30">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="Menu_Tapped"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Grid>
+                            <Grid VerticalOptions="FillAndExpand">
+                                <pages:HomeUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding HomeIsVisible}"/>
+                                <pages:SoldItemsUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding SoldItemsIsVisible}"/>
+                            </Grid>
+                        </StackLayout>
+                    </ContentPage.Content>
+                </ContentPage>
+                <!--<pages:HomePageDetail>-->
+                   
+                   
+                <!--</pages:HomePageDetail>-->
             </x:Arguments>
-    </NavigationPage>
-  </MasterDetailPage.Detail>
+        </NavigationPage>
+    </MasterDetailPage.Detail>
 </MasterDetailPage>

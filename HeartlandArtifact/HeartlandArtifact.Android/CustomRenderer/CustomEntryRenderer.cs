@@ -23,8 +23,8 @@ namespace HeartlandArtifact.Droid.CustomRenderer
                 Control.Background = new ColorDrawable(Android.Graphics.Color.Rgb(255, 245, 246));
                 Control.SetPadding(20, 0, 20, 0);
                 Control.Gravity = GravityFlags.CenterVertical;
-                TextAlignment = Android.Views.TextAlignment.Center;
-                Control.TextAlignment = Android.Views.TextAlignment.Center;
+                TextAlignment = Android.Views.TextAlignment.ViewStart;
+                Control.TextAlignment = Android.Views.TextAlignment.ViewStart;
                 GradientDrawable gd = new GradientDrawable();
                 gd.SetCornerRadius(5);
                 this.Control.SetBackground(gd);

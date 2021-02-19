@@ -244,5 +244,8 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable-xhdpi\BellIcon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\GoogleIcon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

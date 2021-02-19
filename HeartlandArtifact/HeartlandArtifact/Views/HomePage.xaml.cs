@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HeartlandArtifact.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,13 +25,27 @@ namespace HeartlandArtifact.Views
             if (item == null)
                 return;
 
-            var page = (Page)Activator.CreateInstance(item.TargetType);
-            page.Title = item.Title;
+            // var page = (Page)Activator.CreateInstance(item.TargetType);
+            // page.Title = item.Title;
 
-            Detail = new NavigationPage(page);
+            // Detail = new NavigationPage(page);
+            if(item.Title=="Home")
+            {
+                (BindingContext as HomePageViewModel).SoldItemsIsVisible = false;
+                (BindingContext as HomePageViewModel).HomeIsVisible = true;
+            }
+            if (item.Title == "Sold Items")
+            {
+                (BindingContext as HomePageViewModel).HomeIsVisible = false;
+                (BindingContext as HomePageViewModel).SoldItemsIsVisible = true;
+            }
             IsPresented = false;
 
             MasterPage.ListView.SelectedItem = null;
+        }
+        private void Menu_Tapped(object sender, EventArgs e)
+        {
+            IsPresented = true;
         }
     }
 }

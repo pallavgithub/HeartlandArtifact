@@ -33,6 +33,7 @@ namespace HeartlandArtifact
             containerRegistry.RegisterForNavigation<EnterOtpPage, EnterOtpPageViewModel>();
             containerRegistry.RegisterForNavigation<ChangePasswordPage, ChangePasswordPageViewModel>();
             containerRegistry.RegisterForNavigation<HomePage, HomePageViewModel>();
+            containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
         }
     }
 }
