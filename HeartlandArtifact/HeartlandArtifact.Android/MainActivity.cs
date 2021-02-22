@@ -4,6 +4,7 @@ using Android.Content.PM;
 using Android.Gms.Auth.Api;
 using Android.Gms.Auth.Api.SignIn;
 using Android.OS;
+using HeartlandArtifact.Droid.CustomRenderer;
 using HeartlandArtifact.Services.Contracts;
 using Prism;
 using Prism.Ioc;
@@ -26,7 +27,7 @@ namespace HeartlandArtifact.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             FacebookSdk.SdkInitialize(this);
 
-          
+            Xamarin.Forms.DependencyService.Register<MessageAndroid>();
             DependencyService.Register<IGoogleManager, GoogleManager>();
 
             DependencyService.Register<IFacebookManager, FacebookManager>();

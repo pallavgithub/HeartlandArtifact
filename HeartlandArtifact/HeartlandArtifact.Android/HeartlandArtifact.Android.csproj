@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomRenderer\CustomEntryRenderer.cs" />
+    <Compile Include="CustomRenderer\MessageAndroid.cs" />
     <Compile Include="FacebookManager.cs" />
     <Compile Include="GoogleManager.cs" />
     <Compile Include="MainApplication.cs" />

@@ -31,7 +31,7 @@
                     <Label Text="Email" FontFamily="{StaticResource HelveticaRegular}" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
                     <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
-                        <custom:BorderLessEntry Text="" 
+                        <custom:BorderLessEntry Text="{Binding Email}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="14" TextColor="Black"/>
                     </Frame>
@@ -41,7 +41,7 @@
                     <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
                         <StackLayout Orientation="Horizontal">
-                            <custom:BorderLessEntry Text="" IsPassword="True" x:Name="PasswordEntry" 
+                            <custom:BorderLessEntry Text="{Binding Password}" IsPassword="True" x:Name="PasswordEntry" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="14" Focused="PasswordEntry_Focused" Unfocused="PasswordEntry_Unfocused"/>
                             <Image Source="eye.png" IsVisible="{Binding ShowPassword}"/>
@@ -49,7 +49,7 @@
                     </Frame>
                 </StackLayout>
                 <Button Text="Continue" FontFamily="{StaticResource HelveticaBold}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent" BorderColor="Black" BorderWidth="1" 
-                        CornerRadius="30"/>
+                        CornerRadius="30" Command="{Binding ContinueCommand}"/>
                 <Label Text="Forgot Password" FontFamily="{StaticResource HelveticaRegular}" TextDecorations="Underline" TextColor="#823E21" FontSize="20" HorizontalTextAlignment="Center">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding GoToForgotPasswordPageCommand}"/>

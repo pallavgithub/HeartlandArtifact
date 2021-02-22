@@ -17,7 +17,7 @@
                         <Label Text="First Name" FontFamily="{StaticResource HelveticaRegular}" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
                     <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
-                        <custom:BorderLessEntry Text="" 
+                        <custom:BorderLessEntry Text="{Binding FirstName}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="14" TextColor="Black"/>
                     </Frame>
@@ -26,7 +26,7 @@
                         <Label Text="LastName" FontFamily="{StaticResource HelveticaRegular}" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
                     <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
-                            <custom:BorderLessEntry Text=""  
+                            <custom:BorderLessEntry Text="{Binding LastName}"  
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="14" />
                     </Frame>
@@ -35,7 +35,7 @@
                         <Label Text="Email" FontFamily="{StaticResource HelveticaRegular}" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
                     <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
-                        <custom:BorderLessEntry Text=""  
+                            <custom:BorderLessEntry Text="{Binding Email}"  
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="14" TextColor="Black"/>
                     </Frame>
@@ -45,7 +45,7 @@
                     <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
                         <StackLayout Orientation="Horizontal">
-                                <custom:BorderLessEntry Text="" IsPassword="True" x:Name="PasswordEntry"
+                                <custom:BorderLessEntry Text="{Binding Password}" IsPassword="True" x:Name="PasswordEntry"
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="14" Focused="PasswordEntry_Focused" Unfocused="PasswordEntry_Unfocused"/>
                             <Image Source="eye.png" IsVisible="{Binding ShowPassword}"/>
@@ -57,7 +57,7 @@
                     <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
                         <StackLayout Orientation="Horizontal">
-                                <custom:BorderLessEntry Text="" IsPassword="True"  x:Name="ConfirmPasswordEntry" 
+                                <custom:BorderLessEntry Text="{Binding ConfirmPassword}" IsPassword="True"  x:Name="ConfirmPasswordEntry" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="14" Focused="ConfirmPasswordEntry_Focused" Unfocused="ConfirmPasswordEntry_Unfocused"/>
                             <Image Source="eye.png" IsVisible="{Binding ShowPassword}"/>
@@ -65,7 +65,7 @@
                     </Frame>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
-                    <CheckBox Color="LightGray"/>
+                    <CheckBox Color="LightGray" IsChecked="{Binding IsAgree}"/>
                         <Label TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" FontSize="14">
                         <Label.FormattedText>
                             <FormattedString>
@@ -83,10 +83,16 @@
                         <Grid>
                             <Image Source="BlueCircle.png"/>
                             <Image Source="facebook.png" Margin="30,22,30,30"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding FacebookLoginCommand}"/>
+                            </Grid.GestureRecognizers>
                         </Grid>
                         <Grid>
                             <Image Source="GoogleCircle.png"/>
                             <Image Source="GoogleIcon.png" Margin="30,22,30,30"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoogleLoginCommand}"/>
+                            </Grid.GestureRecognizers>
                         </Grid>
                         <Grid>
                             <Image Source="AppleCircle.png"/>

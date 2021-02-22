@@ -1,7 +1,11 @@
-﻿using HeartlandArtifact.Models;
+﻿using HeartlandArtifact.Helpers;
+using HeartlandArtifact.Interfaces;
+using HeartlandArtifact.Models;
 using HeartlandArtifact.Services.Contracts;
 using Prism.Commands;
 using Prism.Navigation;
+using System;
+using System.Text.RegularExpressions;
 using Xamarin.Forms;
 
 namespace HeartlandArtifact.ViewModels
@@ -16,15 +20,34 @@ namespace HeartlandArtifact.ViewModels
         public DelegateCommand GoogleLogoutCommand { get; set; }
         public DelegateCommand GoToSignUpPageCommand { get; set; }
         public DelegateCommand GoToForgotPasswordPageCommand { get; set; }
+        public DelegateCommand ContinueCommand { get; set; }
         private FacebookUser _facebookUser;
         private GoogleUser _googleUser;
         private bool _isLogedIn;
+        public bool IsLogedIn
+        {
+            get { return _isLogedIn; }
+            set { SetProperty(ref _isLogedIn, value); }
+        }
+
         private bool _showPassword;
 
         public bool ShowPassword
         {
             get { return _showPassword; }
             set { SetProperty(ref _showPassword, value); }
+        }
+        private string _email;
+        public string Email
+        {
+            get { return _email; }
+            set { SetProperty(ref _email, value); }
+        }
+        private string _password;
+        public string Password
+        {
+            get { return _password; }
+            set { SetProperty(ref _password, value); }
         }
         public FacebookUser FacebookUser
         {
@@ -38,11 +61,6 @@ namespace HeartlandArtifact.ViewModels
             set { SetProperty(ref _googleUser, value); }
         }
 
-        public bool IsLogedIn
-        {
-            get { return _isLogedIn; }
-            set { SetProperty(ref _isLogedIn, value); }
-        }
 
         public SignInPageViewModel(INavigationService navigationService) : base(navigationService)
         {
@@ -56,8 +74,9 @@ namespace HeartlandArtifact.ViewModels
             GoogleLogoutCommand = new DelegateCommand(GoogleLogout);
             GoToSignUpPageCommand = new DelegateCommand(GoToSignUpPage);
             GoToForgotPasswordPageCommand = new DelegateCommand(GoToForgotPasswordPage);
+            ContinueCommand = new DelegateCommand(SignIn);
         }
-        
+
         public void GoToSignUpPage()
         {
             NavigationService.NavigateAsync("SignUpPage");
@@ -112,6 +131,66 @@ namespace HeartlandArtifact.ViewModels
             else
             {
                 //_dialogService.DisplayAlertAsync("Error", message, "Ok");
+            }
+        }
+        public async void SignIn()
+        {
+            try
+            {
+                var toast = DependencyService.Get<IMessage>();
+                if (string.IsNullOrEmpty(Email))
+                {
+                    toast.LongAlert("Please enter Email."); return;
+                }
+                if (string.IsNullOrEmpty(Password))
+                {
+                    toast.LongAlert("Please enter Password."); return;
+                }
+                if (Password.Trim().Length < 8)
+                {
+                    toast.LongAlert("Password must be at least 8 characters, no more than 15 characters."); return;
+                }
+                //if (!Regex.IsMatch(Password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$", RegexOptions.None))
+                //{
+                //    toast.LongAlert("Password must include at least one uppercase letter, one lowercase letter, one numeric digit, one special character."); return;
+                //}
+                else
+                {
+                    IsBusy = true;
+                    var loginDetails = new LoginModel()
+                    {
+                        UserName = Email,
+                        Password = Password
+                    };
+                    var response = await new ApiData().PostData<UserModel>("user/login", loginDetails, true);
+                    if (response != null && response.data != null)
+                    {
+                        if (!(Password == response.data.Password))
+                        {
+                            toast.LongAlert("Password does not match");
+                        }
+                        else
+                        {
+                            toast.LongAlert(response.message);
+                           // Application.Current.Properties["IsLoogedIn"] = true;
+                           // await Application.Current.SavePropertiesAsync();
+                           // if(App.userModel!=null)
+                            NavigationService.NavigateAsync("HomePage");
+                        }
+                    }
+                    else
+                    {
+                        //if (response != null && response.status == 0)
+                        //{
+                            toast.LongAlert("Invalid Credentials");
+                       // }
+                    }
+                    IsBusy = false;
+                }
+            }
+            catch (Exception e)
+            {
+
             }
         }
     }
