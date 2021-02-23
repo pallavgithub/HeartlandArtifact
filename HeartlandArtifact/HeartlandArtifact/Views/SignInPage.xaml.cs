@@ -19,14 +19,26 @@ namespace HeartlandArtifact.Views
         }
         protected override bool OnBackButtonPressed() => true;
 
-        private void PasswordEntry_Unfocused(object sender, FocusEventArgs e)
-        {
-            (BindingContext as SignInPageViewModel).ShowPassword = false;
-        }
+        //private void PasswordEntry_Unfocused(object sender, FocusEventArgs e)
+        //{
+        //    // if (string.IsNullOrEmpty(PasswordEntry.Text))
+        //    //  (BindingContext as SignInPageViewModel).ShowPassword = false;
+        //}
 
-        private void PasswordEntry_Focused(object sender, FocusEventArgs e)
+        //private void PasswordEntry_Focused(object sender, FocusEventArgs e)
+        //{
+        //    //(BindingContext as SignInPageViewModel).ShowPassword = true;
+        //}
+
+        private async void ShowPassword_Tapped(object sender, EventArgs e)
         {
-            (BindingContext as SignInPageViewModel).ShowPassword = true;
+            (BindingContext as SignInPageViewModel).ShowPassword = !(BindingContext as SignInPageViewModel).ShowPassword;
+            PasswordEntry.IsPassword = !PasswordEntry.IsPassword;
+            if (!string.IsNullOrEmpty(PasswordEntry.Text))
+            {
+                await Task.Delay(10);
+                PasswordEntry.CursorPosition = PasswordEntry.Text.Length;
+            }
         }
     }
 }

@@ -1,10 +1,6 @@
 ﻿using HeartlandArtifact.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -17,23 +13,25 @@ namespace HeartlandArtifact.Views
         {
             InitializeComponent();
         }
-        private void PasswordEntry_Unfocused(object sender, FocusEventArgs e)
+        private async void ShowPassword_Tapped(object sender, EventArgs e)
         {
-            (BindingContext as ChangePasswordPageViewModel).ShowPassword = false;
+            (BindingContext as ChangePasswordPageViewModel).ShowPassword = !(BindingContext as ChangePasswordPageViewModel).ShowPassword;
+            PasswordEntry.IsPassword = !PasswordEntry.IsPassword;
+            if (!string.IsNullOrEmpty(PasswordEntry.Text))
+            {
+                await Task.Delay(10);
+                PasswordEntry.CursorPosition = PasswordEntry.Text.Length;
+            }
         }
-
-        private void PasswordEntry_Focused(object sender, FocusEventArgs e)
+        private async void ShowConfirmPassword_Tapped(object sender, EventArgs e)
         {
-            (BindingContext as ChangePasswordPageViewModel).ShowPassword = true;
-        }
-        private void ConfirmPasswordEntry_Unfocused(object sender, FocusEventArgs e)
-        {
-            (BindingContext as ChangePasswordPageViewModel).ShowConfirmPassword = false;
-        }
-
-        private void ConfirmPasswordEntry_Focused(object sender, FocusEventArgs e)
-        {
-            (BindingContext as ChangePasswordPageViewModel).ShowConfirmPassword = true;
+            (BindingContext as ChangePasswordPageViewModel).ShowConfirmPassword = !(BindingContext as ChangePasswordPageViewModel).ShowConfirmPassword;
+            ConfirmPasswordEntry.IsPassword = !ConfirmPasswordEntry.IsPassword;
+            if (!string.IsNullOrEmpty(ConfirmPasswordEntry.Text))
+            {
+                await Task.Delay(10);
+                ConfirmPasswordEntry.CursorPosition = ConfirmPasswordEntry.Text.Length;
+            }
         }
     }
 }

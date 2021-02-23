@@ -1,8 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:custom="clr-namespace:HeartlandArtifact.CustomRenderers"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:custom="clr-namespace:HeartlandArtifact.CustomRenderers" xmlns:converter="clr-namespace:HeartlandArtifact.Converters"
              x:Class="HeartlandArtifact.Views.SignInPage"
              NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:InverseBoolConverter x:Key="InverseBoolConverter"></converter:InverseBoolConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout Margin="25,30,25,30" VerticalOptions="FillAndExpand">
             <StackLayout VerticalOptions="FillAndExpand" Spacing="30">
@@ -43,8 +48,19 @@
                         <StackLayout Orientation="Horizontal">
                             <custom:BorderLessEntry Text="{Binding Password}" IsPassword="True" x:Name="PasswordEntry" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
-                                          FontSize="14" Focused="PasswordEntry_Focused" Unfocused="PasswordEntry_Unfocused"/>
-                            <Image Source="eye.png" IsVisible="{Binding ShowPassword}"/>
+                                          FontSize="14"/>
+                            <Grid>
+                                <Image Source="apple.png" IsVisible="{Binding ShowPassword, Converter={StaticResource InverseBoolConverter}}">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="ShowPassword_Tapped"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <Image Source="eye.png" IsVisible="{Binding ShowPassword}">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="ShowPassword_Tapped"/>
+                                </Image.GestureRecognizers>
+                                </Image>
+                            </Grid>
                         </StackLayout>
                     </Frame>
                 </StackLayout>

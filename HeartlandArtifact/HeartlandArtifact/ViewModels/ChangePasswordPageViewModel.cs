@@ -16,6 +16,18 @@ namespace HeartlandArtifact.ViewModels
             get { return _showConfirmPassword; }
             set { SetProperty(ref _showConfirmPassword, value); }
         }
+        private string _newPassword;
+        public string NewPassword
+        {
+            get { return _newPassword; }
+            set { SetProperty(ref _newPassword, value); }
+        }
+        private string _confirmNewPassword;
+        public string ConfirmNewPassword
+        {
+            get { return _confirmNewPassword; }
+            set { SetProperty(ref _confirmNewPassword, value); }
+        }
         public DelegateCommand SetPasswordBtnCommand { get; set; }
         public ChangePasswordPageViewModel(INavigationService navigationService) : base(navigationService)
         {
