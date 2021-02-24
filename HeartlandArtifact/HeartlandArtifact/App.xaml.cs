@@ -1,3 +1,4 @@
+using HeartlandArtifact.Models;
 using HeartlandArtifact.ViewModels;
 using HeartlandArtifact.Views;
 using Prism;
@@ -10,6 +11,8 @@ namespace HeartlandArtifact
 {
     public partial class App
     {
+        public static UserModel SignUpDetails { get; set; }
+        public static UserDataModel User { get; set; }
         public App(IPlatformInitializer initializer)
             : base(initializer)
         {
@@ -18,7 +21,8 @@ namespace HeartlandArtifact
         protected override async void OnInitialized()
         {
             InitializeComponent();
-
+            App.User = new UserDataModel();            
+            App.SignUpDetails = new UserModel();            
             await NavigationService.NavigateAsync("NavigationPage/SignInPage");
         }
 

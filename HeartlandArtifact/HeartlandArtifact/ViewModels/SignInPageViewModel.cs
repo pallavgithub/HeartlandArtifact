@@ -76,7 +76,6 @@ namespace HeartlandArtifact.ViewModels
             GoToForgotPasswordPageCommand = new DelegateCommand(GoToForgotPasswordPage);
             ContinueCommand = new DelegateCommand(SignIn);
         }
-
         public void GoToSignUpPage()
         {
             NavigationService.NavigateAsync("SignUpPage");
@@ -85,24 +84,20 @@ namespace HeartlandArtifact.ViewModels
         {
             NavigationService.NavigateAsync("ForgotPasswordPage");
         }
-
         private void FacebookLogout()
         {
             _facebookManager.Logout();
             IsLogedIn = false;
         }
-
         private void FacebookLogin()
         {
             _facebookManager.Login(OnFacebookLoginComplete);
         }
-
         private void GoogleLogout()
         {
             _googleManager.Logout();
             IsLogedIn = false;
         }
-
         private void GoogleLogin()
         {
             _googleManager.Login(OnGoogleLoginComplete);
@@ -120,7 +115,6 @@ namespace HeartlandArtifact.ViewModels
                 //_dialogService.DisplayAlertAsync("Error", message, "Ok");
             }
         }
-
         private void OnGoogleLoginComplete(GoogleUser googleUser, string message)
         {
             if (googleUser != null)
@@ -150,17 +144,17 @@ namespace HeartlandArtifact.ViewModels
                 {
                     toast.LongAlert("Password must be at least 8 characters, no more than 15 characters."); return;
                 }
-                //if (!Regex.IsMatch(Password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$", RegexOptions.None))
-                //{
-                //    toast.LongAlert("Password must include at least one uppercase letter, one lowercase letter, one numeric digit, one special character."); return;
-                //}
+                if (!Regex.IsMatch(Password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$", RegexOptions.None))
+                {
+                    toast.LongAlert("Password must include at least one uppercase letter, one lowercase letter, one numeric digit, one special character."); return;
+                }
                 else
                 {
                     IsBusy = true;
                     var loginDetails = new LoginModel()
                     {
-                        UserName = Email,
-                        Password = Password
+                        UserName = Email.Trim(),
+                        Password = Password.Trim()
                     };
                     var response = await new ApiData().PostData<UserModel>("user/login", loginDetails, true);
                     if (response != null && response.data != null)
@@ -175,7 +169,7 @@ namespace HeartlandArtifact.ViewModels
                            // Application.Current.Properties["IsLoogedIn"] = true;
                            // await Application.Current.SavePropertiesAsync();
                            // if(App.userModel!=null)
-                            NavigationService.NavigateAsync("HomePage");
+                            await NavigationService.NavigateAsync("HomePage");
                         }
                     }
                     else

@@ -1,5 +1,11 @@
-﻿using Prism.Commands;
+﻿using HeartlandArtifact.Helpers;
+using HeartlandArtifact.Interfaces;
+using HeartlandArtifact.Models;
+using Prism.Commands;
 using Prism.Navigation;
+using System;
+using Xamarin.Forms;
+
 namespace HeartlandArtifact.ViewModels
 {
     public class EnterOtpPageViewModel : ViewModelBase
@@ -55,13 +61,92 @@ namespace HeartlandArtifact.ViewModels
         {
             NavigationService.GoBackAsync();
         }
-        public void SubmitButtonClicked()
+        public async void SubmitButtonClicked()
         {
-            if (IsFromForgotPassword)
-                NavigationService.NavigateAsync("ChangePasswordPage");
+            IsBusy = true;
+            var Toast = DependencyService.Get<IMessage>();
+            if (string.IsNullOrEmpty(Text1) || string.IsNullOrEmpty(Text2) || string.IsNullOrEmpty(Text3) || string.IsNullOrEmpty(Text4))
+            {
+                if (TimerText == "0:00")
+                {
+                    Toast.LongAlert("Request time out."); return;
+                }
+                else
+                {
+                    Toast.LongAlert("Please enter correct otp."); return;
+                }
+            }
+            if (TimerText == "0:00")
+            {
+                Toast.LongAlert("Request time out."); return;
+            }
+            if (TimerText == "0:00")
+            {
+                Toast.LongAlert("Request time out."); return;
+            }
             else
-                NavigationService.NavigateAsync("HomePage");
-        }
+            {
+                try
+                {
+                    if (IsFromForgotPassword)
+                    {
+                        await NavigationService.NavigateAsync("ChangePasswordPage");
+                    }
+                    else
+                    {
+                        string OTP = Text1 + Text2 + Text3 + Text4;
+                        App.SignUpDetails.Otp = OTP;
+                        var response = await new ApiData().PostData<UserModel>("user/signup", App.SignUpDetails, true);
+                        if (response != null && response.data != null && response.status == "Success")
+                        {
+                            Application.Current.Properties["IsLogedIn"] = true;
+                            Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
+                            await Application.Current.SavePropertiesAsync();
+                            App.User = new UserDataModel()
+                            {
+                                UserId = response.data.CmsUserId,
+                                FirstName = response.data.FirstName,
+                                LastName = response.data.LastName,
+                                EmailId = response.data.EmailId,
+                                Password = response.data.Password,
+                                IsActive = true
+                            };
+                            Toast.LongAlert("Signup Successful.");
+                            await NavigationService.NavigateAsync("HomePage");
+                            App.SignUpDetails.Otp = string.Empty;
+                        }
+                        else
+                        {
+                            Toast.LongAlert(response.message);
+                            App.SignUpDetails.Otp = string.Empty;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
 
+                }
+            }
+            IsBusy = false;
+        }
+        public async void ResendOtp()
+        {
+            var Toast = DependencyService.Get<IMessage>();
+            Text1 = Text2 = Text3 = Text4 = string.Empty;
+            if (IsFromForgotPassword)
+            {
+
+            }
+            else
+            {
+                IsBusy = true;
+                var response = await new ApiData().PostData<UserModel>("user/signup", App.SignUpDetails, true);
+                if (response != null && response.data != null)
+                {
+                    Toast.LongAlert("Otp sent.");
+                }
+                IsBusy = false;
+            }
+        }
     }
 }

@@ -1,8 +1,10 @@
-﻿using HeartlandArtifact.Interfaces;
+﻿using HeartlandArtifact.Helpers;
+using HeartlandArtifact.Interfaces;
 using HeartlandArtifact.Models;
 using HeartlandArtifact.Services.Contracts;
 using Prism.Commands;
 using Prism.Navigation;
+using System;
 using System.Text.RegularExpressions;
 using Xamarin.Forms;
 
@@ -103,18 +105,15 @@ namespace HeartlandArtifact.ViewModels
             _facebookManager.Logout();
             IsLogedIn = false;
         }
-
         private void FacebookLogin()
         {
             _facebookManager.Login(OnFacebookLoginComplete);
         }
-
         private void GoogleLogout()
         {
             _googleManager.Logout();
             IsLogedIn = false;
         }
-
         private void GoogleLogin()
         {
             _googleManager.Login(OnGoogleLoginComplete);
@@ -148,17 +147,35 @@ namespace HeartlandArtifact.ViewModels
         {
             NavigationService.GoBackAsync();
         }
-        public void GoToEnterOtpPage()
+        public async void GoToEnterOtpPage()
         {
-            ValidateForm();
-            if (IsValid)
+            try
             {
-                // IsBusy = true;
-                var navigationParams = new NavigationParameters();
-                navigationParams.Add("FromForgetPassword", false);
-                NavigationService.NavigateAsync("EnterOtpPage", navigationParams);
-                // IsBusy = false;
-            }            
+                ValidateForm();
+                if (IsValid)
+                {
+                    IsBusy = true;
+                    App.SignUpDetails = new UserModel()
+                    {
+                        FirstName = FirstName.Trim(),
+                        LastName = LastName.Trim(),
+                        EmailId = Email.Trim(),
+                        Password = Password.Trim()
+                    };
+                    var response = await new ApiData().PostData<UserModel>("user/signup", App.SignUpDetails, true);
+                    if (response != null && response.data != null)
+                    {                        
+                        var navigationParams = new NavigationParameters();
+                        navigationParams.Add("FromForgetPassword", false);
+                        await NavigationService.NavigateAsync("EnterOtpPage", navigationParams);
+                    }
+                    IsBusy = false;
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
         }
         private void ValidateForm()
         {

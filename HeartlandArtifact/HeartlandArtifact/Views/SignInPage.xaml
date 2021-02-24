@@ -50,7 +50,7 @@
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="14"/>
                             <Grid>
-                                <Image Source="apple.png" IsVisible="{Binding ShowPassword, Converter={StaticResource InverseBoolConverter}}">
+                                <Image Source="eyeOff.png" IsVisible="{Binding ShowPassword, Converter={StaticResource InverseBoolConverter}}">
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="ShowPassword_Tapped"/>
                                     </Image.GestureRecognizers>

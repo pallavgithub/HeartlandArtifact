@@ -12,7 +12,7 @@ namespace HeartlandArtifact.Views
     {
         private List<Entry> _entries; 
         Timer T = new Timer();
-        int Minutes = 2;
+        int Minutes = 5;
         int Seconds = 0;
         public EnterOtpPage()
         {
@@ -51,7 +51,7 @@ namespace HeartlandArtifact.Views
         private void RestartTimer()
         {
             T.Stop();
-            Minutes = 2;
+            Minutes = 5;
             Seconds = 0;
             (BindingContext as EnterOtpPageViewModel).TimerText = "5:00";
             T.Start();
@@ -134,5 +134,11 @@ namespace HeartlandArtifact.Views
             return previousEntry;
         }
         protected override bool OnBackButtonPressed() => true;
+
+        private void ResendOtp_Tapped(object sender, EventArgs e)
+        {
+            RestartTimer();
+            (BindingContext as EnterOtpPageViewModel).ResendOtp();
+        }
     }
 }

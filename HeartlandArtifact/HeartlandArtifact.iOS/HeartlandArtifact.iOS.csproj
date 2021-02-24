@@ -345,5 +345,8 @@
   <ItemGroup>
     <BundleResource Include="Resources\GoogleIcon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\eyeOff.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

@@ -28,7 +28,11 @@
                     <Entry Text="{Binding Text4}" HorizontalTextAlignment="Center" Keyboard="Numeric" MaxLength="1" WidthRequest="50" x:Name="Entry_four" TextChanged="Entry_four_TextChanged"/>
                 </StackLayout>
                 <StackLayout  HorizontalOptions="CenterAndExpand" Margin="0,0,0,20">
-                    <Label Text="Resend OTP" FontFamily="{StaticResource HelveticaRegular}" FontSize="20" TextColor="#823E21" HorizontalOptions="EndAndExpand"/>
+                    <Label Text="Resend OTP" FontFamily="{StaticResource HelveticaRegular}" FontSize="20" TextColor="#823E21" HorizontalOptions="EndAndExpand">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="ResendOtp_Tapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
                     <Label Text="{Binding TimerText }" FontFamily="{StaticResource HelveticaRegular}" HorizontalOptions="CenterAndExpand" FontSize="20" TextColor="#823E21" />
                 </StackLayout>
                 <Button Text="Submit" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" TextTransform="None" BackgroundColor="Transparent" BorderColor="Black" BorderWidth="1" 
