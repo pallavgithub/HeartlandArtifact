@@ -25,22 +25,22 @@ namespace HeartlandArtifact
             App.SignUpDetails = new UserModel();
             if (Application.Current.Properties != null)
             {
-                await NavigationService.NavigateAsync("NavigationPage/SignInPage");
-                //if (Application.Current.Properties.ContainsKey("IsLogedIn"))
-                //{
-                //    if ((bool)Application.Current.Properties["IsLogedIn"] == true)
-                //    {
-                //        await NavigationService.NavigateAsync("NavigationPage/HomePage");
-                //    }
-                //    else
-                //    {
-                //        await NavigationService.NavigateAsync("NavigationPage/SignInPage");
-                //    }
-                //}
-                //else
-                //{
-                //    await NavigationService.NavigateAsync("NavigationPage/SignInPage");
-                //}
+               // await NavigationService.NavigateAsync("NavigationPage/SignInPage");
+                if (Application.Current.Properties.ContainsKey("IsLogedIn"))
+                {
+                    if ((bool)Application.Current.Properties["IsLogedIn"] == true)
+                    {
+                        await NavigationService.NavigateAsync("NavigationPage/HomePage");
+                    }
+                    else
+                    {
+                        await NavigationService.NavigateAsync("NavigationPage/SignInPage");
+                    }
+                }
+                else
+                {
+                    await NavigationService.NavigateAsync("NavigationPage/SignInPage");
+                }
             }
 
         }
