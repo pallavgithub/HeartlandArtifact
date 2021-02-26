@@ -16,6 +16,12 @@ namespace HeartlandArtifact.ViewModels
             get { return _isFromForgotPassword; }
             set { SetProperty(ref _isFromForgotPassword, value); }
         }
+        private string _email;
+        public string Email
+        {
+            get { return _email; }
+            set { SetProperty(ref _email, value); }
+        }
         private string _text1;
         public string Text1
         {
@@ -56,6 +62,10 @@ namespace HeartlandArtifact.ViewModels
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             IsFromForgotPassword = (bool)parameters["FromForgetPassword"];
+            if (IsFromForgotPassword)
+            {
+                Email=(string)parameters["Email_Id"];
+            }
         }
         public void GoBack()
         {
@@ -88,13 +98,24 @@ namespace HeartlandArtifact.ViewModels
             {
                 try
                 {
+                    string OTP = Text1 + Text2 + Text3 + Text4;
                     if (IsFromForgotPassword)
                     {
-                        await NavigationService.NavigateAsync("ChangePasswordPage");
+                        var response = await new ApiData().PostData<UserModel>("user/ForgotPassword?EmailId=" + Email + "&Otp=" + OTP, true);
+                        if (response != null && response.data != null)
+                        {
+                            if (response.status == "Success")
+                            {
+                                await NavigationService.NavigateAsync("ChangePasswordPage");
+                            }                           
+                        }
+                        else
+                        {
+                            Toast.LongAlert(response.message);
+                        }
                     }
                     else
                     {
-                        string OTP = Text1 + Text2 + Text3 + Text4;
                         App.SignUpDetails.Otp = OTP;
                         var response = await new ApiData().PostData<UserModel>("user/signup", App.SignUpDetails, true);
                         if (response != null && response.data != null && response.status == "Success")
@@ -135,7 +156,13 @@ namespace HeartlandArtifact.ViewModels
             Text1 = Text2 = Text3 = Text4 = string.Empty;
             if (IsFromForgotPassword)
             {
-
+                IsBusy = true;
+                var response = await new ApiData().PostData<UserModel>("user/ForgotPassword?EmailId=" + Email + "&Otp=" + string.Empty, true);
+                if (response != null && response.data != null)
+                {
+                    Toast.LongAlert("Otp sent.");
+                }
+                IsBusy = false;
             }
             else
             {

@@ -10,7 +10,7 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout Margin="25,30,25,30" VerticalOptions="FillAndExpand">
-            <StackLayout VerticalOptions="FillAndExpand" Spacing="30">
+            <StackLayout VerticalOptions="FillAndExpand" Spacing="20">
                 <Label Text="Sign In" FontFamily="{StaticResource HelveticaRegular}" FontSize="30" TextColor="Black" HorizontalTextAlignment="Center"/>
                 <StackLayout Orientation="Horizontal" HeightRequest="80" HorizontalOptions="CenterAndExpand">
                     <Grid>

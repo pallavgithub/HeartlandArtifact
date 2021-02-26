@@ -54,14 +54,11 @@ namespace HeartlandArtifact.ViewModels
             get { return _facebookUser; }
             set { SetProperty(ref _facebookUser, value); }
         }
-
         public GoogleUser GoogleUser
         {
             get { return _googleUser; }
             set { SetProperty(ref _googleUser, value); }
         }
-
-
         public SignInPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             _facebookManager = DependencyService.Get<IFacebookManager>();
@@ -136,6 +133,10 @@ namespace HeartlandArtifact.ViewModels
                 {
                     toast.LongAlert("Please enter Email."); return;
                 }
+                if (!Regex.IsMatch(Email.Trim(), @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase))
+                {
+                    toast.LongAlert("Invalid email address."); return;
+                }
                 if (string.IsNullOrEmpty(Password))
                 {
                     toast.LongAlert("Please enter Password."); return;
@@ -166,18 +167,15 @@ namespace HeartlandArtifact.ViewModels
                         else
                         {
                             toast.LongAlert(response.message);
-                           // Application.Current.Properties["IsLoogedIn"] = true;
-                           // await Application.Current.SavePropertiesAsync();
-                           // if(App.userModel!=null)
+                            // Application.Current.Properties["IsLoogedIn"] = true;
+                            // await Application.Current.SavePropertiesAsync();
+                            // if(App.userModel!=null)
                             await NavigationService.NavigateAsync("HomePage");
                         }
                     }
                     else
                     {
-                        //if (response != null && response.status == 0)
-                        //{
-                            toast.LongAlert("Invalid Credentials");
-                       // }
+                        toast.LongAlert(response.message);
                     }
                     IsBusy = false;
                 }
