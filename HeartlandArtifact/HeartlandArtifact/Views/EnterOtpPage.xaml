@@ -9,35 +9,42 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout Margin="25,30,25,30" VerticalOptions="FillAndExpand">
-            <StackLayout Spacing="30">
-                <Label Text="&lt; BACK" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" TextTransform="Uppercase" FontSize="16">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
-                    </Label.GestureRecognizers>
-                </Label>
-                <Label Text="Enter Verification Code" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" FontSize="30" TextColor="Black"/>
-                <Grid>
-                    <Label FontFamily="{StaticResource HelveticaRegular}" IsVisible="{Binding IsFromForgotPassword, Converter={StaticResource InverseBoolConverter}}" Text="We've sent a One Time Password to your registered email. Please enter the code to verify your email for your profile." HorizontalTextAlignment="Center" FontSize="12" TextColor="Black"/>
-                    <Label FontFamily="{StaticResource HelveticaRegular}" IsVisible="{Binding IsFromForgotPassword}" Text="We've sent a One Time Password to your registered email. Please enter the code to change your password." HorizontalTextAlignment="Center" FontSize="12" TextColor="Black"/>
-                </Grid>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Margin="0,20,0,0">
-                    <Entry Text="{Binding Text1}" HorizontalTextAlignment="Center" Keyboard="Numeric" MaxLength="1" WidthRequest="50" x:Name="Entry_one" TextChanged="Entry_one_TextChanged"/>
-                    <Entry Text="{Binding Text2}" HorizontalTextAlignment="Center" Keyboard="Numeric" MaxLength="1" WidthRequest="50" x:Name="Entry_two" TextChanged="Entry_two_TextChanged"/>
-                    <Entry Text="{Binding Text3}" HorizontalTextAlignment="Center" Keyboard="Numeric" MaxLength="1" WidthRequest="50" x:Name="Entry_three" TextChanged="Entry_three_TextChanged"/>
-                    <Entry Text="{Binding Text4}" HorizontalTextAlignment="Center" Keyboard="Numeric" MaxLength="1" WidthRequest="50" x:Name="Entry_four" TextChanged="Entry_four_TextChanged"/>
-                </StackLayout>
-                <StackLayout  HorizontalOptions="CenterAndExpand" Margin="0,0,0,20">
-                    <Label Text="Resend OTP" FontFamily="{StaticResource HelveticaRegular}" FontSize="20" TextColor="#823E21" HorizontalOptions="EndAndExpand">
+        <Grid>
+            <StackLayout Margin="25,30,25,30" VerticalOptions="FillAndExpand">
+                <StackLayout Spacing="30">
+                    <Label Text="&lt; BACK" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" TextTransform="Uppercase" FontSize="16">
                         <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="ResendOtp_Tapped"/>
+                            <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
                         </Label.GestureRecognizers>
                     </Label>
-                    <Label Text="{Binding TimerText }" FontFamily="{StaticResource HelveticaRegular}" HorizontalOptions="CenterAndExpand" FontSize="20" TextColor="#823E21" />
-                </StackLayout>
-                <Button Text="Submit" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" TextTransform="None" BackgroundColor="Transparent" BorderColor="Black" BorderWidth="1" 
+                    <Label Text="Enter Verification Code" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" FontSize="30" TextColor="Black"/>
+                    <Grid>
+                        <Label FontFamily="{StaticResource HelveticaRegular}" IsVisible="{Binding IsFromForgotPassword, Converter={StaticResource InverseBoolConverter}}" Text="We've sent a One Time Password to your registered email. Please enter the code to verify your email for your profile." HorizontalTextAlignment="Center" FontSize="12" TextColor="Black"/>
+                        <Label FontFamily="{StaticResource HelveticaRegular}" IsVisible="{Binding IsFromForgotPassword}" Text="We've sent a One Time Password to your registered email. Please enter the code to change your password." HorizontalTextAlignment="Center" FontSize="12" TextColor="Black"/>
+                    </Grid>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Margin="0,20,0,0">
+                        <Entry Text="{Binding Text1}" HorizontalTextAlignment="Center" Keyboard="Numeric" MaxLength="1" WidthRequest="50" x:Name="Entry_one" TextChanged="Entry_one_TextChanged"/>
+                        <Entry Text="{Binding Text2}" HorizontalTextAlignment="Center" Keyboard="Numeric" MaxLength="1" WidthRequest="50" x:Name="Entry_two" TextChanged="Entry_two_TextChanged"/>
+                        <Entry Text="{Binding Text3}" HorizontalTextAlignment="Center" Keyboard="Numeric" MaxLength="1" WidthRequest="50" x:Name="Entry_three" TextChanged="Entry_three_TextChanged"/>
+                        <Entry Text="{Binding Text4}" HorizontalTextAlignment="Center" Keyboard="Numeric" MaxLength="1" WidthRequest="50" x:Name="Entry_four" TextChanged="Entry_four_TextChanged"/>
+                    </StackLayout>
+                    <StackLayout  HorizontalOptions="CenterAndExpand" Margin="0,0,0,20">
+                        <Label Text="Resend OTP" FontFamily="{StaticResource HelveticaRegular}" FontSize="20" TextColor="#823E21" HorizontalOptions="EndAndExpand">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ResendOtp_Tapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="{Binding TimerText }" FontFamily="{StaticResource HelveticaRegular}" HorizontalOptions="CenterAndExpand" FontSize="20" TextColor="#823E21" />
+                    </StackLayout>
+                    <Button Text="Submit" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" TextTransform="None" BackgroundColor="Transparent" BorderColor="Black" BorderWidth="1" 
                         CornerRadius="30" FontSize="20" Command="{Binding SubmitBtnCommand}"/>
+                </StackLayout>
             </StackLayout>
-        </StackLayout>
+            <Grid IsVisible="{Binding IsBusy}">
+                <ContentView BackgroundColor="LightGray" Opacity="0.67">
+                    <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" VerticalOptions="Center" HorizontalOptions="Center" Color="Black"/>
+                </ContentView>
+            </Grid>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

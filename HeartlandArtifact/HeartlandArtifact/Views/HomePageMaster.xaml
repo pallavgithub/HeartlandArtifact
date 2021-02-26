@@ -43,6 +43,9 @@
             <StackLayout Orientation="Horizontal">
                 <Image Source="Logout.png" HeightRequest="20" WidthRequest="20"/>
                 <Label Text="Logout" FontFamily="{StaticResource HelveticaRegular}" TextColor="#823E21" FontSize="20"/>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Logout_Tapped"/>
+                </StackLayout.GestureRecognizers>
             </StackLayout>
         </StackLayout>
     </StackLayout>

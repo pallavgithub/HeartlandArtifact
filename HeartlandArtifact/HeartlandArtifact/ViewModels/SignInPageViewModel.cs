@@ -98,29 +98,36 @@ namespace HeartlandArtifact.ViewModels
         private void GoogleLogin()
         {
             _googleManager.Login(OnGoogleLoginComplete);
-
         }
         private void OnFacebookLoginComplete(FacebookUser facebookUser, string message)
         {
+            var toast = DependencyService.Get<IMessage>();
             if (facebookUser != null)
             {
                 FacebookUser = facebookUser;
                 IsLogedIn = true;
+                Application.Current.Properties["IsLogedIn"] = true;
+                NavigationService.NavigateAsync("HomePage");
             }
             else
             {
+                toast.LongAlert(message);
                 //_dialogService.DisplayAlertAsync("Error", message, "Ok");
             }
         }
         private void OnGoogleLoginComplete(GoogleUser googleUser, string message)
         {
+            var toast = DependencyService.Get<IMessage>();
             if (googleUser != null)
             {
                 GoogleUser = googleUser;
                 IsLogedIn = true;
+                Application.Current.Properties["IsLogedIn"] = true;
+                NavigationService.NavigateAsync("HomePage");
             }
             else
             {
+                toast.LongAlert(message);
                 //_dialogService.DisplayAlertAsync("Error", message, "Ok");
             }
         }
@@ -166,6 +173,8 @@ namespace HeartlandArtifact.ViewModels
                         }
                         else
                         {
+                            Application.Current.Properties["IsLogedIn"] = true;
+                            await Application.Current.SavePropertiesAsync();
                             toast.LongAlert(response.message);
                             // Application.Current.Properties["IsLoogedIn"] = true;
                             // await Application.Current.SavePropertiesAsync();

@@ -21,9 +21,28 @@ namespace HeartlandArtifact
         protected override async void OnInitialized()
         {
             InitializeComponent();
-            App.User = new UserDataModel();            
-            App.SignUpDetails = new UserModel();            
-            await NavigationService.NavigateAsync("NavigationPage/SignInPage");
+            App.User = new UserDataModel();
+            App.SignUpDetails = new UserModel();
+            if (Application.Current.Properties != null)
+            {
+                await NavigationService.NavigateAsync("NavigationPage/SignInPage");
+                //if (Application.Current.Properties.ContainsKey("IsLogedIn"))
+                //{
+                //    if ((bool)Application.Current.Properties["IsLogedIn"] == true)
+                //    {
+                //        await NavigationService.NavigateAsync("NavigationPage/HomePage");
+                //    }
+                //    else
+                //    {
+                //        await NavigationService.NavigateAsync("NavigationPage/SignInPage");
+                //    }
+                //}
+                //else
+                //{
+                //    await NavigationService.NavigateAsync("NavigationPage/SignInPage");
+                //}
+            }
+
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)

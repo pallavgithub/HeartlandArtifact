@@ -9,133 +9,140 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
-            <ScrollView Padding="20,20,20,30">
-            <StackLayout Spacing="20">
-                    <Label Text="&lt; BACK" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" TextTransform="Uppercase" FontSize="16">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding GoBackToSignInPage}"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label Text="Sign Up" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" TextTransform="None" FontSize="30" HorizontalTextAlignment="Center"/>
-                <StackLayout Spacing="0" Margin="0,10,0,0">
-                        <Label Text="First Name" FontFamily="{StaticResource HelveticaRegular}" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                    <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
-                           HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
-                        <custom:BorderLessEntry Text="{Binding FirstName}" 
-                                          HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
-                                          FontSize="14" TextColor="Black"/>
-                    </Frame>
-                </StackLayout>
-                <StackLayout Spacing="0">
-                        <Label Text="LastName" FontFamily="{StaticResource HelveticaRegular}" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                    <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
-                           HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
-                            <custom:BorderLessEntry Text="{Binding LastName}"  
-                                          HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
-                                          FontSize="14" />
-                    </Frame>
-                </StackLayout>
-                <StackLayout Spacing="0">
-                        <Label Text="Email" FontFamily="{StaticResource HelveticaRegular}" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                    <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
-                           HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
-                            <custom:BorderLessEntry Text="{Binding Email}"  
-                                          HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
-                                          FontSize="14" TextColor="Black"/>
-                    </Frame>
-                </StackLayout>
-                <StackLayout Spacing="0">
-                        <Label Text="Password" FontFamily="{StaticResource HelveticaRegular}" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                    <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
-                           HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
-                        <StackLayout Orientation="Horizontal">
-                                <custom:BorderLessEntry Text="{Binding Password}" IsPassword="True" x:Name="PasswordEntry"
-                                          HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
-                                          FontSize="14"/>
-                                <Grid>
-                                    <Image Source="eyeOff.png" IsVisible="{Binding ShowPassword, Converter={StaticResource InverseBoolConverter}}">
-                                        <Image.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="ShowPassword_Tapped"/>
-                                        </Image.GestureRecognizers>
-                                    </Image>
-                                    <Image Source="eye.png" IsVisible="{Binding ShowPassword}">
-                                        <Image.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="ShowPassword_Tapped"/>
-                                        </Image.GestureRecognizers>
-                                    </Image>
-                                </Grid>
-                            </StackLayout>
-                    </Frame>
-                </StackLayout>
-                <StackLayout Spacing="0">
-                        <Label Text="Confirm Password" FontFamily="{StaticResource HelveticaRegular}" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                    <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
-                           HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
-                        <StackLayout Orientation="Horizontal">
-                                <custom:BorderLessEntry Text="{Binding ConfirmPassword}" IsPassword="True"  x:Name="ConfirmPasswordEntry" 
-                                          HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
-                                          FontSize="14"/>
-                                <Grid>
-                                    <Image Source="eyeOff.png" IsVisible="{Binding ShowConfirmPassword, Converter={StaticResource InverseBoolConverter}}">
-                                        <Image.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="ShowConfirmPassword_Tapped"/>
-                                        </Image.GestureRecognizers>
-                                    </Image>
-                                    <Image Source="eye.png" IsVisible="{Binding ShowConfirmPassword}">
-                                        <Image.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="ShowConfirmPassword_Tapped"/>
-                                        </Image.GestureRecognizers>
-                                    </Image>
-                                </Grid>
-                            </StackLayout>
-                    </Frame>
-                </StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <CheckBox Color="LightGray" IsChecked="{Binding IsAgree}"/>
-                        <Label TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" FontSize="14">
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="By Signing Up you will be agreeing to the"/>
-                                    <Span Text=" Terms and Conditions " FontSize="14" FontFamily="{StaticResource HelveticaBold}"/>
-                                <Span Text="of use."/>
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-                </StackLayout>
-                    <Button Text="Submit" FontFamily="{StaticResource HelveticaBold}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent" BorderColor="Black" BorderWidth="1" 
-                        CornerRadius="30" Command="{Binding SubmitBtnCommand}"/>
-                    <Label Text="Sign up using" FontFamily="{StaticResource HelveticaRegular}" FontSize="12" HorizontalTextAlignment="Center" TextColor="Black"/>
-                    <StackLayout Orientation="Horizontal" HeightRequest="80" HorizontalOptions="CenterAndExpand">
-                        <Grid>
-                            <Image Source="BlueCircle.png"/>
-                            <Image Source="facebook.png" Margin="30,22,30,30"/>
-                            <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding FacebookLoginCommand}"/>
-                            </Grid.GestureRecognizers>
-                        </Grid>
-                        <Grid>
-                            <Image Source="GoogleCircle.png"/>
-                            <Image Source="GoogleIcon.png" Margin="30,22,30,30"/>
-                            <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding GoogleLoginCommand}"/>
-                            </Grid.GestureRecognizers>
-                        </Grid>
-                        <Grid>
-                            <Image Source="AppleCircle.png"/>
-                            <Image Source="apple.png" Margin="30,22,30,30"/>
-                        </Grid>
-                    </StackLayout>
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-                        <Label Text="Have an existing account?" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" HorizontalTextAlignment="End" FontSize="14"/>
-                        <Label Text="Log In" FontFamily="{StaticResource HelveticaRegular}" TextColor="#823E21" HorizontalTextAlignment="Start" TextDecorations="Underline" FontSize="14">
+        <Grid>
+            <StackLayout>
+                <ScrollView Padding="20,20,20,30">
+                    <StackLayout Spacing="20">
+                        <Label Text="&lt; BACK" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" TextTransform="Uppercase" FontSize="16">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding GoBackToSignInPage}"/>
                             </Label.GestureRecognizers>
                         </Label>
+                        <Label Text="Sign Up" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" TextTransform="None" FontSize="30" HorizontalTextAlignment="Center"/>
+                        <StackLayout Spacing="0" Margin="0,10,0,0">
+                            <Label Text="First Name" FontFamily="{StaticResource HelveticaRegular}" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
+                           HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
+                                <custom:BorderLessEntry Text="{Binding FirstName}" 
+                                          HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                                          FontSize="14" TextColor="Black"/>
+                            </Frame>
+                        </StackLayout>
+                        <StackLayout Spacing="0">
+                            <Label Text="LastName" FontFamily="{StaticResource HelveticaRegular}" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
+                           HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
+                                <custom:BorderLessEntry Text="{Binding LastName}"  
+                                          HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                                          FontSize="14" />
+                            </Frame>
+                        </StackLayout>
+                        <StackLayout Spacing="0">
+                            <Label Text="Email" FontFamily="{StaticResource HelveticaRegular}" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
+                           HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
+                                <custom:BorderLessEntry Text="{Binding Email}"  
+                                          HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                                          FontSize="14" TextColor="Black"/>
+                            </Frame>
+                        </StackLayout>
+                        <StackLayout Spacing="0">
+                            <Label Text="Password" FontFamily="{StaticResource HelveticaRegular}" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
+                           HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
+                                <StackLayout Orientation="Horizontal">
+                                    <custom:BorderLessEntry Text="{Binding Password}" IsPassword="True" x:Name="PasswordEntry"
+                                          HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                                          FontSize="14"/>
+                                    <Grid>
+                                        <Image Source="eyeOff.png" IsVisible="{Binding ShowPassword, Converter={StaticResource InverseBoolConverter}}">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="ShowPassword_Tapped"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                        <Image Source="eye.png" IsVisible="{Binding ShowPassword}">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="ShowPassword_Tapped"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </Grid>
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+                        <StackLayout Spacing="0">
+                            <Label Text="Confirm Password" FontFamily="{StaticResource HelveticaRegular}" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
+                           HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
+                                <StackLayout Orientation="Horizontal">
+                                    <custom:BorderLessEntry Text="{Binding ConfirmPassword}" IsPassword="True"  x:Name="ConfirmPasswordEntry" 
+                                          HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                                          FontSize="14"/>
+                                    <Grid>
+                                        <Image Source="eyeOff.png" IsVisible="{Binding ShowConfirmPassword, Converter={StaticResource InverseBoolConverter}}">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="ShowConfirmPassword_Tapped"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                        <Image Source="eye.png" IsVisible="{Binding ShowConfirmPassword}">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="ShowConfirmPassword_Tapped"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </Grid>
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <CheckBox Color="LightGray" IsChecked="{Binding IsAgree}"/>
+                            <Label TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" FontSize="14">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="By Signing Up you will be agreeing to the"/>
+                                        <Span Text=" Terms and Conditions " FontSize="14" FontFamily="{StaticResource HelveticaBold}"/>
+                                        <Span Text="of use."/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </StackLayout>
+                        <Button Text="Submit" FontFamily="{StaticResource HelveticaBold}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent" BorderColor="Black" BorderWidth="1" 
+                        CornerRadius="30" Command="{Binding SubmitBtnCommand}"/>
+                        <Label Text="Sign up using" FontFamily="{StaticResource HelveticaRegular}" FontSize="12" HorizontalTextAlignment="Center" TextColor="Black"/>
+                        <StackLayout Orientation="Horizontal" HeightRequest="80" HorizontalOptions="CenterAndExpand">
+                            <Grid>
+                                <Image Source="BlueCircle.png"/>
+                                <Image Source="facebook.png" Margin="30,22,30,30"/>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding FacebookLoginCommand}"/>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                            <Grid>
+                                <Image Source="GoogleCircle.png"/>
+                                <Image Source="GoogleIcon.png" Margin="30,22,30,30"/>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GoogleLoginCommand}"/>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                            <Grid>
+                                <Image Source="AppleCircle.png"/>
+                                <Image Source="apple.png" Margin="30,22,30,30"/>
+                            </Grid>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                            <Label Text="Have an existing account?" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" HorizontalTextAlignment="End" FontSize="14"/>
+                            <Label Text="Log In" FontFamily="{StaticResource HelveticaRegular}" TextColor="#823E21" HorizontalTextAlignment="Start" TextDecorations="Underline" FontSize="14">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GoBackToSignInPage}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </StackLayout>
                     </StackLayout>
-                </StackLayout>
-            </ScrollView>
-        </StackLayout>
+                </ScrollView>
+            </StackLayout>
+            <Grid IsVisible="{Binding IsBusy}">
+                <ContentView BackgroundColor="LightGray" Opacity="0.67">
+                    <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" VerticalOptions="Center" HorizontalOptions="Center" Color="Black"/>
+                </ContentView>
+            </Grid>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

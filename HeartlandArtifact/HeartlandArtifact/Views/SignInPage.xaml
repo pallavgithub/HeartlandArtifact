@@ -9,6 +9,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
+        <Grid>
         <StackLayout Margin="25,30,25,30" VerticalOptions="FillAndExpand">
             <StackLayout VerticalOptions="FillAndExpand" Spacing="20">
                 <Label Text="Sign In" FontFamily="{StaticResource HelveticaRegular}" FontSize="30" TextColor="Black" HorizontalTextAlignment="Center"/>
@@ -81,5 +82,11 @@
                 </StackLayout>
             </StackLayout>
         </StackLayout>
+            <Grid IsVisible="{Binding IsBusy}">
+                <ContentView BackgroundColor="LightGray" Opacity="0.67">
+                    <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" VerticalOptions="Center" HorizontalOptions="Center" Color="Black"/>
+                </ContentView>
+            </Grid>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

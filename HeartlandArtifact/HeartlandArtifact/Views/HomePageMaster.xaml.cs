@@ -49,5 +49,11 @@ namespace HeartlandArtifact.Views
             }
             #endregion
         }
+
+        private void Logout_Tapped(object sender, EventArgs e)
+        {
+            Application.Current.Properties["IsLogedIn"] = false;
+            App.Current.MainPage = new SignInPage();
+        }
     }
 }
