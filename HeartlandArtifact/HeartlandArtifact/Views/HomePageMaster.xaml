@@ -40,12 +40,12 @@
         <StackLayout Padding="25" Spacing="20">
             <Label Text="Terms &amp; Conditions" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="20"/>
             <Label Text="Privacy Policy" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="20"/>
-            <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal" x:Name="LogoutOption">
                 <Image Source="Logout.png" HeightRequest="20" WidthRequest="20"/>
                 <Label Text="Logout" FontFamily="{StaticResource HelveticaRegular}" TextColor="#823E21" FontSize="20"/>
-                <StackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="Logout_Tapped"/>
-                </StackLayout.GestureRecognizers>
+                <!--<StackLayout.GestureRecognizers>
+                    --><!--<TapGestureRecognizer Tapped="Logout_Tapped"/>--><!--
+                </StackLayout.GestureRecognizers>-->
             </StackLayout>
         </StackLayout>
     </StackLayout>

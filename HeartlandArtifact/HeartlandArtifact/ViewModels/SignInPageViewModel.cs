@@ -29,6 +29,12 @@ namespace HeartlandArtifact.ViewModels
             get { return _isLogedIn; }
             set { SetProperty(ref _isLogedIn, value); }
         }
+        private bool _isWorking;
+        public bool IsWorking
+        {
+            get { return _isWorking; }
+            set { SetProperty(ref _isWorking, value); }
+        }
 
         private bool _showPassword;
 
@@ -140,7 +146,8 @@ namespace HeartlandArtifact.ViewModels
                 {
                     toast.LongAlert("Please enter Email."); return;
                 }
-                if (!Regex.IsMatch(Email.Trim(), @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase))
+                //if (!Regex.IsMatch(Email.Trim(), @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase))
+                if (!Regex.IsMatch(Email.Trim(), @"/ ^((?:[a - zA - Z0 - 9] +) | (([a - zA - Z0 - 9] + (\.|\+|\-| _))+[a - zA - Z0 - 9] +))@(([a - zA - Z0 - 9] + (\.|\-))+[a - zA - Z]{ 2,4})$/ gm", RegexOptions.IgnoreCase))
                 {
                     toast.LongAlert("Invalid email address."); return;
                 }
@@ -148,17 +155,18 @@ namespace HeartlandArtifact.ViewModels
                 {
                     toast.LongAlert("Please enter Password."); return;
                 }
-                if (Password.Trim().Length < 8)
+                //if (Password.Trim().Length < 8)
+                //{
+                //    toast.LongAlert("Password must be at least 8 characters, no more than 15 characters."); return;
+                //}
+                if (!Regex.IsMatch(Password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$", RegexOptions.None)|| Password.Trim().Length < 8)
                 {
-                    toast.LongAlert("Password must be at least 8 characters, no more than 15 characters."); return;
-                }
-                if (!Regex.IsMatch(Password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$", RegexOptions.None))
-                {
-                    toast.LongAlert("Password must include at least one uppercase letter, one lowercase letter, one numeric digit, one special character."); return;
+                   // toast.LongAlert("Password must include at least one uppercase letter, one lowercase letter, one numeric digit, one special character."); return;
+                    toast.LongAlert("Password must be between 8 to 15 characters, including uppercase, lowercase letters, numbers, and special characters."); return;
                 }
                 else
                 {
-                    IsBusy = true;
+                    IsWorking = true;
                     var loginDetails = new LoginModel()
                     {
                         UserName = Email.Trim(),
@@ -186,7 +194,7 @@ namespace HeartlandArtifact.ViewModels
                     {
                         toast.LongAlert(response.message);
                     }
-                    IsBusy = false;
+                    IsWorking = false;
                 }
             }
             catch (Exception e)

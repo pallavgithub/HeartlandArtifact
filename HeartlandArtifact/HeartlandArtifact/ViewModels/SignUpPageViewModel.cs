@@ -187,25 +187,25 @@ namespace HeartlandArtifact.ViewModels
             }
             if (string.IsNullOrEmpty(FirstName))
             {
-                Toast.LongAlert("FirstName is required."); IsValid = false; return;
+                Toast.LongAlert("First Name is required."); IsValid = false; return;
             }
             if (!Regex.IsMatch(FirstName.Trim(), @"^(?=(?:[^A-Za-z]*[A-Za-z]){3})(?![^\d~`?!^*¨ˆ;@=$%{}\[\]|\/<>#“.,]*[\d~`?!^*¨ˆ;@=$%{}\[\]|\/<>#“.,])\S+(?: \S+){0,2}$", RegexOptions.IgnoreCase))
             {
-                Toast.LongAlert("Full name is not valid."); IsValid = false; return;
+                Toast.LongAlert("First name is not valid."); IsValid = false; return;
             }
             if (string.IsNullOrEmpty(LastName))
             {
-                Toast.LongAlert("LastName is required."); IsValid = false; return;
+                Toast.LongAlert("Last Name is required."); IsValid = false; return;
             }
             if (!Regex.IsMatch(LastName.Trim(), @"^(?=(?:[^A-Za-z]*[A-Za-z]){3})(?![^\d~`?!^*¨ˆ;@=$%{}\[\]|\/<>#“.,]*[\d~`?!^*¨ˆ;@=$%{}\[\]|\/<>#“.,])\S+(?: \S+){0,2}$", RegexOptions.IgnoreCase))
             {
-                Toast.LongAlert("LastName is not valid."); IsValid = false; return;
+                Toast.LongAlert("Last Name is not valid."); IsValid = false; return;
             }
             if (string.IsNullOrEmpty(Email))
             {
                 Toast.LongAlert("Email is required."); IsValid = false; return;
             }
-            if (!Regex.IsMatch(Email.Trim(), @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase))
+            if (!Regex.IsMatch(Email.Trim(), @"/ ^((?:[a - zA - Z0 - 9] +) | (([a - zA - Z0 - 9] + (\.|\+|\-| _))+[a - zA - Z0 - 9] +))@(([a - zA - Z0 - 9] + (\.|\-))+[a - zA - Z]{ 2,4})$/ gm", RegexOptions.IgnoreCase))
             {
                 Toast.LongAlert("Invalid email address."); IsValid = false; return;
             }
@@ -213,13 +213,14 @@ namespace HeartlandArtifact.ViewModels
             {
                 Toast.LongAlert("Password is required."); IsValid = false; return;
             }
-            if (Password.Trim().Length < 8)
+            //if (Password.Trim().Length < 8)
+            //{
+            //    Toast.LongAlert("Password must be at least 8 characters, no more than 15 characters."); IsValid = false; return;
+            //}
+            if (!Regex.IsMatch(Password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$", RegexOptions.None)|| Password.Trim().Length < 8)
             {
-                Toast.LongAlert("Password must be at least 8 characters, no more than 15 characters."); IsValid = false; return;
-            }
-            if (!Regex.IsMatch(Password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$", RegexOptions.None))
-            {
-                Toast.LongAlert("Password must include at least one uppercase letter, one lowercase letter, one numeric digit, one special character."); IsValid = false; return;
+                //Toast.LongAlert("Password must include at least one uppercase letter, one lowercase letter, one numeric digit, one special character."); IsValid = false; return;
+                Toast.LongAlert("Password must be between 8 to 15 characters, including uppercase, lowercase letters, numbers, and special characters."); IsValid = false; return;
             }
             if (string.IsNullOrEmpty(ConfirmPassword))
             {

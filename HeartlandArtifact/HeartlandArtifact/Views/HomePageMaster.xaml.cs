@@ -16,6 +16,7 @@ namespace HeartlandArtifact.Views
     public partial class HomePageMaster : ContentPage
     {
         public ListView ListView;
+        public StackLayout Logout_Option;
 
         public HomePageMaster()
         {
@@ -23,6 +24,7 @@ namespace HeartlandArtifact.Views
 
             BindingContext = new HomePageMasterViewModel();
             ListView = MenuItemsListView;
+            Logout_Option = LogoutOption;
         }
 
         class HomePageMasterViewModel : INotifyPropertyChanged
@@ -50,10 +52,12 @@ namespace HeartlandArtifact.Views
             #endregion
         }
 
-        private void Logout_Tapped(object sender, EventArgs e)
+        private async void Logout_Tapped(object sender, EventArgs e)
         {
             Application.Current.Properties["IsLogedIn"] = false;
-            App.Current.MainPage = new SignInPage();
+            await Application.Current.SavePropertiesAsync();
+            App.Current.MainPage = new NavigationPage(new SignInPage());
+
         }
     }
 }

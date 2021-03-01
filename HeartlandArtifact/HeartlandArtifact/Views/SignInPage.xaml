@@ -10,81 +10,81 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
-        <StackLayout Margin="25,30,25,30" VerticalOptions="FillAndExpand">
-            <StackLayout VerticalOptions="FillAndExpand" Spacing="20">
-                <Label Text="Sign In" FontFamily="{StaticResource HelveticaRegular}" FontSize="30" TextColor="Black" HorizontalTextAlignment="Center"/>
-                <StackLayout Orientation="Horizontal" HeightRequest="80" HorizontalOptions="CenterAndExpand">
-                    <Grid>
-                        <Image Source="BlueCircle.png"/>
-                        <Image Source="facebook.png" Margin="30,22,30,30" />
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding FacebookLoginCommand}"/>
-                        </Grid.GestureRecognizers>
-                    </Grid>
-                    <Grid>
-                        <Image Source="GoogleCircle.png"/>
-                        <Image Source="GoogleIcon.png" Margin="30,22,30,30"/>
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding GoogleLoginCommand}"/>
-                        </Grid.GestureRecognizers>
-                    </Grid>
-                    <Grid>
-                        <Image Source="AppleCircle.png"/>
-                        <Image Source="apple.png" Margin="30,22,30,30"/>
-                    </Grid>
-                </StackLayout>
-                <StackLayout Spacing="0" Margin="0,20,0,0">
-                    <Label Text="Email" FontFamily="{StaticResource HelveticaRegular}" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                    <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
+            <StackLayout Margin="27,30,27,30" VerticalOptions="FillAndExpand">
+                <StackLayout VerticalOptions="FillAndExpand" Spacing="20">
+                    <Label Text="Sign In" FontFamily="{StaticResource HelveticaRegular}" FontSize="30" TextColor="Black" HorizontalTextAlignment="Center"/>
+                    <StackLayout Orientation="Horizontal" HeightRequest="80" HorizontalOptions="CenterAndExpand">
+                        <Grid>
+                            <Image Source="BlueCircle.png"/>
+                            <Image Source="facebook.png" Margin="30,22,30,30" />
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding FacebookLoginCommand}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                        <Grid>
+                            <Image Source="GoogleCircle.png"/>
+                            <Image Source="GoogleIcon.png" Margin="30,22,30,30"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoogleLoginCommand}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                        <Grid>
+                            <Image Source="AppleCircle.png"/>
+                            <Image Source="apple.png" Margin="30,22,30,30"/>
+                        </Grid>
+                    </StackLayout>
+                    <StackLayout Spacing="0" Margin="0,20,0,0">
+                        <Label Text="Email" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                        <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
-                        <custom:BorderLessEntry Text="{Binding Email}" 
+                            <custom:BorderLessEntry Text="{Binding Email}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
-                                          FontSize="14" TextColor="Black"/>
-                    </Frame>
-                </StackLayout>
-                <StackLayout Spacing="0">
-                    <Label Text="Password" FontFamily="{StaticResource HelveticaRegular}" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                    <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
+                                          FontSize="16" TextColor="Black"/>
+                        </Frame>
+                    </StackLayout>
+                    <StackLayout Spacing="0">
+                        <Label Text="Password" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                        <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
-                        <StackLayout Orientation="Horizontal">
-                            <custom:BorderLessEntry Text="{Binding Password}" IsPassword="True" x:Name="PasswordEntry" 
+                            <StackLayout Orientation="Horizontal">
+                                <custom:BorderLessEntry Text="{Binding Password}" IsPassword="True" x:Name="PasswordEntry" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
-                                          FontSize="14"/>
-                            <Grid>
-                                <Image Source="eyeOff.png" IsVisible="{Binding ShowPassword, Converter={StaticResource InverseBoolConverter}}">
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="ShowPassword_Tapped"/>
-                                    </Image.GestureRecognizers>
-                                </Image>
-                                <Image Source="eye.png" IsVisible="{Binding ShowPassword}">
-                                <Image.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="ShowPassword_Tapped"/>
-                                </Image.GestureRecognizers>
-                                </Image>
-                            </Grid>
-                        </StackLayout>
-                    </Frame>
-                </StackLayout>
-                <Button Text="Continue" FontFamily="{StaticResource HelveticaBold}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent" BorderColor="Black" BorderWidth="1" 
+                                          FontSize="16"/>
+                                <Grid>
+                                    <Image Source="eyeOff.png" IsVisible="{Binding ShowPassword, Converter={StaticResource InverseBoolConverter}}">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="ShowPassword_Tapped"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                    <Image Source="eye.png" IsVisible="{Binding ShowPassword}">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="ShowPassword_Tapped"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </Grid>
+                            </StackLayout>
+                        </Frame>
+                    </StackLayout>
+                    <Button Text="Continue" FontFamily="{StaticResource HelveticaBold}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent" BorderColor="Black" BorderWidth="1" 
                         CornerRadius="30" Command="{Binding ContinueCommand}"/>
-                <Label Text="Forgot Password" FontFamily="{StaticResource HelveticaRegular}" TextDecorations="Underline" TextColor="#823E21" FontSize="20" HorizontalTextAlignment="Center">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding GoToForgotPasswordPageCommand}"/>
-                    </Label.GestureRecognizers>
-                </Label>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-                    <Label Text="Don't have an existing account?" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="17" HorizontalTextAlignment="End"/>
-                    <Label Text="Sign-up" FontFamily="{StaticResource HelveticaRegular}" TextDecorations="Underline" TextColor="#823E21" FontSize="17" HorizontalTextAlignment="Start">
+                    <Label Text="Forgot Password" FontFamily="{StaticResource HelveticaRegular}" TextDecorations="Underline" TextColor="#823E21" FontSize="20" HorizontalTextAlignment="Center">
                         <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding GoToSignUpPageCommand}"/>
+                            <TapGestureRecognizer Command="{Binding GoToForgotPasswordPageCommand}"/>
                         </Label.GestureRecognizers>
                     </Label>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                        <Label Text="Don't have an existing account?" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="17" HorizontalTextAlignment="End"/>
+                        <Label Text="Sign Up" FontFamily="{StaticResource HelveticaRegular}" TextDecorations="Underline" TextColor="#823E21" FontSize="17" HorizontalTextAlignment="Start">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoToSignUpPageCommand}"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
                 </StackLayout>
             </StackLayout>
-        </StackLayout>
-            <Grid IsVisible="{Binding IsBusy}">
+            <Grid IsVisible="{Binding IsWorking}">
                 <ContentView BackgroundColor="LightGray" Opacity="0.67">
-                    <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" VerticalOptions="Center" HorizontalOptions="Center" Color="Black"/>
+                    <ActivityIndicator IsVisible="{Binding IsWorking}" IsRunning="{Binding IsWorking}" VerticalOptions="Center" HorizontalOptions="Center" Color="Black"/>
                 </ContentView>
             </Grid>
         </Grid>

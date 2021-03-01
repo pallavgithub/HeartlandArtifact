@@ -1,4 +1,5 @@
-﻿using HeartlandArtifact.ViewModels;
+﻿using HeartlandArtifact.Services.Contracts;
+using HeartlandArtifact.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,27 @@ namespace HeartlandArtifact.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HomePage : MasterDetailPage
     {
+        private readonly IGoogleManager _googleManager;
+        private readonly IFacebookManager _facebookManager;
         public HomePage()
         {
             InitializeComponent();
             MasterPage.ListView.ItemSelected += ListView_ItemSelected;
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.Tapped += Logout_Tapped;
+            MasterPage.Logout_Option.GestureRecognizers.Add(tapGestureRecognizer);
+            _facebookManager = DependencyService.Get<IFacebookManager>();
+            _googleManager = DependencyService.Get<IGoogleManager>();
+        }
+        private async void Logout_Tapped(object sender, EventArgs e)
+        {
+            IsPresented = false;
+            _facebookManager.Logout();
+            _googleManager.Logout();
+            Application.Current.Properties["IsLogedIn"] = false;
+            await Application.Current.SavePropertiesAsync();
+            //App.Current.MainPage = new NavigationPage(new SignInPage());
+            await (BindingContext as HomePageViewModel)._nav.NavigateAsync("/SignInPage");
         }
 
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

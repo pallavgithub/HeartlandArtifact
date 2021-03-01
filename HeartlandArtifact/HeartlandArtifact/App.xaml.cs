@@ -6,6 +6,7 @@ using Prism.Ioc;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
+using static HeartlandArtifact.Views.HomePageMaster;
 
 namespace HeartlandArtifact
 {
@@ -56,6 +57,7 @@ namespace HeartlandArtifact
             containerRegistry.RegisterForNavigation<EnterOtpPage, EnterOtpPageViewModel>();
             containerRegistry.RegisterForNavigation<ChangePasswordPage, ChangePasswordPageViewModel>();
             containerRegistry.RegisterForNavigation<HomePage, HomePageViewModel>();
+           // containerRegistry.RegisterForNavigation<HomePageMaster, HomePageMasterViewModel>();
             containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
         }
     }

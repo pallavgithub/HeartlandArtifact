@@ -19,16 +19,18 @@ namespace HeartlandArtifact.ViewModels
             get { return _homeIsVisible; }
             set { SetProperty(ref _homeIsVisible, value); }
         }
+        public INavigationService _nav;
         public DelegateCommand LogoutCommand { get; set; }
         public HomePageViewModel(INavigationService navigationService) : base(navigationService)
         {
+            _nav = navigationService;
             HomeIsVisible = true;
             LogoutCommand = new DelegateCommand(Logout);
         }
         public void Logout()
         {
             Application.Current.Properties["IsLogedIn"] = false;
-            App.Current.MainPage = new SignInPage();
+            Application.Current.MainPage = new SignInPage();
         }
     }
 }
