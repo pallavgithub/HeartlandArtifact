@@ -14,7 +14,13 @@
                 <ContentPage NavigationPage.HasNavigationBar="False" FlowDirection="LeftToRight">
                     <ContentPage.Content>
                         <StackLayout>
-                            <Grid Padding="20,10,20,20" HeightRequest="40" ColumnSpacing="15">
+                            <Grid HeightRequest="40" ColumnSpacing="15">
+                                  <Grid.Padding>
+<OnPlatform x:TypeArguments="Thickness">
+<On Platform="iOS" Value="20,50,20,20" />
+<On Platform="Android" Value="20,10,20,20" />
+</OnPlatform>
+</Grid.Padding>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="3*"/>
