@@ -41,8 +41,8 @@ namespace HeartlandArtifact.ViewModels
         public ViewModelBase(INavigationService navigationService)
         {
             NavigationService = navigationService;
-            //Connectivity.ConnectivityChanged += Internet_ConnectionChanged;
-            //IsNotConnected = Connectivity.NetworkAccess != NetworkAccess.Internet;
+            Connectivity.ConnectivityChanged += Internet_ConnectionChanged;
+            IsNotConnected = Connectivity.NetworkAccess != NetworkAccess.Internet;
         }
         //public ViewModelBase(IFacebookManager facebookManager, IGoogleManager googleManager, INavigationService navigationService)
         //{
