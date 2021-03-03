@@ -36,6 +36,8 @@ namespace HeartlandArtifact.Views
             //App.Current.MainPage = new NavigationPage(new SignInPage());
             await (BindingContext as HomePageViewModel)._nav.NavigateAsync("/SignInPage");
         }
+        protected override bool OnBackButtonPressed() => true;
+
 
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {

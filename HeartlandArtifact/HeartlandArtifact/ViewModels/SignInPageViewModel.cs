@@ -147,7 +147,7 @@ namespace HeartlandArtifact.ViewModels
                     toast.LongAlert("Please enter Email."); return;
                 }
                 //if (!Regex.IsMatch(Email.Trim(), @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase))
-                if (!Regex.IsMatch(Email.Trim(), @"/ ^((?:[a - zA - Z0 - 9] +) | (([a - zA - Z0 - 9] + (\.|\+|\-| _))+[a - zA - Z0 - 9] +))@(([a - zA - Z0 - 9] + (\.|\-))+[a - zA - Z]{ 2,4})$/ gm", RegexOptions.IgnoreCase))
+                if (!Regex.IsMatch(Email.Trim(), @"^((?:[a-zA-Z0-9]+)|(([a-zA-Z0-9]+(\.|\+|\-|_))+[a-zA-Z0-9]+))@(([a-zA-Z0-9]+(\.|\-))+[a-zA-Z]{2,4})$", RegexOptions.IgnoreCase))
                 {
                     toast.LongAlert("Invalid email address."); return;
                 }

@@ -72,8 +72,7 @@ namespace HeartlandArtifact.ViewModels
             NavigationService.GoBackAsync();
         }
         public async void SubmitButtonClicked()
-        {
-            IsBusy = true;
+        {            
             var Toast = DependencyService.Get<IMessage>();
             if (string.IsNullOrEmpty(Text1) || string.IsNullOrEmpty(Text2) || string.IsNullOrEmpty(Text3) || string.IsNullOrEmpty(Text4))
             {
@@ -98,6 +97,7 @@ namespace HeartlandArtifact.ViewModels
             {
                 try
                 {
+                    IsBusy = true;
                     string OTP = Text1 + Text2 + Text3 + Text4;
                     if (IsFromForgotPassword)
                     {
@@ -142,13 +142,14 @@ namespace HeartlandArtifact.ViewModels
                             App.SignUpDetails.Otp = string.Empty;
                         }
                     }
+                    IsBusy = false;
                 }
                 catch (Exception e)
                 {
 
                 }
             }
-            IsBusy = false;
+           
         }
         public async void ResendOtp()
         {

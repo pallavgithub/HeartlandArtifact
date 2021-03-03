@@ -121,25 +121,32 @@ namespace HeartlandArtifact.ViewModels
         }
         private void OnFacebookLoginComplete(FacebookUser facebookUser, string message)
         {
+            var toast = DependencyService.Get<IMessage>();
             if (facebookUser != null)
             {
                 FacebookUser = facebookUser;
-                IsLogedIn = true;
+                IsLogedIn = true; 
+                Application.Current.Properties["IsLogedIn"] = true;
+                NavigationService.NavigateAsync("HomePage");
             }
             else
             {
-                //_dialogService.DisplayAlertAsync("Error", message, "Ok");
+                toast.LongAlert(message);
             }
         }
         private void OnGoogleLoginComplete(GoogleUser googleUser, string message)
         {
+            var toast = DependencyService.Get<IMessage>();
             if (googleUser != null)
             {
                 GoogleUser = googleUser;
-                IsLogedIn = true;
+                IsLogedIn = true; 
+                Application.Current.Properties["IsLogedIn"] = true;
+                NavigationService.NavigateAsync("HomePage");
             }
             else
             {
+                toast.LongAlert(message);
                 //_dialogService.DisplayAlertAsync("Error", message, "Ok");
             }
         }
@@ -205,7 +212,7 @@ namespace HeartlandArtifact.ViewModels
             {
                 Toast.LongAlert("Email is required."); IsValid = false; return;
             }
-            if (!Regex.IsMatch(Email.Trim(), @"/ ^((?:[a - zA - Z0 - 9] +) | (([a - zA - Z0 - 9] + (\.|\+|\-| _))+[a - zA - Z0 - 9] +))@(([a - zA - Z0 - 9] + (\.|\-))+[a - zA - Z]{ 2,4})$/ gm", RegexOptions.IgnoreCase))
+            if (!Regex.IsMatch(Email.Trim(), @"^((?:[a-zA-Z0-9]+)|(([a-zA-Z0-9]+(\.|\+|\-|_))+[a-zA-Z0-9]+))@(([a-zA-Z0-9]+(\.|\-))+[a-zA-Z]{2,4})$", RegexOptions.IgnoreCase))
             {
                 Toast.LongAlert("Invalid email address."); IsValid = false; return;
             }

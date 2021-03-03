@@ -26,6 +26,7 @@ namespace HeartlandArtifact.Views
             ListView = MenuItemsListView;
             Logout_Option = LogoutOption;
         }
+        protected override bool OnBackButtonPressed() => true;
 
         class HomePageMasterViewModel : INotifyPropertyChanged
         {

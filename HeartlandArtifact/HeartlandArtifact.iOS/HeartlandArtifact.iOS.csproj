@@ -348,5 +348,23 @@
   <ItemGroup>
     <BundleResource Include="Resources\eyeOff.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Group.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Group%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Group%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Button%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Button%403x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

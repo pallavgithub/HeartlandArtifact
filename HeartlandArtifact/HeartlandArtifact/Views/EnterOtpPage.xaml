@@ -11,12 +11,14 @@
     <ContentPage.Content>
         <Grid>
             <StackLayout Margin="25,30,25,30" VerticalOptions="FillAndExpand">
-                <StackLayout Spacing="30">
-                    <Label Text="&lt; BACK" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" TextTransform="Uppercase" FontSize="16">
-                        <Label.GestureRecognizers>
+                <StackLayout Spacing="30">                   
+                     <StackLayout Orientation="Horizontal">
+                        <Label Text="&lt;" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Start" VerticalOptions="Start" TextColor="Black" TextTransform="Uppercase" FontSize="16"/>
+                        <Label Text="BACK" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Center" TextColor="Black" TextTransform="Uppercase" FontSize="18"/>
+                        <StackLayout.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
-                        </Label.GestureRecognizers>
-                    </Label>
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
                     <Label Text="Enter Verification Code" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" FontSize="30" TextColor="Black"/>
                     <Grid>
                         <Label FontFamily="{StaticResource HelveticaRegular}" IsVisible="{Binding IsFromForgotPassword, Converter={StaticResource InverseBoolConverter}}" Text="We've sent a One Time Password to your registered email. Please enter the code to verify your email for your profile." HorizontalTextAlignment="Center" FontSize="12" TextColor="Black"/>
@@ -36,8 +38,15 @@
                         </Label>
                         <Label Text="{Binding TimerText }" FontFamily="{StaticResource HelveticaRegular}" HorizontalOptions="CenterAndExpand" FontSize="20" TextColor="#823E21" />
                     </StackLayout>
-                    <Button Text="Submit" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" TextTransform="None" BackgroundColor="Transparent" BorderColor="Black" BorderWidth="1" 
-                        CornerRadius="30" FontSize="20" Command="{Binding SubmitBtnCommand}"/>
+                    <!--<Button Text="Submit" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" TextTransform="None" BackgroundColor="Transparent" BorderColor="Black" BorderWidth="1" 
+                        CornerRadius="30" FontSize="20" Command="{Binding SubmitBtnCommand}"/>-->
+                    <Grid HorizontalOptions="CenterAndExpand">
+                        <Image Source="Button.png"/>
+                        <Label Text="Submit" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,3" FontFamily="{StaticResource HelveticaBold}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent"/>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SubmitBtnCommand}"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
                 </StackLayout>
             </StackLayout>
             <Grid IsVisible="{Binding IsBusy}">
