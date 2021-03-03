@@ -10,7 +10,13 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
-            <StackLayout Margin="27,30,27,30" VerticalOptions="FillAndExpand">
+            <StackLayout VerticalOptions="FillAndExpand">
+                <StackLayout.Margin>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS" Value="25,50,25,30" />
+                        <On Platform="Android" Value="25,30,25,30" />
+                    </OnPlatform>
+                </StackLayout.Margin>
                 <StackLayout VerticalOptions="FillAndExpand" Spacing="20">
                     <Label Text="Sign In" FontFamily="{StaticResource HelveticaRegular}" FontSize="30" TextColor="Black" HorizontalTextAlignment="Center"/>
                     <StackLayout Orientation="Horizontal" HeightRequest="80" HorizontalOptions="CenterAndExpand">
@@ -34,22 +40,22 @@
                         </Grid>
                     </StackLayout>
                     <StackLayout Spacing="0" Margin="0,20,0,0">
-                        <Label Text="Email" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                        <Label Text="Email" FontFamily="{StaticResource HelveticaRegular}" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
                         <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
                             <custom:BorderLessEntry Text="{Binding Email}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
-                                          FontSize="16" TextColor="Black"/>
+                                          FontSize="14" TextColor="Black"/>
                         </Frame>
                     </StackLayout>
                     <StackLayout Spacing="0">
-                        <Label Text="Password" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                        <Label Text="Password" FontFamily="{StaticResource HelveticaRegular}" FontSize="12" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
                         <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
                             <StackLayout Orientation="Horizontal">
                                 <custom:BorderLessEntry Text="{Binding Password}" IsPassword="True" x:Name="PasswordEntry" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
-                                          FontSize="16"/>
+                                          FontSize="14"/>
                                 <Grid>
                                     <Image Source="eyeOff.png" IsVisible="{Binding ShowPassword, Converter={StaticResource InverseBoolConverter}}">
                                         <Image.GestureRecognizers>
@@ -65,8 +71,6 @@
                             </StackLayout>
                         </Frame>
                     </StackLayout>
-                    <!--<Button Text="Continue" FontFamily="{StaticResource HelveticaBold}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent" BorderColor="Black" BorderWidth="1" 
-                        CornerRadius="30" Command="{Binding ContinueCommand}"/>-->
                     <Grid HorizontalOptions="CenterAndExpand">
                         <Image Source="Button.png"/>
                         <Label Text="Continue" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,3" FontFamily="{StaticResource HelveticaBold}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent"/>
@@ -81,7 +85,7 @@
                     </Label>
                     <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
                         <Label Text="Don't have an existing account?" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="17" HorizontalTextAlignment="End"/>
-                        <Label Text="Sign Up" FontFamily="{StaticResource HelveticaRegular}" TextDecorations="Underline" TextColor="#823E21" FontSize="17" HorizontalTextAlignment="Start">
+                        <Label Text="Sign-up" FontFamily="{StaticResource HelveticaRegular}" TextDecorations="Underline" TextColor="#823E21" FontSize="17" HorizontalTextAlignment="Start">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding GoToSignUpPageCommand}"/>
                             </Label.GestureRecognizers>
@@ -89,9 +93,10 @@
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
+
             <Grid IsVisible="{Binding IsWorking}">
                 <ContentView BackgroundColor="LightGray" Opacity="0.67">
-                    <ActivityIndicator IsVisible="{Binding IsWorking}" IsRunning="{Binding IsWorking}" VerticalOptions="Center" HorizontalOptions="Center" Color="Black"/>
+                    <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" VerticalOptions="Center" HorizontalOptions="Center" Color="Black"/>
                 </ContentView>
             </Grid>
         </Grid>
