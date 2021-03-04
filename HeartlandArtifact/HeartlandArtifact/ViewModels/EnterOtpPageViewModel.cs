@@ -133,7 +133,7 @@ namespace HeartlandArtifact.ViewModels
                                 IsActive = true
                             };
                             Toast.LongAlert("Signup Successful.");
-                            await NavigationService.NavigateAsync("HomePage");
+                            await NavigationService.NavigateAsync("/HomePage");
                             App.SignUpDetails.Otp = string.Empty;
                         }
                         else

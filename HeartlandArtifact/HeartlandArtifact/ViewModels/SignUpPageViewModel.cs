@@ -127,7 +127,7 @@ namespace HeartlandArtifact.ViewModels
                 FacebookUser = facebookUser;
                 IsLogedIn = true; 
                 Application.Current.Properties["IsLogedIn"] = true;
-                NavigationService.NavigateAsync("HomePage");
+                NavigationService.NavigateAsync("/HomePage");
             }
             else
             {
@@ -142,7 +142,7 @@ namespace HeartlandArtifact.ViewModels
                 GoogleUser = googleUser;
                 IsLogedIn = true; 
                 Application.Current.Properties["IsLogedIn"] = true;
-                NavigationService.NavigateAsync("HomePage");
+                NavigationService.NavigateAsync("/HomePage");
             }
             else
             {

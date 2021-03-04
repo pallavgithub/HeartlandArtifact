@@ -113,7 +113,7 @@ namespace HeartlandArtifact.ViewModels
                 FacebookUser = facebookUser;
                 IsLogedIn = true;
                 Application.Current.Properties["IsLogedIn"] = true;
-                NavigationService.NavigateAsync("HomePage");
+                NavigationService.NavigateAsync("/HomePage");
             }
             else
             {
@@ -129,7 +129,7 @@ namespace HeartlandArtifact.ViewModels
                 GoogleUser = googleUser;
                 IsLogedIn = true;
                 Application.Current.Properties["IsLogedIn"] = true;
-                NavigationService.NavigateAsync("HomePage");
+                NavigationService.NavigateAsync("/HomePage");
             }
             else
             {
@@ -187,7 +187,7 @@ namespace HeartlandArtifact.ViewModels
                             // Application.Current.Properties["IsLoogedIn"] = true;
                             // await Application.Current.SavePropertiesAsync();
                             // if(App.userModel!=null)
-                            await NavigationService.NavigateAsync("HomePage");
+                            await NavigationService.NavigateAsync("/HomePage");
                         }
                     }
                     else

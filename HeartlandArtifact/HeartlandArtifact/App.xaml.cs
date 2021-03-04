@@ -3,6 +3,7 @@ using HeartlandArtifact.ViewModels;
 using HeartlandArtifact.Views;
 using Prism;
 using Prism.Ioc;
+using Prism.Mvvm;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
@@ -30,7 +31,7 @@ namespace HeartlandArtifact
                 {
                     if ((bool)Application.Current.Properties["IsLogedIn"] == true)
                     {
-                        await NavigationService.NavigateAsync("NavigationPage/HomePage");
+                        await NavigationService.NavigateAsync("/HomePage");
                     }
                     else
                     {
@@ -58,6 +59,8 @@ namespace HeartlandArtifact
             containerRegistry.RegisterForNavigation<HomePage, HomePageViewModel>();
            // containerRegistry.RegisterForNavigation<HomePageMaster, HomePageMasterViewModel>();
             containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
+            containerRegistry.RegisterForNavigation<MyCollectionPage, MainPageViewModel>();
+            ViewModelLocationProvider.Register<MyCollectionUserControl, HomePageViewModel>();
         }
     }
 }

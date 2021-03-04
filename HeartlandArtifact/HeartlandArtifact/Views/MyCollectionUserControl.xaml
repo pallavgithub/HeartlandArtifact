@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HeartlandArtifact.Views.MyCollectionUserControl"
+             NavigationPage.HasNavigationBar="False">
+  <ContentView.Content>
+      <StackLayout Padding="30,0,30,30">
+          <Label Text="My Collections" HorizontalTextAlignment="Center" FontSize="22" TextColor="Black" FontFamily="{StaticResource HelveticaBold}"/>
+            <Grid ColumnSpacing="0" HeightRequest="120">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                    <Label Text="&lt;" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Center" Margin="0,0,0,3" TextColor="Black" TextTransform="Uppercase" FontSize="14"/>
+                    <Label Text="BACK" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Center" TextColor="Black" TextTransform="Uppercase" FontSize="16"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoBackFromCollectionsCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <Grid Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="60">
+                    <Image Source="Button.png"/>
+                    <Label Text="Edit Collections" VerticalOptions="Center" FontSize="16" HorizontalOptions="Center" Margin="0,0,0,3" TextColor="Black" TextTransform="Uppercase"/>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding EditCollectionCommand}"/>
+                    </Grid.GestureRecognizers>             
+                </Grid>
+            </Grid>
+            <ListView ItemsSource="{Binding AllCollections}" SelectionMode="None" SeparatorVisibility="None" HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout HeightRequest="50" Margin="0,5,0,5">
+                                <Frame Padding="15" BackgroundColor="Transparent" OutlineColor="LightGray" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                    <Grid VerticalOptions="CenterAndExpand">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="30"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Text="{Binding CollectionName}" TextColor="Black" FontFamily="{StaticResource HelveticaBold}" FontSize="16"/>
+                                        <Image Source="Arrow.png" Grid.Column="1" HorizontalOptions="EndAndExpand"/>
+                                    </Grid>
+                                </Frame>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Grid HorizontalOptions="CenterAndExpand" HeightRequest="100" VerticalOptions="End">
+                <Image Source="Button.png"/>
+                <Label Text="+ Add Collections" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,3" FontFamily="{StaticResource HelveticaRegular}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent"/>
+                
+            </Grid>
+        </StackLayout>
+  </ContentView.Content>
+</ContentView>

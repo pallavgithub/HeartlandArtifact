@@ -33,12 +33,9 @@ namespace HeartlandArtifact.Views
             _googleManager.Logout();
             Application.Current.Properties["IsLogedIn"] = false;
             await Application.Current.SavePropertiesAsync();
-            //App.Current.MainPage = new NavigationPage(new SignInPage());
             await (BindingContext as HomePageViewModel)._nav.NavigateAsync("/SignInPage");
         }
         protected override bool OnBackButtonPressed() => true;
-
-
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var item = e.SelectedItem as HomePageMasterMenuItem;
@@ -51,13 +48,13 @@ namespace HeartlandArtifact.Views
             // Detail = new NavigationPage(page);
             if(item.Title=="Home")
             {
-                (BindingContext as HomePageViewModel).SoldItemsIsVisible = false;
+                //(BindingContext as HomePageViewModel).SoldItemsIsVisible = false;
                 (BindingContext as HomePageViewModel).HomeIsVisible = true;
             }
             if (item.Title == "Sold Items")
             {
-                (BindingContext as HomePageViewModel).HomeIsVisible = false;
-                (BindingContext as HomePageViewModel).SoldItemsIsVisible = true;
+                //(BindingContext as HomePageViewModel).HomeIsVisible = false;
+                //(BindingContext as HomePageViewModel).SoldItemsIsVisible = true;
             }
             IsPresented = false;
 

@@ -10,9 +10,11 @@ namespace HeartlandArtifact.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
+        public INavigationService nav;
         public MainPageViewModel(INavigationService navigationService)
             : base(navigationService)
         {
+            nav = navigationService;
             Title = "Main Page";
         }
     }
