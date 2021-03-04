@@ -108,14 +108,14 @@
                         </StackLayout>
                         <!--<Button Text="Submit" FontFamily="{StaticResource HelveticaBold}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent" BorderColor="Black" BorderWidth="1" 
                         CornerRadius="30" Command="{Binding SubmitBtnCommand}"/>-->
-                        <Grid HorizontalOptions="CenterAndExpand">
+                        <Grid  Margin="15,0,15,0" HorizontalOptions="CenterAndExpand">
                             <Image Source="Button.png"/>
                             <Label Text="Submit" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,3" FontFamily="{StaticResource HelveticaBold}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent"/>
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding SubmitBtnCommand}"/>
                             </Grid.GestureRecognizers>
                         </Grid>
-                        <Label Text="Sign up using" FontFamily="{StaticResource HelveticaRegular}" FontSize="14" HorizontalTextAlignment="Center" TextColor="Black"/>
+                        <Label Text="Sign up using" FontFamily="{StaticResource HelveticaRegular}" FontSize="18" HorizontalTextAlignment="Center" TextColor="Black"/>
                         <StackLayout Orientation="Horizontal" HeightRequest="80" HorizontalOptions="CenterAndExpand">
                             <Grid>
                                 <Image Source="BlueCircle.png"/>
@@ -137,8 +137,8 @@
                             </Grid>
                         </StackLayout>
                         <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-                            <Label Text="Have an existing account?" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" HorizontalTextAlignment="End" FontSize="14"/>
-                            <Label Text="Log In" FontFamily="{StaticResource HelveticaRegular}" TextColor="#823E21" HorizontalTextAlignment="Start" TextDecorations="Underline" FontSize="14">
+                            <Label Text="Have an existing account?" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" HorizontalTextAlignment="End" FontSize="17"/>
+                            <Label Text="Log In" FontFamily="{StaticResource HelveticaRegular}" TextColor="#823E21" HorizontalTextAlignment="Start" TextDecorations="Underline" FontSize="17">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding GoBackToSignInPage}"/>
                                 </Label.GestureRecognizers>

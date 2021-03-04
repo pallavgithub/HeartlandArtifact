@@ -46,7 +46,7 @@
                     </StackLayout>
                     <!--<Button Text="Submit" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" TextTransform="None" BackgroundColor="Transparent" BorderColor="Black" BorderWidth="1" 
                         CornerRadius="30" FontSize="20" Command="{Binding SubmitBtnCommand}"/>-->
-                    <Grid HorizontalOptions="CenterAndExpand">
+                    <Grid  Margin="15,0,15,0" HorizontalOptions="CenterAndExpand">
                         <Image Source="Button.png"/>
                         <Label Text="Submit" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,3" FontFamily="{StaticResource HelveticaBold}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent"/>
                         <Grid.GestureRecognizers>

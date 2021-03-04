@@ -56,6 +56,10 @@ namespace HeartlandArtifact.ViewModels
                             await NavigationService.NavigateAsync("EnterOtpPage", navigationParams);
                         }
                     }
+                    else
+                    {
+                        Toast.LongAlert(response.message);
+                    }
                     IsBusy = false;
                 }
             }

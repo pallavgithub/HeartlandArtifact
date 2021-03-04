@@ -61,10 +61,19 @@ namespace HeartlandArtifact.ViewModels
         }
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
-            IsFromForgotPassword = (bool)parameters["FromForgetPassword"];
-            if (IsFromForgotPassword)
+            //IsFromForgotPassword = (bool)parameters["FromForgetPassword"];
+            if (parameters.ContainsKey("FromForgetPassword"))
             {
-                Email=(string)parameters["Email_Id"];
+                IsFromForgotPassword = (bool)parameters["FromForgetPassword"];
+                if (IsFromForgotPassword)
+                {
+                    Email = (string)parameters["Email_Id"];
+                }
+            }
+            else if (parameters.ContainsKey("FromResetPassword"))
+            {
+                if ((bool)parameters["FromResetPassword"])
+                    NavigationService.GoBackAsync();
             }
         }
         public void GoBack()
@@ -72,7 +81,7 @@ namespace HeartlandArtifact.ViewModels
             NavigationService.GoBackAsync();
         }
         public async void SubmitButtonClicked()
-        {            
+        {
             var Toast = DependencyService.Get<IMessage>();
             if (string.IsNullOrEmpty(Text1) || string.IsNullOrEmpty(Text2) || string.IsNullOrEmpty(Text3) || string.IsNullOrEmpty(Text4))
             {
@@ -106,8 +115,10 @@ namespace HeartlandArtifact.ViewModels
                         {
                             if (response.status == "Success")
                             {
-                                await NavigationService.NavigateAsync("ChangePasswordPage");
-                            }                           
+                                var navigationParams = new NavigationParameters();
+                                navigationParams.Add("EmailId", Email);                                
+                                await NavigationService.NavigateAsync("ChangePasswordPage", navigationParams);
+                            }
                         }
                         else
                         {
@@ -149,7 +160,7 @@ namespace HeartlandArtifact.ViewModels
 
                 }
             }
-           
+
         }
         public async void ResendOtp()
         {

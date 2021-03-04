@@ -161,6 +161,7 @@ namespace HeartlandArtifact.ViewModels
                 ValidateForm();
                 if (IsValid)
                 {
+                    var Toast = DependencyService.Get<IMessage>();
                     IsBusy = true;
                     App.SignUpDetails = new UserModel()
                     {
@@ -175,6 +176,10 @@ namespace HeartlandArtifact.ViewModels
                         var navigationParams = new NavigationParameters();
                         navigationParams.Add("FromForgetPassword", false);
                         await NavigationService.NavigateAsync("EnterOtpPage", navigationParams);
+                    }
+                    else
+                    {
+                        Toast.LongAlert(response.message);
                     }
                     IsBusy = false;
                 }
