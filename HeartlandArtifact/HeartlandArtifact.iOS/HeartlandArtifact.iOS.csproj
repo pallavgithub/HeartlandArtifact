@@ -375,5 +375,32 @@
   <ItemGroup>
     <BundleResource Include="Resources\Arrow%402x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Cross.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Cross%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Cross%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Trash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Trash%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Trash%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Pen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Pen%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Pen%403x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

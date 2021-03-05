@@ -64,5 +64,10 @@ namespace HeartlandArtifact.Views
         {
             IsPresented = true;
         }
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+
+        }
     }
 }

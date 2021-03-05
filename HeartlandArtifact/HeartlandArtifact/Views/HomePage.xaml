@@ -2,8 +2,8 @@
 <MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HeartlandArtifact.Views.HomePage"
-             xmlns:pages="clr-namespace:HeartlandArtifact.Views"
-             FlowDirection="RightToLeft"
+             xmlns:pages="clr-namespace:HeartlandArtifact.Views" xmlns:custom="clr-namespace:HeartlandArtifact.CustomRenderers"
+                  FlowDirection="RightToLeft"
              NavigationPage.HasNavigationBar="False">
     <MasterDetailPage.Master>
         <pages:HomePageMaster x:Name="MasterPage"/>
@@ -13,6 +13,7 @@
             <x:Arguments>
                 <ContentPage NavigationPage.HasNavigationBar="False" FlowDirection="LeftToRight">
                     <ContentPage.Content>
+                        <Grid>
                         <StackLayout>
                             <Grid HeightRequest="40" ColumnSpacing="15">
                                 <Grid.Padding>
@@ -42,6 +43,81 @@
                                 <pages:SoldItemsUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding SoldItemsIsVisible}"/>
                             </Grid>
                         </StackLayout>
+                            <Grid IsVisible="{Binding AddCollectionPopupIsVisible}" x:Name="AddCollectionPopup">
+                                <ContentView BackgroundColor="LightGray" Opacity="0.7"/>
+                                <StackLayout BackgroundColor="White" Padding="15" Margin="20,0,20,0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                                    <Image HorizontalOptions="End" Source="Cross.png" HeightRequest="20" WidthRequest="20">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding CrossButtonCommand}"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                    <Label Text="Add New Collection" FontSize="22" TextColor="Black" HorizontalTextAlignment="Center" FontFamily="{StaticResource HelveticaRegular}"/>
+                                    <Frame Margin="2,5,2,8" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="25"
+                           HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
+                                        <custom:BorderLessEntry Text="{Binding NewCollectionName}" 
+                                          HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                                          FontSize="16" TextColor="Black"/>
+                                    </Frame>
+                                    <Grid>
+                                        <Image Source="Button.png" WidthRequest="210"/>
+                                        <Label Text="Confirm" FontSize="16" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,0,0,3"/>
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding ConfirmButtonCommand}"/>
+                                        </Grid.GestureRecognizers>
+                                    </Grid>
+                                </StackLayout> 
+                            </Grid>
+                            <Grid IsVisible="{Binding EditCollectionPopupIsVisible}" x:Name="EditCollectionPopup">
+                                <ContentView BackgroundColor="LightGray" Opacity="0.7"/>
+                                <StackLayout BackgroundColor="White" Padding="15" Margin="20,0,20,0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                                    <Label Text="Edit Collection" FontSize="22" TextColor="Black" HorizontalTextAlignment="Center" FontFamily="{StaticResource HelveticaRegular}"/>
+                                    <Frame Margin="2,5,2,8" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="25"
+                           HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
+                                        <custom:BorderLessEntry Text="{Binding NewCollectionName}" 
+                                          HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                                          FontSize="16" TextColor="Black"/>
+                                    </Frame>
+                                    <StackLayout Orientation="Horizontal">
+                                    <Grid>
+                                        <Image Source="Button.png" WidthRequest="150"/>
+                                        <Label Text="Save" FontSize="16" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,0,0,3"/>
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SaveButtonCommand}"/>
+                                        </Grid.GestureRecognizers>
+                                    </Grid>
+                                        <Grid>
+                                            <Image Source="Button.png" WidthRequest="150"/>
+                                            <Label Text="Cancel" FontSize="16" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,0,0,3"/>
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding CancelButtonCommand}"/>
+                                            </Grid.GestureRecognizers>
+                                        </Grid>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Grid>
+                            <Grid IsVisible="{Binding DeleteCollectionPopupIsVisible}" x:Name="DeleteCollectionPopup">
+                                <ContentView BackgroundColor="LightGray" Opacity="0.7"/>
+                                <StackLayout BackgroundColor="White" Padding="15" Spacing="30" Margin="20,0,20,0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                                    <Label Text="Are you sure you want to delete this collection?" FontSize="20" TextColor="Black" HorizontalTextAlignment="Center" FontFamily="{StaticResource HelveticaRegular}"/>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Grid>
+                                            <Image Source="Button.png" WidthRequest="150"/>
+                                            <Label Text="No,Don't Delete" FontSize="16" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,0,0,3"/>
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding CancelDeleteButtonCommand}"/>
+                                            </Grid.GestureRecognizers>
+                                        </Grid>
+                                        <Grid>
+                                            <Image Source="Button.png" WidthRequest="150"/>
+                                            <Label Text="Yes, Delete" FontSize="16" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,0,0,3"/>
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding DeleteCollectionCommand}"/>
+                                            </Grid.GestureRecognizers>
+                                        </Grid>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Grid>
+                        </Grid>
                     </ContentPage.Content>
                 </ContentPage>
                 <!--<pages:HomePageDetail>-->
