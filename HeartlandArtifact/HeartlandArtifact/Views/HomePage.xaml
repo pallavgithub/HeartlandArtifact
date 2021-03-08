@@ -117,6 +117,11 @@
                                     </StackLayout>
                                 </StackLayout>
                             </Grid>
+                            <Grid IsVisible="{Binding IsBusy}">
+                                <ContentView BackgroundColor="LightGray" Opacity="0.7">
+                                    <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" HorizontalOptions="Center" VerticalOptions="Center" Color="Black"/>
+                                </ContentView>
+                            </Grid>
                         </Grid>
                     </ContentPage.Content>
                 </ContentPage>
