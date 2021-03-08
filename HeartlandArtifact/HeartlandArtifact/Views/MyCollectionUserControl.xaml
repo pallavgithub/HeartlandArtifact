@@ -55,12 +55,12 @@
                                         </Image>
                                     </StackLayout>
                                     <Frame Grid.Column="1" Padding="15" BackgroundColor="Transparent" OutlineColor="LightGray" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                        <Grid VerticalOptions="CenterAndExpand">
+                                        <Grid VerticalOptions="FillAndExpand">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="30"/>
                                             </Grid.ColumnDefinitions>
-                                            <Label Text="{Binding CollectionName}" TextColor="Black" FontFamily="{StaticResource HelveticaBold}" FontSize="16"/>
+                                            <Label Text="{Binding CollectionName}" TextColor="Black" Margin="0,-2,0,0" FontFamily="{StaticResource HelveticaBold}" FontSize="16"/>
                                             <Image Source="Arrow.png" Grid.Column="1" HorizontalOptions="EndAndExpand"/>
                                         </Grid>
                                     </Frame>

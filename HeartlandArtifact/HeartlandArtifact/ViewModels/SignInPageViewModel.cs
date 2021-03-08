@@ -159,9 +159,9 @@ namespace HeartlandArtifact.ViewModels
                 //{
                 //    toast.LongAlert("Password must be at least 8 characters, no more than 15 characters."); return;
                 //}
-                if (!Regex.IsMatch(Password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$", RegexOptions.None)|| Password.Trim().Length < 8)
+                if (!Regex.IsMatch(Password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$", RegexOptions.None) || Password.Trim().Length < 8)
                 {
-                   // toast.LongAlert("Password must include at least one uppercase letter, one lowercase letter, one numeric digit, one special character."); return;
+                    // toast.LongAlert("Password must include at least one uppercase letter, one lowercase letter, one numeric digit, one special character."); return;
                     toast.LongAlert("Password must be between 8 to 15 characters, including uppercase, lowercase letters, numbers, and special characters."); return;
                 }
                 else
@@ -179,7 +179,7 @@ namespace HeartlandArtifact.ViewModels
                         {
                             toast.LongAlert("Password does not match");
                         }
-                        else
+                        else if (response.status.ToLower() == "success")
                         {
                             Application.Current.Properties["IsLogedIn"] = true;
                             await Application.Current.SavePropertiesAsync();
@@ -188,6 +188,10 @@ namespace HeartlandArtifact.ViewModels
                             // await Application.Current.SavePropertiesAsync();
                             // if(App.userModel!=null)
                             await NavigationService.NavigateAsync("/HomePage");
+                        }
+                        else
+                        {
+                            toast.LongAlert(response.message);
                         }
                     }
                     else

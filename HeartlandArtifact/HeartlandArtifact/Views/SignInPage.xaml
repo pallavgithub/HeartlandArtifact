@@ -78,7 +78,7 @@
                             <TapGestureRecognizer Command="{Binding ContinueCommand}"/>
                         </Grid.GestureRecognizers>
                     </Grid>
-                    <Label Text="Forgot Password" FontFamily="{StaticResource HelveticaRegular}" TextDecorations="Underline" TextColor="#823E21" FontSize="20" HorizontalTextAlignment="Center">
+                    <Label Text="Forgot Password" HorizontalOptions="Center" FontFamily="{StaticResource HelveticaRegular}" TextDecorations="Underline" TextColor="#823E21" FontSize="20" HorizontalTextAlignment="Center">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding GoToForgotPasswordPageCommand}"/>
                         </Label.GestureRecognizers>
