@@ -14,35 +14,35 @@
                 <ContentPage NavigationPage.HasNavigationBar="False" FlowDirection="LeftToRight">
                     <ContentPage.Content>
                         <Grid>
-                        <StackLayout>
-                            <Grid HeightRequest="40" ColumnSpacing="15">
-                                <Grid.Padding>
-                                    <OnPlatform x:TypeArguments="Thickness">
-                                        <On Platform="iOS" Value="20,50,20,20" />
-                                        <On Platform="Android" Value="20,10,20,20" />
-                                    </OnPlatform>
-                                </Grid.Padding>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="3*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Source="ProfileIcon.png" Grid.Column="0" HeightRequest="40" WidthRequest="40"/>
-                                <Label Text="Hi, Tucker" FontFamily="{StaticResource HelveticaRegular}" Grid.Column="1" VerticalOptions="CenterAndExpand" TextColor="Black" FontSize="20"/>
-                                <Image Source="BellIcon.png" Grid.Column="2" HeightRequest="30" WidthRequest="20"/>
-                                <Image Source="MenuIcon.png" Grid.Column="3" HeightRequest="20" WidthRequest="30">
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="Menu_Tapped"/>
-                                    </Image.GestureRecognizers>
-                                </Image>
-                            </Grid>
-                            <Grid VerticalOptions="FillAndExpand">
-                                <pages:HomeUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding HomeIsVisible}"/>
-                                <pages:MyCollectionUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding MyCollectionVisible}"/>
-                                <pages:SoldItemsUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding SoldItemsIsVisible}"/>
-                            </Grid>
-                        </StackLayout>
+                            <StackLayout>
+                                <Grid HeightRequest="40" ColumnSpacing="15">
+                                    <Grid.Padding>
+                                        <OnPlatform x:TypeArguments="Thickness">
+                                            <On Platform="iOS" Value="20,50,20,20" />
+                                            <On Platform="Android" Value="20,10,20,20" />
+                                        </OnPlatform>
+                                    </Grid.Padding>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="ProfileIcon.png" Grid.Column="0" HeightRequest="40" WidthRequest="40"/>
+                                    <Label Text="Hi, Tucker" FontFamily="{StaticResource HelveticaRegular}" Grid.Column="1" VerticalOptions="CenterAndExpand" TextColor="Black" FontSize="20"/>
+                                    <Image Source="BellIcon.png" Grid.Column="2" HeightRequest="30" WidthRequest="20"/>
+                                    <Image Source="MenuIcon.png" Grid.Column="3" HeightRequest="20" WidthRequest="30">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="Menu_Tapped"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </Grid>
+                                <Grid VerticalOptions="FillAndExpand">
+                                    <pages:HomeUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding HomeIsVisible}"/>
+                                    <pages:MyCollectionUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding MyCollectionVisible}"/>
+                                    <pages:SoldItemsUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding SoldItemsIsVisible}"/>
+                                </Grid>
+                            </StackLayout>
                             <Grid IsVisible="{Binding AddCollectionPopupIsVisible}" x:Name="AddCollectionPopup">
                                 <ContentView BackgroundColor="LightGray" Opacity="0.7"/>
                                 <StackLayout BackgroundColor="White" Padding="15" Margin="20,0,20,0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
@@ -65,7 +65,7 @@
                                             <TapGestureRecognizer Command="{Binding ConfirmButtonCommand}"/>
                                         </Grid.GestureRecognizers>
                                     </Grid>
-                                </StackLayout> 
+                                </StackLayout>
                             </Grid>
                             <Grid IsVisible="{Binding EditCollectionPopupIsVisible}" x:Name="EditCollectionPopup">
                                 <ContentView BackgroundColor="LightGray" Opacity="0.7"/>
@@ -78,13 +78,13 @@
                                           FontSize="16" TextColor="Black"/>
                                     </Frame>
                                     <StackLayout Orientation="Horizontal">
-                                    <Grid>
-                                        <Image Source="Button.png" WidthRequest="150"/>
-                                        <Label Text="Save" FontSize="16" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,0,0,3"/>
-                                        <Grid.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding SaveButtonCommand}"/>
-                                        </Grid.GestureRecognizers>
-                                    </Grid>
+                                        <Grid>
+                                            <Image Source="Button.png" WidthRequest="150"/>
+                                            <Label Text="Save" FontSize="16" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,0,0,3"/>
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding SaveButtonCommand}"/>
+                                            </Grid.GestureRecognizers>
+                                        </Grid>
                                         <Grid>
                                             <Image Source="Button.png" WidthRequest="150"/>
                                             <Label Text="Cancel" FontSize="16" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,0,0,3"/>

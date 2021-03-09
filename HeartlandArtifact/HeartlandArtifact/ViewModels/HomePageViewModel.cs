@@ -1,4 +1,5 @@
 ﻿using HeartlandArtifact.Helpers;
+using HeartlandArtifact.Interfaces;
 using HeartlandArtifact.Models;
 using HeartlandArtifact.Views;
 using Prism.Commands;
@@ -59,6 +60,12 @@ namespace HeartlandArtifact.ViewModels
         {
             get { return _addCollectionPopupIsVisible; }
             set { SetProperty(ref _addCollectionPopupIsVisible, value); }
+        }
+        private bool _notFoundLblIsVisible;
+        public bool NotFoundLblIsVisible
+        {
+            get { return _notFoundLblIsVisible; }
+            set { SetProperty(ref _notFoundLblIsVisible, value); }
         }
         private ObservableCollection<CollectionModel> _allCollections;
         public ObservableCollection<CollectionModel> AllCollections
@@ -121,24 +128,33 @@ namespace HeartlandArtifact.ViewModels
         }
         public async void UpdateCollectionName()
         {
-            IsBusy = true;
-            var collection = new CollectionModel()
+            var Toast = DependencyService.Get<IMessage>();
+            if (string.IsNullOrEmpty(NewCollectionName))
             {
-                CollectionId = CollectionData.CollectionId,
-                CollectionName = NewCollectionName,
-                CreatorId = CollectionData.CreatorId,
-                ModifierId = App.User.UserId
-            };
-            var response = await new ApiData().PutData<CollectionModel>("Collections/UpdateCollection", collection, true);
-            if (response != null)
-            {
-                // AllCollections.Where(c => c.CollectionId == response.data.CollectionId).FirstOrDefault().CollectionName = response.data.CollectionName;
-                AllCollections.Remove(CollectionData);
-                AllCollections.Add(response.data);
+                Toast.LongAlert("Collection name is required.");
+                return;
             }
-            EditCollectionPopupIsVisible = false;
-            NewCollectionName = string.Empty;
-            IsBusy = false;
+            else
+            {
+                IsBusy = true;
+                var collection = new CollectionModel()
+                {
+                    CollectionId = CollectionData.CollectionId,
+                    CollectionName = NewCollectionName,
+                    CreatorId = CollectionData.CreatorId,
+                    ModifierId = App.User.UserId
+                };
+                var response = await new ApiData().PutData<CollectionModel>("Collections/UpdateCollection", collection, true);
+                if (response != null)
+                {
+                    // AllCollections.Where(c => c.CollectionId == response.data.CollectionId).FirstOrDefault().CollectionName = response.data.CollectionName;
+                    AllCollections.Remove(CollectionData);
+                    AllCollections.Add(response.data);
+                }
+                EditCollectionPopupIsVisible = false;
+                NewCollectionName = string.Empty;
+                IsBusy = false;
+            }
         }
         public void OpenCloseDeleteCollectionPopup(CollectionModel Collection)
         {
@@ -158,6 +174,7 @@ namespace HeartlandArtifact.ViewModels
             {
                 AllCollections.Remove(CollectionData);
             }
+            NotFoundLblIsVisible = AllCollections.Count > 0 ? false : true;
             DeleteCollectionPopupIsVisible = false;
             IsBusy = false;
         }
@@ -167,8 +184,9 @@ namespace HeartlandArtifact.ViewModels
             var response = await new ApiData().GetData<List<CollectionModel>>("Collections/GetAllCollections", true);
             if (response != null)
             {
-                AllCollections = new ObservableCollection<CollectionModel>(response.data);
+                AllCollections = new ObservableCollection<CollectionModel>(response.data);                
             }
+            NotFoundLblIsVisible = AllCollections.Count > 0 ? false : true;
             IsBusy = false;
         }
         public void GoBackFromCollection()
@@ -189,20 +207,30 @@ namespace HeartlandArtifact.ViewModels
         }
         public async void CreateNewCollection()
         {
-            IsBusy = true;
-            var newCollection = new CollectionModel()
+            var Toast = DependencyService.Get<IMessage>();
+            if (string.IsNullOrEmpty(NewCollectionName))
             {
-                CollectionName = NewCollectionName,
-                CreatorId = App.User.UserId,
-            };
-            var response = await new ApiData().PostData<CollectionModel>("Collections/AddNewCollection", newCollection, true);
-            if (response != null)
-            {
-                AllCollections.Add(response.data);
+                Toast.LongAlert("Collection name is required.");
+                return;
             }
-            AddCollectionPopupIsVisible = false;
-            NewCollectionName = string.Empty;
-            IsBusy = false;
+            else
+            {
+                IsBusy = true;
+                var newCollection = new CollectionModel()
+                {
+                    CollectionName = NewCollectionName,
+                    CreatorId = App.User.UserId,
+                };
+                var response = await new ApiData().PostData<CollectionModel>("Collections/AddNewCollection", newCollection, true);
+                if (response != null)
+                {
+                    AllCollections.Add(response.data);
+                }
+                NotFoundLblIsVisible = AllCollections.Count > 0 ? false : true;
+                AddCollectionPopupIsVisible = false;
+                NewCollectionName = string.Empty;
+                IsBusy = false;
+            }
         }
 
     }

@@ -84,7 +84,12 @@ namespace HeartlandArtifact.ViewModels
             else
             {
                 IsBusy = true;
-                var response = await new ApiData().PostData<UserModel>("user/ResetPassword?EmailId=" + Email + "&Password=" + NewPassword, true);
+                UserModel model = new UserModel()
+                {
+                    EmailId = Email,
+                    Password = NewPassword
+                };
+                var response = await new ApiData().PostData<UserModel>("user/ResetPassword", model, true);
                 if (response != null && response.status == "Success")
                 {
                     Toast.LongAlert("Password has been updated successfully.");

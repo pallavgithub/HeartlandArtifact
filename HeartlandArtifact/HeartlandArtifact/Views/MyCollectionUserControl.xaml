@@ -32,6 +32,7 @@
                     </Grid.GestureRecognizers>
                 </Grid>
             </Grid>
+            <Label Text="Collection not found." TextColor="Black" FontSize="16" HorizontalOptions="Center" IsVisible="{Binding NotFoundLblIsVisible}"/>
             <ListView ItemsSource="{Binding AllCollections}" SelectionMode="None" SeparatorVisibility="None" HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
