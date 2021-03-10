@@ -3,7 +3,7 @@
   <item>
 		<color android:color="@color/launcher_background" />
 	</item>
-	<item android:left="10dp" android:right="10dp" android:bottom="60dp">
+	<item android:left="20dp" android:right="20dp" android:bottom="60dp">
 		<bitmap android:src="@drawable/splashimg" android:tileMode="disabled" android:top="120dp" android:bottom="120dp" android:gravity="fill_horizontal" android:layout_gravity="center" />
 	</item>  
 </layer-list>

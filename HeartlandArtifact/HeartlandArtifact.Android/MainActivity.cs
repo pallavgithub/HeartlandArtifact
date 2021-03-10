@@ -13,13 +13,13 @@ using Xamarin.Forms;
 
 namespace HeartlandArtifact.Droid
 {
-    [Activity(Theme = "@style/MainTheme",
+    [Activity(Theme = "@style/MainTheme", Icon = "@drawable/appicon",
               ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
-           // TabLayoutResource = Resource.Layout.Tabbar;
+            // TabLayoutResource = Resource.Layout.Tabbar;
             //ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
