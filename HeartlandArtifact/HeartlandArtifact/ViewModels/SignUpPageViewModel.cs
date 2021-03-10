@@ -172,7 +172,8 @@ namespace HeartlandArtifact.ViewModels
                     };
                     var response = await new ApiData().PostData<UserModel>("user/signup", App.SignUpDetails, true);
                     if (response != null && response.data != null)
-                    {                        
+                    {
+                        App.SignUpDetails.Otp = response.data.Otp;
                         var navigationParams = new NavigationParameters();
                         navigationParams.Add("FromForgetPassword", false);
                         await NavigationService.NavigateAsync("EnterOtpPage", navigationParams);

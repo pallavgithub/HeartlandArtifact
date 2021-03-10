@@ -12,7 +12,7 @@ namespace HeartlandArtifact.Views
     {
         private List<Entry> _entries; 
         Timer T = new Timer();
-        int Minutes = 5;
+        int Minutes = 2;
         int Seconds = 0;
         public EnterOtpPage()
         {
@@ -51,9 +51,9 @@ namespace HeartlandArtifact.Views
         private void RestartTimer()
         {
             T.Stop();
-            Minutes = 5;
+            Minutes = 2;
             Seconds = 0;
-            (BindingContext as EnterOtpPageViewModel).TimerText = "5:00";
+            (BindingContext as EnterOtpPageViewModel).TimerText = "2:00";
             T.Start();
         }
 

@@ -82,6 +82,7 @@ namespace HeartlandArtifact.ViewModels
         }
         public async void SubmitButtonClicked()
         {
+            string OTP = Text1 + Text2 + Text3 + Text4;
             var Toast = DependencyService.Get<IMessage>();
             if (string.IsNullOrEmpty(Text1) || string.IsNullOrEmpty(Text2) || string.IsNullOrEmpty(Text3) || string.IsNullOrEmpty(Text4))
             {
@@ -105,18 +106,17 @@ namespace HeartlandArtifact.ViewModels
             else
             {
                 try
-                {
-                    IsBusy = true;
-                    string OTP = Text1 + Text2 + Text3 + Text4;
+                {                    
                     if (IsFromForgotPassword)
                     {
+                        IsBusy = true;
                         var response = await new ApiData().PostData<UserModel>("user/ForgotPassword?EmailId=" + Email + "&Otp=" + OTP, true);
                         if (response != null && response.data != null)
                         {
                             if (response.status == "Success")
                             {
                                 var navigationParams = new NavigationParameters();
-                                navigationParams.Add("EmailId", Email);                                
+                                navigationParams.Add("EmailId", Email);
                                 await NavigationService.NavigateAsync("ChangePasswordPage", navigationParams);
                             }
                         }
@@ -124,36 +124,37 @@ namespace HeartlandArtifact.ViewModels
                         {
                             Toast.LongAlert(response.message);
                         }
+                        IsBusy = false;
                     }
                     else
                     {
-                        App.SignUpDetails.Otp = OTP;
-                        var response = await new ApiData().PostData<UserModel>("user/signup", App.SignUpDetails, true);
-                        if (response != null && response.data != null && response.status == "Success")
+                        if (App.SignUpDetails.Otp != OTP)
                         {
-                            Application.Current.Properties["IsLogedIn"] = true;
-                            Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
-                            await Application.Current.SavePropertiesAsync();
-                            App.User = new UserDataModel()
-                            {
-                                UserId = response.data.CmsUserId,
-                                FirstName = response.data.FirstName,
-                                LastName = response.data.LastName,
-                                EmailId = response.data.EmailId,
-                                Password = response.data.Password,
-                                IsActive = true
-                            };
-                            Toast.LongAlert("Signup Successful.");
-                            await NavigationService.NavigateAsync("/HomePage");
-                            App.SignUpDetails.Otp = string.Empty;
+                            Toast.LongAlert("Otp does not match."); return;
                         }
                         else
                         {
-                            Toast.LongAlert(response.message);
-                            App.SignUpDetails.Otp = string.Empty;
+                            IsBusy = true;
+                            var response = await new ApiData().PostData<UserModel>("User/SignupWithVerifiedOtp", App.SignUpDetails, true);
+                            if (response != null && response.data != null && response.status == "Success")
+                            {
+                                Application.Current.Properties["IsLogedIn"] = true;
+                                Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
+                                Application.Current.Properties["User"] = App.SignUpDetails;
+                                await Application.Current.SavePropertiesAsync();
+                                Toast.LongAlert("Signup Successful.");
+                                await NavigationService.NavigateAsync("/HomePage");
+                                App.SignUpDetails.Otp = string.Empty;
+                            }
+                            else
+                            {
+                                Toast.LongAlert(response.message);
+                                App.SignUpDetails.Otp = string.Empty;
+                            }
+                            IsBusy = false;
                         }
                     }
-                    IsBusy = false;
+                    
                 }
                 catch (Exception e)
                 {

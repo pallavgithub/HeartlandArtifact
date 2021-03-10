@@ -142,7 +142,7 @@ namespace HeartlandArtifact.ViewModels
                     CollectionId = CollectionData.CollectionId,
                     CollectionName = NewCollectionName,
                     CreatorId = CollectionData.CreatorId,
-                    ModifierId = App.User.UserId
+                    //ModifierId = App.User.UserId
                 };
                 var response = await new ApiData().PutData<CollectionModel>("Collections/UpdateCollection", collection, true);
                 if (response != null)
@@ -219,7 +219,7 @@ namespace HeartlandArtifact.ViewModels
                 var newCollection = new CollectionModel()
                 {
                     CollectionName = NewCollectionName,
-                    CreatorId = App.User.UserId,
+                   // CreatorId = App.User.UserId,
                 };
                 var response = await new ApiData().PostData<CollectionModel>("Collections/AddNewCollection", newCollection, true);
                 if (response != null)

@@ -13,7 +13,7 @@ namespace HeartlandArtifact
     public partial class App
     {
         public static UserModel SignUpDetails { get; set; }
-        public static UserDataModel User { get; set; }
+       // public static UserDataModel User { get; set; }
         public App(IPlatformInitializer initializer)
             : base(initializer)
         {
@@ -22,7 +22,7 @@ namespace HeartlandArtifact
         protected override async void OnInitialized()
         {
             InitializeComponent();
-            App.User = new UserDataModel();
+           // App.User = new UserDataModel();
             App.SignUpDetails = new UserModel();
             if (Application.Current.Properties != null)
             {

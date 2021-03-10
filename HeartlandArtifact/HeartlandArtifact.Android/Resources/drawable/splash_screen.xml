@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-  <item android:drawable="@color/launcher_background"/>
-   <item android:left="20dp" android:right="20dp" android:top="60dp" android:bottom="60dp">
-    <bitmap android:gravity="center_vertical|fill_horizontal"
-            android:src="@drawable/splashimg"/>
-  </item>
+  <item>
+		<color android:color="@color/launcher_background" />
+	</item>
+	<item android:left="10dp" android:right="10dp" android:bottom="60dp">
+		<bitmap android:src="@drawable/splashimg" android:tileMode="disabled" android:top="120dp" android:bottom="120dp" android:gravity="fill_horizontal" android:layout_gravity="center" />
+	</item>  
 </layer-list>
