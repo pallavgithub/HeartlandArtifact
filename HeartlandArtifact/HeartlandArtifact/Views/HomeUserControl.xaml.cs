@@ -11,7 +11,12 @@ namespace HeartlandArtifact.Views
         {
             InitializeComponent();
         }
+        private void AddItem_Tapped(object sender, System.EventArgs e)
+        {
+            (BindingContext as HomePageViewModel).AddNewItemUserControlIsVisible = true;
+            (BindingContext as HomePageViewModel).HomeIsVisible = false;
 
+        }
         private void MyCollection_Tapped(object sender, System.EventArgs e)
         {
             (BindingContext as HomePageViewModel).MyCollectionVisible = true;

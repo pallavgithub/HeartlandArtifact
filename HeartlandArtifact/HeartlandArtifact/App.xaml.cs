@@ -61,6 +61,7 @@ namespace HeartlandArtifact
             containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
             containerRegistry.RegisterForNavigation<MyCollectionPage, MainPageViewModel>();
             ViewModelLocationProvider.Register<MyCollectionUserControl, HomePageViewModel>();
+            ViewModelLocationProvider.Register<AddNewItemUserControl, HomePageViewModel>();
         }
     }
 }

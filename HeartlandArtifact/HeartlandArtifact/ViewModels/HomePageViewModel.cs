@@ -13,6 +13,30 @@ namespace HeartlandArtifact.ViewModels
 {
     public class HomePageViewModel : ViewModelBase
     {
+        private bool _addNewItemUserControlIsVisible;
+        public bool AddNewItemUserControlIsVisible
+        {
+            get { return _addNewItemUserControlIsVisible; }
+            set { SetProperty(ref _addNewItemUserControlIsVisible, value); }
+        }
+        private bool _contentViewIsVisible;
+        public bool ContentViewIsVisible
+        {
+            get { return _contentViewIsVisible; }
+            set { SetProperty(ref _contentViewIsVisible, value); }
+        }
+        private bool _collectionDropdownIsVisible;
+        public bool CollectionDropdownIsVisible
+        {
+            get { return _collectionDropdownIsVisible; }
+            set { SetProperty(ref _collectionDropdownIsVisible, value); }
+        }
+        private bool _categoryDropdownIsVisible;
+        public bool CategoryDropdownIsVisible
+        {
+            get { return _categoryDropdownIsVisible; }
+            set { SetProperty(ref _categoryDropdownIsVisible, value); }
+        }
         private bool _soldItemsIsVisible;
         public bool SoldItemsIsVisible
         {
@@ -73,6 +97,18 @@ namespace HeartlandArtifact.ViewModels
             get { return _allCollections; }
             set { SetProperty(ref _allCollections, value); }
         }
+        private ObservableCollection<CollectionModel> _collectionList;
+        public ObservableCollection<CollectionModel> CollectionList
+        {
+            get { return _collectionList; }
+            set { SetProperty(ref _collectionList, value); }
+        }
+        private ObservableCollection<CollectionModel> _categoryList;
+        public ObservableCollection<CollectionModel> CategoryList
+        {
+            get { return _categoryList; }
+            set { SetProperty(ref _categoryList, value); }
+        }
         public DelegateCommand LogoutCommand { get; set; }
         public DelegateCommand EditCollectionCommand { get; set; }
         public DelegateCommand GoBackFromCollectionsCommand { get; set; }
@@ -92,7 +128,7 @@ namespace HeartlandArtifact.ViewModels
         {
             _nav = navigationService;
             HomeIsVisible = true;
-            GetAllCollections();
+            GetUserCollections();
             LogoutCommand = new DelegateCommand(Logout);
             EditCollectionCommand = new DelegateCommand(EditCollection);
             GoBackFromCollectionsCommand = new DelegateCommand(GoBackFromCollection);
@@ -105,6 +141,7 @@ namespace HeartlandArtifact.ViewModels
             SaveButtonCommand = new DelegateCommand(UpdateCollectionName);
             DeleteCollectionCommand = new DelegateCommand(DeleteCollection);
             CancelDeleteButtonCommand = new DelegateCommand(CloseDeleteCollectionPopup);
+            GetListForDropdown();
         }
         public void Logout()
         {
@@ -142,7 +179,7 @@ namespace HeartlandArtifact.ViewModels
                     CollectionId = CollectionData.CollectionId,
                     CollectionName = NewCollectionName,
                     CreatorId = CollectionData.CreatorId,
-                    //ModifierId = App.User.UserId
+                    ModifierId = (int)Application.Current.Properties["LogedInUserId"]
                 };
                 var response = await new ApiData().PutData<CollectionModel>("Collections/UpdateCollection", collection, true);
                 if (response != null)
@@ -178,13 +215,14 @@ namespace HeartlandArtifact.ViewModels
             DeleteCollectionPopupIsVisible = false;
             IsBusy = false;
         }
-        public async void GetAllCollections()
+        public async void GetUserCollections()
         {
             IsBusy = true;
-            var response = await new ApiData().GetData<List<CollectionModel>>("Collections/GetAllCollections", true);
+            var UserId = Application.Current.Properties["LogedInUserId"];
+            var response = await new ApiData().GetData<List<CollectionModel>>("Collections/GetUserCollections?userId=" + UserId, true);
             if (response != null)
             {
-                AllCollections = new ObservableCollection<CollectionModel>(response.data);                
+                AllCollections = new ObservableCollection<CollectionModel>(response.data);
             }
             NotFoundLblIsVisible = AllCollections.Count > 0 ? false : true;
             IsBusy = false;
@@ -219,7 +257,8 @@ namespace HeartlandArtifact.ViewModels
                 var newCollection = new CollectionModel()
                 {
                     CollectionName = NewCollectionName,
-                   // CreatorId = App.User.UserId,
+                    CreatorId = (int)Application.Current.Properties["LogedInUserId"],
+                    ModifierId = (int)Application.Current.Properties["LogedInUserId"],
                 };
                 var response = await new ApiData().PostData<CollectionModel>("Collections/AddNewCollection", newCollection, true);
                 if (response != null)
@@ -232,7 +271,25 @@ namespace HeartlandArtifact.ViewModels
                 IsBusy = false;
             }
         }
-
+        public void GetListForDropdown()
+        {
+            CollectionList = new ObservableCollection<CollectionModel>()
+            {
+                new CollectionModel{CollectionName="Coins"},
+                new CollectionModel{CollectionName="Stones"},
+                new CollectionModel{CollectionName="Black stone"},
+                new CollectionModel{CollectionName="Black stone"},
+                new CollectionModel{CollectionName="Black stone"},
+            };
+            CategoryList = new ObservableCollection<CollectionModel>()
+            {
+                new CollectionModel{CollectionName="Coins"},
+                new CollectionModel{CollectionName="Stones"},
+                new CollectionModel{CollectionName="Black stone"},
+                new CollectionModel{CollectionName="Black stone"},
+                new CollectionModel{CollectionName="Black stone"},
+            };
+        }
     }
 }
 

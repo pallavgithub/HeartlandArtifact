@@ -182,6 +182,8 @@ namespace HeartlandArtifact.ViewModels
                         else if (response.status.ToLower() == "success")
                         {
                             Application.Current.Properties["IsLogedIn"] = true;
+                            Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
+                            Application.Current.Properties["User"] = response.data;
                             await Application.Current.SavePropertiesAsync();
                             toast.LongAlert(response.message);
                             // Application.Current.Properties["IsLoogedIn"] = true;

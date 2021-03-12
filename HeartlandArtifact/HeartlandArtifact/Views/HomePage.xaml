@@ -39,6 +39,7 @@
                                 </Grid>
                                 <Grid VerticalOptions="FillAndExpand">
                                     <pages:HomeUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding HomeIsVisible}"/>
+                                    <pages:AddNewItemUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding AddNewItemUserControlIsVisible}"/>
                                     <pages:MyCollectionUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding MyCollectionVisible}"/>
                                     <pages:SoldItemsUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding SoldItemsIsVisible}"/>
                                 </Grid>
