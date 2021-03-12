@@ -13,6 +13,12 @@ namespace HeartlandArtifact.ViewModels
 {
     public class HomePageViewModel : ViewModelBase
     {
+        private string _userName;
+        public string UserName
+        {
+            get { return _userName; }
+            set { SetProperty(ref _userName, value); }
+        }
         private bool _addNewItemUserControlIsVisible;
         public bool AddNewItemUserControlIsVisible
         {
@@ -55,6 +61,12 @@ namespace HeartlandArtifact.ViewModels
             get { return _homeIsVisible; }
             set { SetProperty(ref _homeIsVisible, value); }
         }
+        private bool _categoryUserControlIsVisible;
+        public bool CategoryUserControlIsVisible
+        {
+            get { return _categoryUserControlIsVisible; }
+            set { SetProperty(ref _categoryUserControlIsVisible, value); }
+        }
         private bool _isEditIconVisible;
         public bool IsEditIconVisible
         {
@@ -85,17 +97,65 @@ namespace HeartlandArtifact.ViewModels
             get { return _addCollectionPopupIsVisible; }
             set { SetProperty(ref _addCollectionPopupIsVisible, value); }
         }
+        private bool _addCategoryPopupIsVisible;
+        public bool AddCategoryPopupIsVisible
+        {
+            get { return _addCategoryPopupIsVisible; }
+            set { SetProperty(ref _addCategoryPopupIsVisible, value); }
+        }
         private bool _notFoundLblIsVisible;
         public bool NotFoundLblIsVisible
         {
             get { return _notFoundLblIsVisible; }
             set { SetProperty(ref _notFoundLblIsVisible, value); }
         }
+        private bool _categoryNotFoundLblIsVisible;
+        public bool CategoryNotFoundLblIsVisible
+        {
+            get { return _categoryNotFoundLblIsVisible; }
+            set { SetProperty(ref _categoryNotFoundLblIsVisible, value); }
+        }
+        private bool _isEditCategoryIconVisible;
+        public bool IsEditCategoryIconVisible
+        {
+            get { return _isEditCategoryIconVisible; }
+            set { SetProperty(ref _isEditCategoryIconVisible, value); }
+        } 
+        private bool _editCategoryPopupIsVisible;
+        public bool EditCategoryPopupIsVisible
+        {
+            get { return _editCategoryPopupIsVisible; }
+            set { SetProperty(ref _editCategoryPopupIsVisible, value); }
+        }
+        private bool _deleteCategoryPopupIsVisible;
+        public bool DeleteCategoryPopupIsVisible
+        {
+            get { return _deleteCategoryPopupIsVisible; }
+            set { SetProperty(ref _deleteCategoryPopupIsVisible, value); }
+        }
+        private string _newCategoryName;
+        public string NewCategoryName
+        {
+            get { return _newCategoryName; }
+            set { SetProperty(ref _newCategoryName, value); }
+        }
+        private string _selectedCollectionName;
+        public string SelectedCollectionName
+        {
+            get { return _selectedCollectionName; }
+            set { SetProperty(ref _selectedCollectionName, value); }
+        }
         private ObservableCollection<CollectionModel> _allCollections;
         public ObservableCollection<CollectionModel> AllCollections
         {
             get { return _allCollections; }
             set { SetProperty(ref _allCollections, value); }
+        }
+        private ObservableCollection<CategoryModel> _allCategories;
+        public ObservableCollection<CategoryModel> AllCategories
+        {
+            get { return _allCategories; }
+            set { SetProperty(ref _allCategories, value); }
         }
         private ObservableCollection<CollectionModel> _collectionList;
         public ObservableCollection<CollectionModel> CollectionList
@@ -121,6 +181,8 @@ namespace HeartlandArtifact.ViewModels
         public DelegateCommand CancelButtonCommand { get; set; }
         public DelegateCommand CancelDeleteButtonCommand { get; set; }
         public DelegateCommand DeleteCollectionCommand { get; set; }
+        public DelegateCommand CloseAddCategoryPopupCommand { get; set; }
+        public DelegateCommand AddNewCategoryBtnCommand { get; set; }
         public INavigationService _nav;
 
         public CollectionModel CollectionData { get; set; }
@@ -128,6 +190,7 @@ namespace HeartlandArtifact.ViewModels
         {
             _nav = navigationService;
             HomeIsVisible = true;
+            UserName = "Hi, " + Application.Current.Properties["UserName"].ToString();
             GetUserCollections();
             LogoutCommand = new DelegateCommand(Logout);
             EditCollectionCommand = new DelegateCommand(EditCollection);
@@ -141,6 +204,8 @@ namespace HeartlandArtifact.ViewModels
             SaveButtonCommand = new DelegateCommand(UpdateCollectionName);
             DeleteCollectionCommand = new DelegateCommand(DeleteCollection);
             CancelDeleteButtonCommand = new DelegateCommand(CloseDeleteCollectionPopup);
+            CloseAddCategoryPopupCommand = new DelegateCommand(CloseAddCategoryPopup);
+            AddNewCategoryBtnCommand = new DelegateCommand(CreateNewCategory);
             GetListForDropdown();
         }
         public void Logout()
@@ -289,6 +354,54 @@ namespace HeartlandArtifact.ViewModels
                 new CollectionModel{CollectionName="Black stone"},
                 new CollectionModel{CollectionName="Black stone"},
             };
+        }
+        public void CloseAddCategoryPopup()
+        {
+            AddCategoryPopupIsVisible = !AddCategoryPopupIsVisible;
+        }
+        public async void GetUserCategories(CollectionModel collection)
+        {
+            IsBusy = true;
+            CollectionData = new CollectionModel();
+            CollectionData = collection;
+            SelectedCollectionName = collection.CollectionName;
+            var UserId = Application.Current.Properties["LogedInUserId"];
+            var response = await new ApiData().GetData<List<CategoryModel>>("Category/GetUserCategories?userId=" + UserId, true);
+            if (response != null)
+            {
+                AllCategories = new ObservableCollection<CategoryModel>(response.data);
+            }
+            CategoryNotFoundLblIsVisible = AllCategories.Count > 0 ? false : true;
+            IsBusy = false;
+        }
+        public async void CreateNewCategory()
+        {
+            var Toast = DependencyService.Get<IMessage>();
+            if (string.IsNullOrEmpty(NewCategoryName))
+            {
+                Toast.LongAlert("Category name is required.");
+                return;
+            }
+            else
+            {
+                IsBusy = true;
+                var newCategory = new CategoryModel()
+                {
+                    CollectionId=CollectionData.CollectionId,
+                    CategoryName = NewCategoryName,
+                    CreatorId = (int)Application.Current.Properties["LogedInUserId"],
+                    ModifierId = (int)Application.Current.Properties["LogedInUserId"],
+                };
+                var response = await new ApiData().PostData<CategoryModel>("Category/AddNewCategory", newCategory, true);
+                if (response != null)
+                {
+                    AllCategories.Add(response.data);
+                }
+                CategoryNotFoundLblIsVisible = AllCategories.Count > 0 ? false : true;
+                AddCategoryPopupIsVisible = false;
+                NewCategoryName = string.Empty;
+                IsBusy = false;
+            }
         }
     }
 }

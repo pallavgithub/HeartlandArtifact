@@ -1,16 +1,17 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:converter="clr-namespace:HeartlandArtifact.Converters"
-             x:Class="HeartlandArtifact.Views.MyCollectionUserControl"
-             NavigationPage.HasNavigationBar="False" x:Name="MyCollection">
+             x:Class="HeartlandArtifact.Views.CategoryUserControl"
+             NavigationPage.HasNavigationBar="False"
+             x:Name="Category">
     <ContentView.Resources>
         <ResourceDictionary>
             <converter:InverseBoolConverter x:Key="InverseBoolConverter"></converter:InverseBoolConverter>
         </ResourceDictionary>
     </ContentView.Resources>
     <ContentView.Content>
-        <StackLayout Padding="20,0,30,30">
-            <Label Text="My Collections" HorizontalTextAlignment="Center" FontSize="22" TextColor="Black" FontFamily="{StaticResource HelveticaBold}"/>
+        <StackLayout Padding="20,0,20,30">
+            <Label Text="{Binding SelectedCollectionName}" HorizontalOptions="Center" TextColor="Black" FontSize="22" FontFamily="{StaticResource HelveticaBold}"/>
             <Grid ColumnSpacing="0" HeightRequest="120">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="70"/>
@@ -21,19 +22,19 @@
                     <Label Text="&lt;" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Center" Margin="0,0,0,3" TextColor="Black" TextTransform="Uppercase" FontSize="14"/>
                     <Label Text="BACK" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Center" TextColor="Black" TextTransform="Uppercase" FontSize="16"/>
                     <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding GoBackFromCollectionsCommand}"/>
+                        <TapGestureRecognizer Tapped="GoBack_Tapped"/>
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
-                <Grid IsVisible="{Binding IsEditIconVisible, Converter={StaticResource InverseBoolConverter}}" Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="60">
+                <Grid IsVisible="{Binding IsEditCategoryIconVisible, Converter={StaticResource InverseBoolConverter}}" Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="60">
                     <Image Source="Button.png"/>
-                    <Label Text="Edit Collections" VerticalOptions="Center" FontSize="16" HorizontalOptions="Center" Margin="0,0,0,3" TextColor="Black" TextTransform="Uppercase"/>
+                    <Label Text="Edit Categories" VerticalOptions="Center" FontSize="16" HorizontalOptions="Center" Margin="0,0,0,3" TextColor="Black" TextTransform="Uppercase"/>
                     <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding EditCollectionCommand}"/>
+                        <TapGestureRecognizer Tapped="EditCategoryBtn_Tapped"/>
                     </Grid.GestureRecognizers>
                 </Grid>
             </Grid>
-            <Label Text="Collection not found." TextColor="Black" FontSize="16" HorizontalOptions="Center" IsVisible="{Binding NotFoundLblIsVisible}"/>
-            <ListView ItemsSource="{Binding AllCollections}" SelectionMode="None" SeparatorVisibility="None" HasUnevenRows="True">
+            <Label Text="Category not found." TextColor="Black" FontSize="16" HorizontalOptions="Center" IsVisible="{Binding CategoryNotFoundLblIsVisible}"/>
+            <ListView ItemsSource="{Binding AllCategories}" SelectionMode="None" SeparatorVisibility="None" HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -43,15 +44,15 @@
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <StackLayout Margin="0,2,0,2" IsVisible="{Binding BindingContext.IsEditIconVisible, Source={x:Reference MyCollection}}">
+                                    <StackLayout Margin="0,2,0,2" IsVisible="{Binding BindingContext.IsEditCategoryIconVisible, Source={x:Reference Category}}">
                                         <Image Source="Pen.png" HeightRequest="13" WidthRequest="14" VerticalOptions="FillAndExpand">
                                             <Image.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding BindingContext.OpenUpdateCollectionPopupCommand, Source={x:Reference MyCollection}}" CommandParameter="{Binding .}"/>
+                                                <TapGestureRecognizer Tapped="EditIcon_Tapped"/>
                                             </Image.GestureRecognizers>
                                         </Image>
                                         <Image Source="Trash.png" HeightRequest="12" WidthRequest="12" VerticalOptions="FillAndExpand">
                                             <Image.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding BindingContext.OpenDeleteCollectionPopupCommand, Source={x:Reference MyCollection}}" CommandParameter="{Binding .}"/>
+                                                <TapGestureRecognizer Tapped="DeleteIcon_Tapped"/>
                                             </Image.GestureRecognizers>
                                         </Image>
                                     </StackLayout>
@@ -61,14 +62,14 @@
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="30"/>
                                             </Grid.ColumnDefinitions>
-                                            <Label Text="{Binding CollectionName}" TextColor="Black" Margin="0,-2,0,0" FontFamily="{StaticResource HelveticaBold}" FontSize="16"/>
+                                            <Label Text="{Binding CategoryName}" TextColor="Black" Margin="0,-2,0,0" FontFamily="{StaticResource HelveticaBold}" FontSize="16"/>
                                             <Image Source="Arrow.png" Grid.Column="1" HorizontalOptions="EndAndExpand"/>
                                         </Grid>
                                     </Frame>
                                 </Grid>
-                                <StackLayout.GestureRecognizers>
+                                <!--<StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="GoToCategoryList_Tapped" CommandParameter="{Binding .}"/>
-                                </StackLayout.GestureRecognizers>
+                                </StackLayout.GestureRecognizers>-->
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
@@ -76,9 +77,9 @@
             </ListView>
             <Grid HorizontalOptions="CenterAndExpand" HeightRequest="100" VerticalOptions="End">
                 <Image Source="Button.png"/>
-                <Label Text="+ Add Collections" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,3" FontFamily="{StaticResource HelveticaRegular}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent"/>
+                <Label Text="+ Add Category" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,3" FontFamily="{StaticResource HelveticaRegular}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent"/>
                 <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding AddCollectionButtonCommand}"/>
+                    <TapGestureRecognizer Tapped="AddNewCategory_Tapped"/>
                 </Grid.GestureRecognizers>
             </Grid>
         </StackLayout>

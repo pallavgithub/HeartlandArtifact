@@ -32,6 +32,8 @@ namespace HeartlandArtifact.Views
             _facebookManager.Logout();
             _googleManager.Logout();
             Application.Current.Properties["IsLogedIn"] = false;
+            Application.Current.Properties["LogedInUserId"] = 0;
+            Application.Current.Properties["UserName"] = string.Empty;
             await Application.Current.SavePropertiesAsync();
             await (BindingContext as HomePageViewModel)._nav.NavigateAsync("/SignInPage");
         }
@@ -46,7 +48,7 @@ namespace HeartlandArtifact.Views
             // page.Title = item.Title;
 
             // Detail = new NavigationPage(page);
-            if(item.Title=="Home")
+            if (item.Title == "Home")
             {
                 //(BindingContext as HomePageViewModel).SoldItemsIsVisible = false;
                 (BindingContext as HomePageViewModel).HomeIsVisible = true;
@@ -63,11 +65,6 @@ namespace HeartlandArtifact.Views
         private void Menu_Tapped(object sender, EventArgs e)
         {
             IsPresented = true;
-        }
-
-        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
-        {
-
         }
     }
 }

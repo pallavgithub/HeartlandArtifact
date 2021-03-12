@@ -29,7 +29,7 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <Image Source="ProfileIcon.png" Grid.Column="0" HeightRequest="40" WidthRequest="40"/>
-                                    <Label Text="Hi, Tucker" FontFamily="{StaticResource HelveticaRegular}" Grid.Column="1" VerticalOptions="CenterAndExpand" TextColor="Black" FontSize="20"/>
+                                    <Label Text="{Binding UserName}" FontFamily="{StaticResource HelveticaRegular}" Grid.Column="1" VerticalOptions="CenterAndExpand" TextColor="Black" FontSize="20"/>
                                     <Image Source="BellIcon.png" Grid.Column="2" HeightRequest="30" WidthRequest="20"/>
                                     <Image Source="MenuIcon.png" Grid.Column="3" HeightRequest="20" WidthRequest="30">
                                         <Image.GestureRecognizers>
@@ -41,6 +41,7 @@
                                     <pages:HomeUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding HomeIsVisible}"/>
                                     <pages:AddNewItemUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding AddNewItemUserControlIsVisible}"/>
                                     <pages:MyCollectionUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding MyCollectionVisible}"/>
+                                    <pages:CategoryUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding CategoryUserControlIsVisible}"/>
                                     <pages:SoldItemsUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding SoldItemsIsVisible}"/>
                                 </Grid>
                             </StackLayout>
@@ -116,6 +117,31 @@
                                             </Grid.GestureRecognizers>
                                         </Grid>
                                     </StackLayout>
+                                </StackLayout>
+                            </Grid>
+
+                            <Grid IsVisible="{Binding AddCategoryPopupIsVisible}" x:Name="AddCategoryPopup">
+                                <ContentView BackgroundColor="LightGray" Opacity="0.7"/>
+                                <StackLayout BackgroundColor="White" Padding="15" Margin="20,0,20,0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                                    <Image HorizontalOptions="End" Source="Cross.png" HeightRequest="20" WidthRequest="20">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding CloseAddCategoryPopupCommand}"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                    <Label Text="Add New Category" FontSize="22" TextColor="Black" HorizontalTextAlignment="Center" FontFamily="{StaticResource HelveticaRegular}"/>
+                                    <Frame Margin="2,5,2,8" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="25"
+                           HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
+                                        <custom:BorderLessEntry Text="{Binding NewCategoryName}" 
+                                          HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                                          FontSize="16" TextColor="Black"/>
+                                    </Frame>
+                                    <Grid>
+                                        <Image Source="Button.png" WidthRequest="210"/>
+                                        <Label Text="Confirm" FontSize="16" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,0,0,3"/>
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding AddNewCategoryBtnCommand}"/>
+                                        </Grid.GestureRecognizers>
+                                    </Grid>
                                 </StackLayout>
                             </Grid>
                             <Grid IsVisible="{Binding IsBusy}">

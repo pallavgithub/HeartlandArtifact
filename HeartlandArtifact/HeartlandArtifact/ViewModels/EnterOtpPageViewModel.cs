@@ -106,7 +106,7 @@ namespace HeartlandArtifact.ViewModels
             else
             {
                 try
-                {                    
+                {
                     if (IsFromForgotPassword)
                     {
                         IsBusy = true;
@@ -140,7 +140,7 @@ namespace HeartlandArtifact.ViewModels
                             {
                                 Application.Current.Properties["IsLogedIn"] = true;
                                 Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
-                                Application.Current.Properties["User"] = App.SignUpDetails;
+                                Application.Current.Properties["UserName"] = response.data.FirstName;
                                 await Application.Current.SavePropertiesAsync();
                                 Toast.LongAlert("Signup Successful.");
                                 await NavigationService.NavigateAsync("/HomePage");
@@ -154,7 +154,7 @@ namespace HeartlandArtifact.ViewModels
                             IsBusy = false;
                         }
                     }
-                    
+
                 }
                 catch (Exception e)
                 {
@@ -183,6 +183,7 @@ namespace HeartlandArtifact.ViewModels
                 var response = await new ApiData().PostData<UserModel>("user/signup", App.SignUpDetails, true);
                 if (response != null && response.data != null)
                 {
+                    App.SignUpDetails.Otp = response.data.Otp;
                     Toast.LongAlert("Otp sent.");
                 }
                 IsBusy = false;

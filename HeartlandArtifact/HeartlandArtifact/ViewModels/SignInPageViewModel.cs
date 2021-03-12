@@ -113,6 +113,7 @@ namespace HeartlandArtifact.ViewModels
                 FacebookUser = facebookUser;
                 IsLogedIn = true;
                 Application.Current.Properties["IsLogedIn"] = true;
+                Application.Current.Properties["UserName"] = facebookUser.FirstName;
                 NavigationService.NavigateAsync("/HomePage");
             }
             else
@@ -129,6 +130,7 @@ namespace HeartlandArtifact.ViewModels
                 GoogleUser = googleUser;
                 IsLogedIn = true;
                 Application.Current.Properties["IsLogedIn"] = true;
+                Application.Current.Properties["UserName"] = googleUser.Name.Split(' ')[0];
                 NavigationService.NavigateAsync("/HomePage");
             }
             else
@@ -183,12 +185,9 @@ namespace HeartlandArtifact.ViewModels
                         {
                             Application.Current.Properties["IsLogedIn"] = true;
                             Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
-                            Application.Current.Properties["User"] = response.data;
+                            Application.Current.Properties["UserName"] = response.data.FirstName;
                             await Application.Current.SavePropertiesAsync();
                             toast.LongAlert(response.message);
-                            // Application.Current.Properties["IsLoogedIn"] = true;
-                            // await Application.Current.SavePropertiesAsync();
-                            // if(App.userModel!=null)
                             await NavigationService.NavigateAsync("/HomePage");
                         }
                         else
