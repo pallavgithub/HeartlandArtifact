@@ -1,4 +1,5 @@
-﻿using HeartlandArtifact.ViewModels;
+﻿using HeartlandArtifact.Models;
+using HeartlandArtifact.ViewModels;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -38,13 +39,20 @@ namespace HeartlandArtifact.Views
 
         private void EditIcon_Tapped(object sender, EventArgs e)
         {
+            var selectedCategory = ((TappedEventArgs)e).Parameter as CategoryModel;
             var viewModel = BindingContext as HomePageViewModel;
+            viewModel.NewCategoryName = selectedCategory.CategoryName;
+            viewModel.CategoryData = new CategoryModel();
+            viewModel.CategoryData = selectedCategory;
             viewModel.EditCategoryPopupIsVisible = !viewModel.EditCategoryPopupIsVisible;
         }
 
         private void DeleteIcon_Tapped(object sender, EventArgs e)
         {
+            var selectedCategory = ((TappedEventArgs)e).Parameter as CategoryModel;
             var viewModel = BindingContext as HomePageViewModel;
+            viewModel.CategoryData = new CategoryModel();
+            viewModel.CategoryData = selectedCategory;
             viewModel.DeleteCategoryPopupIsVisible = !viewModel.DeleteCategoryPopupIsVisible;
         }
     }

@@ -120,7 +120,7 @@ namespace HeartlandArtifact.ViewModels
         {
             get { return _isEditCategoryIconVisible; }
             set { SetProperty(ref _isEditCategoryIconVisible, value); }
-        } 
+        }
         private bool _editCategoryPopupIsVisible;
         public bool EditCategoryPopupIsVisible
         {
@@ -183,9 +183,14 @@ namespace HeartlandArtifact.ViewModels
         public DelegateCommand DeleteCollectionCommand { get; set; }
         public DelegateCommand CloseAddCategoryPopupCommand { get; set; }
         public DelegateCommand AddNewCategoryBtnCommand { get; set; }
+        public DelegateCommand SaveEditCategoryCommand { get; set; }
+        public DelegateCommand CancelEditCategoryCommand { get; set; }
+        public DelegateCommand DeleteCategoryCommand { get; set; }
+        public DelegateCommand CancelDeleteCategoryCommand { get; set; }
         public INavigationService _nav;
 
         public CollectionModel CollectionData { get; set; }
+        public CategoryModel CategoryData { get; set; }
         public HomePageViewModel(INavigationService navigationService) : base(navigationService)
         {
             _nav = navigationService;
@@ -206,6 +211,10 @@ namespace HeartlandArtifact.ViewModels
             CancelDeleteButtonCommand = new DelegateCommand(CloseDeleteCollectionPopup);
             CloseAddCategoryPopupCommand = new DelegateCommand(CloseAddCategoryPopup);
             AddNewCategoryBtnCommand = new DelegateCommand(CreateNewCategory);
+            SaveEditCategoryCommand = new DelegateCommand(UpdateCategoryName);
+            CancelEditCategoryCommand = new DelegateCommand(CloseUpdateCategoryPopup);
+            DeleteCategoryCommand = new DelegateCommand(DeleteCategory);
+            CancelDeleteCategoryCommand = new DelegateCommand(CloseDeleteCategoryPopup);
             GetListForDropdown();
         }
         public void Logout()
@@ -326,11 +335,21 @@ namespace HeartlandArtifact.ViewModels
                     ModifierId = (int)Application.Current.Properties["LogedInUserId"],
                 };
                 var response = await new ApiData().PostData<CollectionModel>("Collections/AddNewCollection", newCollection, true);
-                if (response != null)
+                if (response != null && response.data != null)
                 {
                     AllCollections.Add(response.data);
                 }
+                else
+                {
+                    Toast.LongAlert(response.message);
+                    IsBusy = false; 
+                    return;
+                }
                 NotFoundLblIsVisible = AllCollections.Count > 0 ? false : true;
+                if (IsEditIconVisible)
+                {
+                    IsEditIconVisible = false;
+                }
                 AddCollectionPopupIsVisible = false;
                 NewCollectionName = string.Empty;
                 IsBusy = false;
@@ -387,22 +406,84 @@ namespace HeartlandArtifact.ViewModels
                 IsBusy = true;
                 var newCategory = new CategoryModel()
                 {
-                    CollectionId=CollectionData.CollectionId,
+                    CollectionId = CollectionData.CollectionId,
                     CategoryName = NewCategoryName,
                     CreatorId = (int)Application.Current.Properties["LogedInUserId"],
                     ModifierId = (int)Application.Current.Properties["LogedInUserId"],
                 };
                 var response = await new ApiData().PostData<CategoryModel>("Category/AddNewCategory", newCategory, true);
-                if (response != null)
+                if (response != null && response.data!=null)
                 {
                     AllCategories.Add(response.data);
                 }
+                else
+                {
+                    Toast.LongAlert(response.message);
+                    IsBusy = false; 
+                    return;
+                }
                 CategoryNotFoundLblIsVisible = AllCategories.Count > 0 ? false : true;
+                if (IsEditCategoryIconVisible)
+                {
+                    IsEditCategoryIconVisible = false;
+                }
                 AddCategoryPopupIsVisible = false;
                 NewCategoryName = string.Empty;
                 IsBusy = false;
             }
         }
+        public async void UpdateCategoryName()
+        {
+            var Toast = DependencyService.Get<IMessage>();
+            if (string.IsNullOrEmpty(NewCategoryName))
+            {
+                Toast.LongAlert("Category name is required.");
+                return;
+            }
+            else
+            {
+                IsBusy = true;
+                var category = new CategoryModel()
+                {
+                    CategoryId = CategoryData.CategoryId,
+                    CollectionId = CategoryData.CollectionId,
+                    CategoryName = NewCategoryName,
+                    CreatorId = CategoryData.CreatorId,
+                    ModifierId = (int)Application.Current.Properties["LogedInUserId"]
+                };
+                var response = await new ApiData().PutData<CategoryModel>("Category/UpdateCategory", category, true);
+                if (response != null)
+                {
+                    AllCategories.Remove(CategoryData);
+                    AllCategories.Add(response.data);
+                }
+                EditCategoryPopupIsVisible = !EditCategoryPopupIsVisible;
+                NewCategoryName = string.Empty;
+                IsBusy = false;
+            }
+        }
+        public void CloseUpdateCategoryPopup()
+        {
+            EditCategoryPopupIsVisible = !EditCategoryPopupIsVisible;
+        }
+        public async void DeleteCategory()
+        {
+            IsBusy = true;
+            var response = await new ApiData().DeleteData<string>("Category/DeleteCategoryById?collectionId=" + CategoryData.CategoryId, true);
+            if (response != null)
+            {
+                AllCategories.Remove(CategoryData);
+            }
+            CategoryNotFoundLblIsVisible = AllCategories.Count > 0 ? false : true;
+            DeleteCategoryPopupIsVisible = !DeleteCategoryPopupIsVisible;
+            IsBusy = false;
+        }
+        public void CloseDeleteCategoryPopup()
+        {
+            DeleteCategoryPopupIsVisible = !DeleteCategoryPopupIsVisible;
+        }
     }
 }
+
+
 

@@ -19,6 +19,10 @@ namespace HeartlandArtifact.Views
             var selectedCollection = (((TappedEventArgs)e).Parameter) as CollectionModel;
             var viewModel = BindingContext as HomePageViewModel;
             viewModel.GetUserCategories(selectedCollection);
+            if (viewModel.IsEditIconVisible)
+            {
+                viewModel.IsEditIconVisible = false;
+            }
             viewModel.CategoryUserControlIsVisible = true;
             viewModel.MyCollectionVisible = false;
         }
