@@ -50,7 +50,10 @@ namespace HeartlandArtifact.Views
             // Detail = new NavigationPage(page);
             if (item.Title == "Home")
             {
-                //(BindingContext as HomePageViewModel).SoldItemsIsVisible = false;
+                (BindingContext as HomePageViewModel).MyCollectionVisible = false;
+                (BindingContext as HomePageViewModel).AddNewItemUserControlIsVisible = false;
+                (BindingContext as HomePageViewModel).CategoryUserControlIsVisible = false;
+                (BindingContext as HomePageViewModel).SoldItemsIsVisible = false;
                 (BindingContext as HomePageViewModel).HomeIsVisible = true;
             }
             if (item.Title == "Sold Items")

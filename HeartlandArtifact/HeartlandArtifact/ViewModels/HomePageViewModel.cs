@@ -405,6 +405,7 @@ namespace HeartlandArtifact.ViewModels
             try
             {
                 IsBusy = true;
+                AllCategories = new ObservableCollection<CategoryModel>();
                 CollectionData = new CollectionModel();
                 CollectionData = collection;
                 SelectedCollectionName = collection.CollectionName;
@@ -412,7 +413,12 @@ namespace HeartlandArtifact.ViewModels
                 var response = await new ApiData().GetData<List<CategoryModel>>("Category/GetUserCategories?userId=" + UserId, true);
                 if (response != null)
                 {
-                    AllCategories = new ObservableCollection<CategoryModel>(response.data);
+                    foreach (var item in response.data)
+                    {
+                        if (item.CollectionId == CollectionData.CollectionId)
+                            AllCategories.Add(item);
+                    }
+                    //AllCategories = new ObservableCollection<CategoryModel>(response.data.Where(i => i.CollectionId == CollectionData.CollectionId));
                 }
                 CategoryNotFoundLblIsVisible = AllCategories.Count > 0 ? false : true;
                 IsBusy = false;
