@@ -28,8 +28,8 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
-                            <Image Source="{Binding IconImage}" HorizontalOptions="Start" HeightRequest="25" WidthRequest="25"/>
+                        <StackLayout Padding="15,10" HeightRequest="30" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                            <Image Source="{Binding IconImage}" HorizontalOptions="Start" VerticalOptions="CenterAndExpand" HeightRequest="25" WidthRequest="25"/>
                             <Label FontFamily="{StaticResource HelveticaRegular}" VerticalOptions="FillAndExpand" HorizontalOptions="StartAndExpand" VerticalTextAlignment="Center" 
                            Text="{Binding Title}" FontSize="24" TextColor="Black"/>
                         </StackLayout>

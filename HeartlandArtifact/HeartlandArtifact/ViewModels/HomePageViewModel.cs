@@ -4,6 +4,7 @@ using HeartlandArtifact.Models;
 using HeartlandArtifact.Views;
 using Prism.Commands;
 using Prism.Navigation;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -247,24 +248,31 @@ namespace HeartlandArtifact.ViewModels
             }
             else
             {
-                IsBusy = true;
-                var collection = new CollectionModel()
+                try
                 {
-                    CollectionId = CollectionData.CollectionId,
-                    CollectionName = NewCollectionName,
-                    CreatorId = CollectionData.CreatorId,
-                    ModifierId = (int)Application.Current.Properties["LogedInUserId"]
-                };
-                var response = await new ApiData().PutData<CollectionModel>("Collections/UpdateCollection", collection, true);
-                if (response != null)
-                {
-                    // AllCollections.Where(c => c.CollectionId == response.data.CollectionId).FirstOrDefault().CollectionName = response.data.CollectionName;
-                    AllCollections.Remove(CollectionData);
-                    AllCollections.Add(response.data);
+                    IsBusy = true;
+                    var collection = new CollectionModel()
+                    {
+                        CollectionId = CollectionData.CollectionId,
+                        CollectionName = NewCollectionName,
+                        CreatorId = CollectionData.CreatorId,
+                        ModifierId = (int)Application.Current.Properties["LogedInUserId"]
+                    };
+                    var response = await new ApiData().PutData<CollectionModel>("Collections/UpdateCollection", collection, true);
+                    if (response != null)
+                    {
+                        // AllCollections.Where(c => c.CollectionId == response.data.CollectionId).FirstOrDefault().CollectionName = response.data.CollectionName;
+                        AllCollections.Remove(CollectionData);
+                        AllCollections.Add(response.data);
+                    }
+                    EditCollectionPopupIsVisible = false;
+                    NewCollectionName = string.Empty;
+                    IsBusy = false;
                 }
-                EditCollectionPopupIsVisible = false;
-                NewCollectionName = string.Empty;
-                IsBusy = false;
+                catch (Exception e)
+                {
+
+                }
             }
         }
         public void OpenCloseDeleteCollectionPopup(CollectionModel Collection)
@@ -291,15 +299,22 @@ namespace HeartlandArtifact.ViewModels
         }
         public async void GetUserCollections()
         {
-            IsBusy = true;
-            var UserId = Application.Current.Properties["LogedInUserId"];
-            var response = await new ApiData().GetData<List<CollectionModel>>("Collections/GetUserCollections?userId=" + UserId, true);
-            if (response != null)
+            try
             {
-                AllCollections = new ObservableCollection<CollectionModel>(response.data);
+                IsBusy = true;
+                var UserId = Application.Current.Properties["LogedInUserId"];
+                var response = await new ApiData().GetData<List<CollectionModel>>("Collections/GetUserCollections?userId=" + UserId, true);
+                if (response != null)
+                {
+                    AllCollections = new ObservableCollection<CollectionModel>(response.data);
+                }
+                NotFoundLblIsVisible = AllCollections.Count > 0 ? false : true;
+                IsBusy = false;
             }
-            NotFoundLblIsVisible = AllCollections.Count > 0 ? false : true;
-            IsBusy = false;
+            catch (Exception e)
+            {
+
+            }
         }
         public void GoBackFromCollection()
         {
@@ -327,32 +342,39 @@ namespace HeartlandArtifact.ViewModels
             }
             else
             {
-                IsBusy = true;
-                var newCollection = new CollectionModel()
+                try
                 {
-                    CollectionName = NewCollectionName,
-                    CreatorId = (int)Application.Current.Properties["LogedInUserId"],
-                    ModifierId = (int)Application.Current.Properties["LogedInUserId"],
-                };
-                var response = await new ApiData().PostData<CollectionModel>("Collections/AddNewCollection", newCollection, true);
-                if (response != null && response.data != null)
-                {
-                    AllCollections.Add(response.data);
+                    IsBusy = true;
+                    var newCollection = new CollectionModel()
+                    {
+                        CollectionName = NewCollectionName,
+                        CreatorId = (int)Application.Current.Properties["LogedInUserId"],
+                        ModifierId = (int)Application.Current.Properties["LogedInUserId"],
+                    };
+                    var response = await new ApiData().PostData<CollectionModel>("Collections/AddNewCollection", newCollection, true);
+                    if (response != null && response.data != null)
+                    {
+                        AllCollections.Add(response.data);
+                    }
+                    else
+                    {
+                        Toast.LongAlert(response.message);
+                        IsBusy = false;
+                        return;
+                    }
+                    NotFoundLblIsVisible = AllCollections.Count > 0 ? false : true;
+                    if (IsEditIconVisible)
+                    {
+                        IsEditIconVisible = false;
+                    }
+                    AddCollectionPopupIsVisible = false;
+                    NewCollectionName = string.Empty;
+                    IsBusy = false;
                 }
-                else
+                catch (Exception e)
                 {
-                    Toast.LongAlert(response.message);
-                    IsBusy = false; 
-                    return;
+
                 }
-                NotFoundLblIsVisible = AllCollections.Count > 0 ? false : true;
-                if (IsEditIconVisible)
-                {
-                    IsEditIconVisible = false;
-                }
-                AddCollectionPopupIsVisible = false;
-                NewCollectionName = string.Empty;
-                IsBusy = false;
             }
         }
         public void GetListForDropdown()
@@ -380,18 +402,25 @@ namespace HeartlandArtifact.ViewModels
         }
         public async void GetUserCategories(CollectionModel collection)
         {
-            IsBusy = true;
-            CollectionData = new CollectionModel();
-            CollectionData = collection;
-            SelectedCollectionName = collection.CollectionName;
-            var UserId = Application.Current.Properties["LogedInUserId"];
-            var response = await new ApiData().GetData<List<CategoryModel>>("Category/GetUserCategories?userId=" + UserId, true);
-            if (response != null)
+            try
             {
-                AllCategories = new ObservableCollection<CategoryModel>(response.data);
+                IsBusy = true;
+                CollectionData = new CollectionModel();
+                CollectionData = collection;
+                SelectedCollectionName = collection.CollectionName;
+                var UserId = Application.Current.Properties["LogedInUserId"];
+                var response = await new ApiData().GetData<List<CategoryModel>>("Category/GetUserCategories?userId=" + UserId, true);
+                if (response != null)
+                {
+                    AllCategories = new ObservableCollection<CategoryModel>(response.data);
+                }
+                CategoryNotFoundLblIsVisible = AllCategories.Count > 0 ? false : true;
+                IsBusy = false;
             }
-            CategoryNotFoundLblIsVisible = AllCategories.Count > 0 ? false : true;
-            IsBusy = false;
+            catch (Exception e)
+            {
+
+            }
         }
         public async void CreateNewCategory()
         {
@@ -403,33 +432,40 @@ namespace HeartlandArtifact.ViewModels
             }
             else
             {
-                IsBusy = true;
-                var newCategory = new CategoryModel()
+                try
                 {
-                    CollectionId = CollectionData.CollectionId,
-                    CategoryName = NewCategoryName,
-                    CreatorId = (int)Application.Current.Properties["LogedInUserId"],
-                    ModifierId = (int)Application.Current.Properties["LogedInUserId"],
-                };
-                var response = await new ApiData().PostData<CategoryModel>("Category/AddNewCategory", newCategory, true);
-                if (response != null && response.data!=null)
-                {
-                    AllCategories.Add(response.data);
+                    IsBusy = true;
+                    var newCategory = new CategoryModel()
+                    {
+                        CollectionId = CollectionData.CollectionId,
+                        CategoryName = NewCategoryName,
+                        CreatorId = (int)Application.Current.Properties["LogedInUserId"],
+                        ModifierId = (int)Application.Current.Properties["LogedInUserId"],
+                    };
+                    var response = await new ApiData().PostData<CategoryModel>("Category/AddNewCategory", newCategory, true);
+                    if (response != null && response.data != null)
+                    {
+                        AllCategories.Add(response.data);
+                    }
+                    else
+                    {
+                        Toast.LongAlert(response.message);
+                        IsBusy = false;
+                        return;
+                    }
+                    CategoryNotFoundLblIsVisible = AllCategories.Count > 0 ? false : true;
+                    if (IsEditCategoryIconVisible)
+                    {
+                        IsEditCategoryIconVisible = false;
+                    }
+                    AddCategoryPopupIsVisible = false;
+                    NewCategoryName = string.Empty;
+                    IsBusy = false;
                 }
-                else
+                catch (Exception e)
                 {
-                    Toast.LongAlert(response.message);
-                    IsBusy = false; 
-                    return;
+
                 }
-                CategoryNotFoundLblIsVisible = AllCategories.Count > 0 ? false : true;
-                if (IsEditCategoryIconVisible)
-                {
-                    IsEditCategoryIconVisible = false;
-                }
-                AddCategoryPopupIsVisible = false;
-                NewCategoryName = string.Empty;
-                IsBusy = false;
             }
         }
         public async void UpdateCategoryName()
@@ -442,24 +478,29 @@ namespace HeartlandArtifact.ViewModels
             }
             else
             {
-                IsBusy = true;
-                var category = new CategoryModel()
+                try
                 {
-                    CategoryId = CategoryData.CategoryId,
-                    CollectionId = CategoryData.CollectionId,
-                    CategoryName = NewCategoryName,
-                    CreatorId = CategoryData.CreatorId,
-                    ModifierId = (int)Application.Current.Properties["LogedInUserId"]
-                };
-                var response = await new ApiData().PutData<CategoryModel>("Category/UpdateCategory", category, true);
-                if (response != null)
-                {
-                    AllCategories.Remove(CategoryData);
-                    AllCategories.Add(response.data);
+                    IsBusy = true;
+                    var category = new CategoryModel()
+                    {
+                        CategoryId = CategoryData.CategoryId,
+                        CollectionId = CategoryData.CollectionId,
+                        CategoryName = NewCategoryName,
+                        CreatorId = CategoryData.CreatorId,
+                        ModifierId = (int)Application.Current.Properties["LogedInUserId"]
+                    };
+                    var response = await new ApiData().PutData<CategoryModel>("Category/UpdateCategory", category, true);
+                    if (response != null)
+                    {
+                        AllCategories.Remove(CategoryData);
+                        AllCategories.Add(response.data);
+                    }
+                    EditCategoryPopupIsVisible = !EditCategoryPopupIsVisible;
+                    NewCategoryName = string.Empty;
+                    IsBusy = false;
                 }
-                EditCategoryPopupIsVisible = !EditCategoryPopupIsVisible;
-                NewCategoryName = string.Empty;
-                IsBusy = false;
+                catch (Exception e)
+                { }
             }
         }
         public void CloseUpdateCategoryPopup()

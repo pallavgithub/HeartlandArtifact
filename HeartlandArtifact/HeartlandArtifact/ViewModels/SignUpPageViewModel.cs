@@ -119,7 +119,7 @@ namespace HeartlandArtifact.ViewModels
             _googleManager.Login(OnGoogleLoginComplete);
 
         }
-        private void OnFacebookLoginComplete(FacebookUser facebookUser, string message)
+        private async void OnFacebookLoginComplete(FacebookUser facebookUser, string message)
         {
             var toast = DependencyService.Get<IMessage>();
             if (facebookUser != null)
@@ -127,15 +127,17 @@ namespace HeartlandArtifact.ViewModels
                 FacebookUser = facebookUser;
                 IsLogedIn = true; 
                 Application.Current.Properties["IsLogedIn"] = true;
-                Application.Current.Properties["UserName"] = facebookUser.FirstName;   
-                NavigationService.NavigateAsync("/HomePage");
+                Application.Current.Properties["LogedInUserId"] = 0;
+                Application.Current.Properties["UserName"] = facebookUser.FirstName;
+                await Application.Current.SavePropertiesAsync();
+                await NavigationService.NavigateAsync("/HomePage");
             }
             else
             {
                 toast.LongAlert(message);
             }
         }
-        private void OnGoogleLoginComplete(GoogleUser googleUser, string message)
+        private async void OnGoogleLoginComplete(GoogleUser googleUser, string message)
         {
             var toast = DependencyService.Get<IMessage>();
             if (googleUser != null)
@@ -143,8 +145,10 @@ namespace HeartlandArtifact.ViewModels
                 GoogleUser = googleUser;
                 IsLogedIn = true; 
                 Application.Current.Properties["IsLogedIn"] = true;
+                Application.Current.Properties["LogedInUserId"] = 0;
                 Application.Current.Properties["UserName"] = googleUser.Name;
-                NavigationService.NavigateAsync("/HomePage");
+                await Application.Current.SavePropertiesAsync();
+                await NavigationService.NavigateAsync("/HomePage");
             }
             else
             {
