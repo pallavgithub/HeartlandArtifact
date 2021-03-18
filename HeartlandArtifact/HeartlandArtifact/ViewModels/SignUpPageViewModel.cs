@@ -5,6 +5,7 @@ using HeartlandArtifact.Services.Contracts;
 using Prism.Commands;
 using Prism.Navigation;
 using System;
+using System.Net.Http;
 using System.Text.RegularExpressions;
 using Xamarin.Forms;
 
@@ -125,12 +126,28 @@ namespace HeartlandArtifact.ViewModels
             if (facebookUser != null)
             {
                 FacebookUser = facebookUser;
-                IsLogedIn = true; 
-                Application.Current.Properties["IsLogedIn"] = true;
-                Application.Current.Properties["LogedInUserId"] = 0;
-                Application.Current.Properties["UserName"] = facebookUser.FirstName;
-                await Application.Current.SavePropertiesAsync();
-                await NavigationService.NavigateAsync("/HomePage");
+                HttpClient client = new HttpClient();
+                MultipartFormDataContent form = new MultipartFormDataContent();
+                form.Add(new StringContent(FacebookUser.FirstName), "FirstName");
+                form.Add(new StringContent(FacebookUser.LastName), "LastName");
+                form.Add(new StringContent(FacebookUser.Email), "EmailId");
+                form.Add(new StringContent("Facebook"), "Platform");
+                form.Add(new StringContent(string.Empty), "ContactNumber");
+                var response = await new ApiData().PostFormData<UserModel>("user/SocialMediaLogin", form, true);
+                if (response != null && response.data != null)
+                {
+                    IsLogedIn = true;
+                    Application.Current.Properties["IsLogedIn"] = true;
+                    Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
+                    Application.Current.Properties["UserName"] = response.data.FirstName;
+                    await Application.Current.SavePropertiesAsync();
+                    toast.LongAlert(response.message);
+                    await NavigationService.NavigateAsync("/HomePage");
+                }
+                else
+                {
+                    toast.LongAlert(response.message);
+                }
             }
             else
             {
@@ -143,17 +160,31 @@ namespace HeartlandArtifact.ViewModels
             if (googleUser != null)
             {
                 GoogleUser = googleUser;
-                IsLogedIn = true; 
-                Application.Current.Properties["IsLogedIn"] = true;
-                Application.Current.Properties["LogedInUserId"] = 0;
-                Application.Current.Properties["UserName"] = googleUser.Name;
-                await Application.Current.SavePropertiesAsync();
-                await NavigationService.NavigateAsync("/HomePage");
+                MultipartFormDataContent form = new MultipartFormDataContent();
+                form.Add(new StringContent(GoogleUser.Name.Split(' ')[0]), "FirstName");
+                form.Add(new StringContent(GoogleUser.Name.Split(' ')[1]), "LastName");
+                form.Add(new StringContent(GoogleUser.Email), "EmailId");
+                form.Add(new StringContent("Google"), "Platform");
+                form.Add(new StringContent(string.Empty), "ContactNumber");
+                var response = await new ApiData().PostFormData<UserModel>("user/SocialMediaLogin", form, true);
+                if (response != null && response.data != null)
+                {
+                    IsLogedIn = true;
+                    Application.Current.Properties["IsLogedIn"] = true;
+                    Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
+                    Application.Current.Properties["UserName"] = response.data.FirstName;
+                    await Application.Current.SavePropertiesAsync();
+                    toast.LongAlert(response.message);
+                    await NavigationService.NavigateAsync("/HomePage");
+                }
+                else
+                {
+                    toast.LongAlert(response.message);
+                }
             }
             else
             {
                 toast.LongAlert(message);
-                //_dialogService.DisplayAlertAsync("Error", message, "Ok");
             }
         }
         public void GoToSignInPage()

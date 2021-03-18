@@ -196,5 +196,57 @@ namespace HeartlandArtifact.Helpers
             }
             return data;
         }
+        public async Task<ResponseModel<T>> PostFormData<T>(string extURL, MultipartFormDataContent sendData, bool authHeaders = false)
+        {
+            ResponseModel<T> data = new ResponseModel<T>();
+            string url = string.Format("{0}{1}", ApiUrlConstant.BASE_URL, extURL);
+            try
+            {
+                HttpClient client = new HttpClient();
+                // SetAuthHeaders(client, authHeaders);
+
+                //HttpContent content;
+                //if (sendData != null)
+                //{
+                //    var json = JsonConvert.SerializeObject(sendData);
+                //    content = new StringContent(json, Encoding.UTF8, "application/json");
+                //    //content = new StringContent(json);
+                //}
+                //else
+                //{
+                //    content = new StringContent(string.Empty);
+                //}
+                // SetAuthHeaders(client, authHeaders);
+                try
+                {
+                    var result = await client.PostAsync(url, sendData);
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        var response = await result.Content.ReadAsStringAsync();
+                        data = JsonConvert.DeserializeObject<ResponseModel<T>>(response);
+                    }
+                    else if (result.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        data.message = "Unauthorized";
+                        data.status = "fail";
+                    }
+                    else
+                    {
+                        var response = await result.Content.ReadAsStringAsync();
+                        data = JsonConvert.DeserializeObject<ResponseModel<T>>(response);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                data = default(ResponseModel<T>);
+            }
+            return data;
+        }
     }
 }
