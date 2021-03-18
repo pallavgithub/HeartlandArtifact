@@ -128,6 +128,12 @@ namespace HeartlandArtifact.ViewModels
             get { return _editCategoryPopupIsVisible; }
             set { SetProperty(ref _editCategoryPopupIsVisible, value); }
         }
+        private bool _logoutPopupIsVisible;
+        public bool LogoutPopupIsVisible
+        {
+            get { return _logoutPopupIsVisible; }
+            set { SetProperty(ref _logoutPopupIsVisible, value); }
+        }
         private bool _deleteCategoryPopupIsVisible;
         public bool DeleteCategoryPopupIsVisible
         {
@@ -236,6 +242,8 @@ namespace HeartlandArtifact.ViewModels
         }
         public void CloseUpdateCollectionPopup()
         {
+            IsEditIconVisible = false;
+            NewCollectionName = string.Empty;
             EditCollectionPopupIsVisible = !EditCollectionPopupIsVisible;
         }
         public async void UpdateCollectionName()
@@ -250,6 +258,7 @@ namespace HeartlandArtifact.ViewModels
             {
                 try
                 {
+                    IsEditIconVisible = false;
                     IsBusy = true;
                     var collection = new CollectionModel()
                     {
@@ -260,11 +269,11 @@ namespace HeartlandArtifact.ViewModels
                     };
                     var response = await new ApiData().PutData<CollectionModel>("Collections/UpdateCollection", collection, true);
                     if (response != null)
-                    {
+                    {                        
                         // AllCollections.Where(c => c.CollectionId == response.data.CollectionId).FirstOrDefault().CollectionName = response.data.CollectionName;
                         AllCollections.Remove(CollectionData);
                         AllCollections.Add(response.data);
-                    }
+                    }                    
                     EditCollectionPopupIsVisible = false;
                     NewCollectionName = string.Empty;
                     IsBusy = false;
@@ -277,16 +286,19 @@ namespace HeartlandArtifact.ViewModels
         }
         public void OpenCloseDeleteCollectionPopup(CollectionModel Collection)
         {
+            IsEditIconVisible = false;
             CollectionData = new CollectionModel();
             CollectionData = Collection;
             DeleteCollectionPopupIsVisible = !DeleteCollectionPopupIsVisible;
         }
         public void CloseDeleteCollectionPopup()
         {
+            IsEditIconVisible = false;
             DeleteCollectionPopupIsVisible = !DeleteCollectionPopupIsVisible;
         }
         public async void DeleteCollection()
         {
+            IsEditIconVisible = false;
             IsBusy = true;
             var response = await new ApiData().DeleteData<string>("Collections/DeleteCollectionById?collectionId=" + CollectionData.CollectionId, true);
             if (response != null)
@@ -330,6 +342,7 @@ namespace HeartlandArtifact.ViewModels
         }
         public void OpenCloseAddCollectionPopup()
         {
+            NewCollectionName = string.Empty;
             AddCollectionPopupIsVisible = !AddCollectionPopupIsVisible;
         }
         public async void CreateNewCollection()
@@ -398,6 +411,7 @@ namespace HeartlandArtifact.ViewModels
         }
         public void CloseAddCategoryPopup()
         {
+            NewCategoryName = string.Empty;
             AddCategoryPopupIsVisible = !AddCategoryPopupIsVisible;
         }
         public async void GetUserCategories(CollectionModel collection)
@@ -486,6 +500,7 @@ namespace HeartlandArtifact.ViewModels
             {
                 try
                 {
+                    IsEditCategoryIconVisible = false;
                     IsBusy = true;
                     var category = new CategoryModel()
                     {
@@ -496,10 +511,16 @@ namespace HeartlandArtifact.ViewModels
                         ModifierId = (int)Application.Current.Properties["LogedInUserId"]
                     };
                     var response = await new ApiData().PutData<CategoryModel>("Category/UpdateCategory", category, true);
-                    if (response != null)
+                    if (response != null && response.data != null)
                     {
                         AllCategories.Remove(CategoryData);
                         AllCategories.Add(response.data);
+                    }
+                    else
+                    {
+                        Toast.LongAlert(response.message);
+                        IsBusy = false;
+                        return;
                     }
                     EditCategoryPopupIsVisible = !EditCategoryPopupIsVisible;
                     NewCategoryName = string.Empty;
@@ -511,10 +532,13 @@ namespace HeartlandArtifact.ViewModels
         }
         public void CloseUpdateCategoryPopup()
         {
+            IsEditCategoryIconVisible = false;
+            NewCategoryName = string.Empty;
             EditCategoryPopupIsVisible = !EditCategoryPopupIsVisible;
         }
         public async void DeleteCategory()
         {
+            IsEditCategoryIconVisible = false;
             IsBusy = true;
             var response = await new ApiData().DeleteData<string>("Category/DeleteCategoryById?collectionId=" + CategoryData.CategoryId, true);
             if (response != null)
@@ -527,6 +551,7 @@ namespace HeartlandArtifact.ViewModels
         }
         public void CloseDeleteCategoryPopup()
         {
+            IsEditCategoryIconVisible = false;
             DeleteCategoryPopupIsVisible = !DeleteCategoryPopupIsVisible;
         }
     }

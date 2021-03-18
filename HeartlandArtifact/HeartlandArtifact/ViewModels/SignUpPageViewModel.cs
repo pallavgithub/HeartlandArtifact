@@ -5,6 +5,7 @@ using HeartlandArtifact.Services.Contracts;
 using Prism.Commands;
 using Prism.Navigation;
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using Xamarin.Forms;
@@ -136,10 +137,11 @@ namespace HeartlandArtifact.ViewModels
                 var response = await new ApiData().PostFormData<UserModel>("user/SocialMediaLogin", form, true);
                 if (response != null && response.data != null)
                 {
+                    string newString = new String(response.data.FirstName.Select((ch, index) => (index == 0) ? Char.ToUpper(ch) : Char.ToLower(ch)).ToArray());
                     IsLogedIn = true;
                     Application.Current.Properties["IsLogedIn"] = true;
                     Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
-                    Application.Current.Properties["UserName"] = response.data.FirstName;
+                    Application.Current.Properties["UserName"] = newString;
                     await Application.Current.SavePropertiesAsync();
                     toast.LongAlert(response.message);
                     await NavigationService.NavigateAsync("/HomePage");
@@ -169,10 +171,11 @@ namespace HeartlandArtifact.ViewModels
                 var response = await new ApiData().PostFormData<UserModel>("user/SocialMediaLogin", form, true);
                 if (response != null && response.data != null)
                 {
+                    string newString = new String(response.data.FirstName.Select((ch, index) => (index == 0) ? Char.ToUpper(ch) : Char.ToLower(ch)).ToArray());
                     IsLogedIn = true;
                     Application.Current.Properties["IsLogedIn"] = true;
                     Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
-                    Application.Current.Properties["UserName"] = response.data.FirstName;
+                    Application.Current.Properties["UserName"] = newString;
                     await Application.Current.SavePropertiesAsync();
                     toast.LongAlert(response.message);
                     await NavigationService.NavigateAsync("/HomePage");

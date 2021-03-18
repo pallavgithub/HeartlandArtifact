@@ -79,22 +79,26 @@
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="16" TextColor="Black"/>
                                     </Frame>
-                                    <StackLayout Orientation="Horizontal">
-                                        <Grid>
-                                            <Image Source="Button.png" WidthRequest="150"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Padding="0,10,0,10" HeightRequest="38">
+                                            <Image Source="Button.png" Aspect="Fill"/>
                                             <Label Text="Save" FontSize="16" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,0,0,3"/>
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding SaveButtonCommand}"/>
                                             </Grid.GestureRecognizers>
                                         </Grid>
-                                        <Grid>
-                                            <Image Source="Button.png" WidthRequest="150"/>
+                                        <Grid Grid.Column="1">
+                                            <Image Source="GrayBtn.png"/>
                                             <Label Text="Cancel" FontSize="16" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,0,0,3"/>
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding CancelButtonCommand}"/>
                                             </Grid.GestureRecognizers>
                                         </Grid>
-                                    </StackLayout>
+                                    </Grid>
                                 </StackLayout>
                             </Grid>
                             <Grid IsVisible="{Binding DeleteCollectionPopupIsVisible}" x:Name="DeleteCollectionPopup">
@@ -116,7 +120,7 @@
                                         </Grid>
                                         <Grid Grid.Column="1">
                                             <Image Source="RedBtn.png"/>
-                                            <Label Text="Yes, Delete" FontSize="16" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,0,0,3"/>
+                                            <Label Text="Yes, Delete" FontSize="16" TextColor="White" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,0,0,3"/>
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding DeleteCollectionCommand}"/>
                                             </Grid.GestureRecognizers>
@@ -154,29 +158,33 @@
                             <Grid IsVisible="{Binding EditCategoryPopupIsVisible}" x:Name="EditCategoryPopup">
                                 <ContentView BackgroundColor="LightGray" Opacity="0.7"/>
                                 <StackLayout BackgroundColor="White" Padding="15" Margin="20,0,20,0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-                                    <Label Text="Edit Collection" FontSize="22" TextColor="Black" HorizontalTextAlignment="Center" FontFamily="{StaticResource HelveticaRegular}"/>
+                                    <Label Text="Edit Category" FontSize="22" TextColor="Black" HorizontalTextAlignment="Center" FontFamily="{StaticResource HelveticaRegular}"/>
                                     <Frame Margin="2,5,2,8" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="25"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
                                         <custom:BorderLessEntry Text="{Binding NewCategoryName}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="16" TextColor="Black"/>
                                     </Frame>
-                                    <StackLayout Orientation="Horizontal">
-                                        <Grid>
-                                            <Image Source="Button.png" WidthRequest="150"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Padding="0,10,0,10" HeightRequest="38">
+                                            <Image Source="Button.png" Aspect="Fill"/>
                                             <Label Text="Save" FontSize="16" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,0,0,3"/>
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding SaveEditCategoryCommand}"/>
                                             </Grid.GestureRecognizers>
                                         </Grid>
-                                        <Grid>
-                                            <Image Source="Button.png" WidthRequest="150"/>
+                                        <Grid Grid.Column="1">
+                                            <Image Source="GrayBtn.png"/>
                                             <Label Text="Cancel" FontSize="16" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,0,0,3"/>
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding CancelEditCategoryCommand}"/>
                                             </Grid.GestureRecognizers>
                                         </Grid>
-                                    </StackLayout>
+                                    </Grid>
                                 </StackLayout>
                             </Grid>
                             <Grid IsVisible="{Binding DeleteCategoryPopupIsVisible}" x:Name="DeleteCategoryPopup">
@@ -197,12 +205,31 @@
                                         </Grid>
                                         <Grid Grid.Column="1">
                                             <Image Source="RedBtn.png"/>
-                                            <Label Text="Yes, Delete" FontSize="16" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,0,0,3"/>
+                                            <Label Text="Yes, Delete" FontSize="16" TextColor="White" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,0,0,3"/>
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding DeleteCategoryCommand}"/>
                                             </Grid.GestureRecognizers>
                                         </Grid>
                                     </Grid>
+                                </StackLayout>
+                            </Grid>
+
+                            <Grid IsVisible="{Binding LogoutPopupIsVisible}" x:Name="LogoutPopup">
+                                <ContentView BackgroundColor="LightGray" Opacity="0.7"/>
+                                <StackLayout BackgroundColor="White" Padding="7,7,7,15" Spacing="10" Margin="20,0,20,0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                                    <Image HorizontalOptions="End" Source="Cross.png" HeightRequest="20" WidthRequest="20">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="CancelLogout_Tapped"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                    <Label Text="Are you sure you want to logout?" Margin="10,0,10,0" FontSize="20" TextColor="Black" HorizontalTextAlignment="Center" FontFamily="{StaticResource HelveticaRegular}"/>
+                                    <Grid>
+                                        <Image Source="Button.png" WidthRequest="210"/>
+                                        <Label Text="Logout" FontSize="18" TextColor="#823E21" FontFamily="{StaticResource HelveticaBold}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,0,0,3"/>
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="ConfirmLogout_Tapped"/>
+                                        </Grid.GestureRecognizers>
+                                    </Grid>                                        
                                 </StackLayout>
                             </Grid>
                             <Grid IsVisible="{Binding IsBusy}">

@@ -22,7 +22,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="10"/>
                     </Grid.RowDefinitions>
-                    <Image Source="MenuIcon.png"  Grid.Column="1" Grid.Row="1" HeightRequest="20" WidthRequest="25" HorizontalOptions="End"/>
+                    <Image Source="MenuIcon.png" x:Name="MasterMenuIcon" Grid.Column="1" Grid.Row="1" HeightRequest="20" WidthRequest="30" HorizontalOptions="End"/>
                 </Grid>
             </ListView.Header>
             <ListView.ItemTemplate>

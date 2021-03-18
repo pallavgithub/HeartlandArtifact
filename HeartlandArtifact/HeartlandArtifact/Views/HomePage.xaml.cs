@@ -1,11 +1,6 @@
 ﻿using HeartlandArtifact.Services.Contracts;
 using HeartlandArtifact.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -23,19 +18,16 @@ namespace HeartlandArtifact.Views
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += Logout_Tapped;
             MasterPage.Logout_Option.GestureRecognizers.Add(tapGestureRecognizer);
+            var MenuTabGesture = new TapGestureRecognizer();
+            MenuTabGesture.Tapped += Menu_Tapped;
+            MasterPage.Menu_Icon.GestureRecognizers.Add(MenuTabGesture);
             _facebookManager = DependencyService.Get<IFacebookManager>();
             _googleManager = DependencyService.Get<IGoogleManager>();
         }
-        private async void Logout_Tapped(object sender, EventArgs e)
+        private void Logout_Tapped(object sender, EventArgs e)
         {
+            (BindingContext as HomePageViewModel).LogoutPopupIsVisible = true;
             IsPresented = false;
-            _facebookManager.Logout();
-            _googleManager.Logout();
-            Application.Current.Properties["IsLogedIn"] = false;
-            Application.Current.Properties["LogedInUserId"] = 0;
-            Application.Current.Properties["UserName"] = string.Empty;
-            await Application.Current.SavePropertiesAsync();
-            await (BindingContext as HomePageViewModel)._nav.NavigateAsync("/SignInPage");
         }
         protected override bool OnBackButtonPressed() => true;
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -67,7 +59,24 @@ namespace HeartlandArtifact.Views
         }
         private void Menu_Tapped(object sender, EventArgs e)
         {
-            IsPresented = true;
+            IsPresented = !IsPresented;
+        }
+
+        private void CancelLogout_Tapped(object sender, EventArgs e)
+        {
+            (BindingContext as HomePageViewModel).LogoutPopupIsVisible = false;
+        }
+
+        private async void ConfirmLogout_Tapped(object sender, EventArgs e)
+        {
+            _facebookManager.Logout();
+            _googleManager.Logout();
+            Application.Current.Properties["IsLogedIn"] = false;
+            Application.Current.Properties["LogedInUserId"] = 0;
+            Application.Current.Properties["UserName"] = string.Empty;
+            await Application.Current.SavePropertiesAsync();
+            (BindingContext as HomePageViewModel).LogoutPopupIsVisible = false;
+            await (BindingContext as HomePageViewModel)._nav.NavigateAsync("/SignInPage");
         }
     }
 }

@@ -4,6 +4,7 @@ using HeartlandArtifact.Models;
 using Prism.Commands;
 using Prism.Navigation;
 using System;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace HeartlandArtifact.ViewModels
@@ -138,9 +139,10 @@ namespace HeartlandArtifact.ViewModels
                             var response = await new ApiData().PostData<UserModel>("User/SignupWithVerifiedOtp", App.SignUpDetails, true);
                             if (response != null && response.data != null && response.status == "Success")
                             {
+                                string newString = new String(response.data.FirstName.Select((ch, index) => (index == 0) ? Char.ToUpper(ch) : Char.ToLower(ch)).ToArray());
                                 Application.Current.Properties["IsLogedIn"] = true;
                                 Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
-                                Application.Current.Properties["UserName"] = response.data.FirstName;
+                                Application.Current.Properties["UserName"] = newString;
                                 await Application.Current.SavePropertiesAsync();
                                 Toast.LongAlert("Signup Successful.");
                                 await NavigationService.NavigateAsync("/HomePage");

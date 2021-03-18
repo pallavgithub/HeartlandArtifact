@@ -17,7 +17,7 @@ namespace HeartlandArtifact.Views
     {
         public ListView ListView;
         public StackLayout Logout_Option;
-
+        public Image Menu_Icon;
         public HomePageMaster()
         {
             InitializeComponent();
@@ -25,6 +25,7 @@ namespace HeartlandArtifact.Views
             BindingContext = new HomePageMasterViewModel();
             ListView = MenuItemsListView;
             Logout_Option = LogoutOption;
+            Menu_Icon = MasterMenuIcon;
         }
         protected override bool OnBackButtonPressed() => true;
 
