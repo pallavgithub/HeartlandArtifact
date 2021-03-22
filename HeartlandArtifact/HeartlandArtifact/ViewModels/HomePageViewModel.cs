@@ -297,7 +297,8 @@ namespace HeartlandArtifact.ViewModels
                     var response = await new ApiData().PostData<CollectionModel>("Collections/AddNewCollection", newCollection, true);
                     if (response != null && response.data != null)
                     {
-                        AllCollections.Add(response.data);
+                        //AllCollections.Add(response.data);
+                        AllCollections.Insert(0, response.data);
                     }
                     else
                     {
@@ -343,7 +344,7 @@ namespace HeartlandArtifact.ViewModels
                     var response = await new ApiData().PostData<CategoryModel>("Category/AddNewCategory", newCategory, true);
                     if (response != null && response.data != null)
                     {
-                        AllCategories.Add(response.data);
+                        AllCategories.Insert(0,response.data);
                     }
                     else
                     {
@@ -571,6 +572,7 @@ namespace HeartlandArtifact.ViewModels
                     {
                         if (item.CollectionId == CollectionData.CollectionId)
                             AllCategories.Add(item);
+
                     }
                 }
                 CategoryNotFoundLblIsVisible = AllCategories.Count > 0 ? false : true;
