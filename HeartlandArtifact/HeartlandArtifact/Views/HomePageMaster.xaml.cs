@@ -37,8 +37,8 @@ namespace HeartlandArtifact.Views
             {
                 MenuItems = new ObservableCollection<HomePageMasterMenuItem>(new[]
                 {
-                    new HomePageMasterMenuItem { Id = 0, Title = "Home", IconImage="HomeIcon.png"},
-                    new HomePageMasterMenuItem { Id = 1, Title = "Sold Items", IconImage="Dollar.png" },
+                    new HomePageMasterMenuItem { Id = 0, Title = "Home", IconImage="HomeIcon.png" ,TextColor="#823E21"},
+                    new HomePageMasterMenuItem { Id = 1, Title = "Sold Items", IconImage="Dollar.png", TextColor="#000000" },
                 });
             }
 

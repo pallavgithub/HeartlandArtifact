@@ -130,7 +130,7 @@ namespace HeartlandArtifact.ViewModels
                     Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
                     Application.Current.Properties["UserName"] = newString;
                     await Application.Current.SavePropertiesAsync();
-                    toast.LongAlert(response.message);
+                    toast.LongAlert("Login Successful");
                     await NavigationService.NavigateAsync("/HomePage");
                 }
                 else
@@ -168,7 +168,7 @@ namespace HeartlandArtifact.ViewModels
                     Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
                     Application.Current.Properties["UserName"] = newString;
                     await Application.Current.SavePropertiesAsync();
-                    toast.LongAlert(response.message);
+                    toast.LongAlert("Login Successful");
                     await NavigationService.NavigateAsync("/HomePage");
                 }
                 else

@@ -69,14 +69,14 @@ namespace HeartlandArtifact.Views
 
         private async void ConfirmLogout_Tapped(object sender, EventArgs e)
         {
+            (BindingContext as HomePageViewModel).LogoutPopupIsVisible = false;
             _facebookManager.Logout();
             _googleManager.Logout();
             Application.Current.Properties["IsLogedIn"] = false;
             Application.Current.Properties["LogedInUserId"] = 0;
             Application.Current.Properties["UserName"] = string.Empty;
             await Application.Current.SavePropertiesAsync();
-            (BindingContext as HomePageViewModel).LogoutPopupIsVisible = false;
-            await (BindingContext as HomePageViewModel)._nav.NavigateAsync("/SignInPage");
+            await (BindingContext as HomePageViewModel)._nav.NavigateAsync("SignInPage");
         }
     }
 }

@@ -29,9 +29,9 @@
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout Padding="15,10" HeightRequest="30" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
-                            <Image Source="{Binding IconImage}" HorizontalOptions="Start" VerticalOptions="CenterAndExpand" HeightRequest="25" WidthRequest="25"/>
+                            <Image Source="{Binding IconImage}" HorizontalOptions="Start" Aspect="AspectFit" VerticalOptions="CenterAndExpand" Margin="0,5,0,0" HeightRequest="25" WidthRequest="23"/>
                             <Label FontFamily="{StaticResource HelveticaRegular}" VerticalOptions="FillAndExpand" HorizontalOptions="StartAndExpand" VerticalTextAlignment="Center" 
-                           Text="{Binding Title}" FontSize="24" TextColor="Black"/>
+                           Text="{Binding Title}" FontSize="24" TextColor="{Binding TextColor}"/>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

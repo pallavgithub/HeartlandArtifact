@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace HeartlandArtifact.Views
 {
@@ -17,5 +18,6 @@ namespace HeartlandArtifact.Views
         public string Title { get; set; }
         public string IconImage { get; set; }
         public Type TargetType { get; set; }
+        public string TextColor { get; set; }
     }
 }
