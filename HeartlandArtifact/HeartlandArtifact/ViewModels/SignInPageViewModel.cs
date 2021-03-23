@@ -17,6 +17,9 @@ namespace HeartlandArtifact.ViewModels
     {
         private readonly IGoogleManager _googleManager;
         private readonly IFacebookManager _facebookManager;
+        private readonly IAppleManager _appleManager;
+        public DelegateCommand AppleLoginCommand { get; set; }
+        public DelegateCommand AppleLogoutCommand { get; set; }
         public DelegateCommand FacebookLoginCommand { get; set; }
         public DelegateCommand FacebookLogoutCommand { get; set; }
         public DelegateCommand GoogleLoginCommand { get; set; }
@@ -26,6 +29,7 @@ namespace HeartlandArtifact.ViewModels
         public DelegateCommand ContinueCommand { get; set; }
         private FacebookUser _facebookUser;
         private GoogleUser _googleUser;
+       
         private bool _isLogedIn;
         public bool IsLogedIn
         {
@@ -72,8 +76,11 @@ namespace HeartlandArtifact.ViewModels
         {
             _facebookManager = DependencyService.Get<IFacebookManager>();
             _googleManager = DependencyService.Get<IGoogleManager>();
+            _appleManager = DependencyService.Get<IAppleManager>();
 
             IsLogedIn = false;
+            AppleLoginCommand = new DelegateCommand(AppleIdLogin);
+            AppleLogoutCommand = new DelegateCommand(AppleIdLogout);
             FacebookLoginCommand = new DelegateCommand(FacebookLogin);
             GoogleLoginCommand = new DelegateCommand(GoogleLogin);
             FacebookLogoutCommand = new DelegateCommand(FacebookLogout);
@@ -89,6 +96,17 @@ namespace HeartlandArtifact.ViewModels
         public void GoToForgotPasswordPage()
         {
             NavigationService.NavigateAsync("ForgotPasswordPage");
+        }
+        private void AppleIdLogout()
+        {
+           // _facebookManager.Logout();
+            IsLogedIn = false;
+        }
+        private async void AppleIdLogin()
+        {
+            //var k = _appleManager.IsAvailable;
+            var account = await  _appleManager.SignInAsync();
+            
         }
         private void FacebookLogout()
         {

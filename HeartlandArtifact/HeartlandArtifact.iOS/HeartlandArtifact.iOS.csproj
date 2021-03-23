@@ -29,9 +29,9 @@
     <MtouchDebug>true</MtouchDebug>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
     <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
-    <CodesignProvision>VS: WildCard Development</CodesignProvision>
-    <CodesignKey>Apple Development: Ajeet Singh (VH76Y7WGDN)</CodesignKey>
+    <CodesignKey>iPhone Distribution: Algoworks Technologies Pvt Ltd (8QF396N54V)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <CodesignProvision>HeartlandArtifactAdHocDistribution</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -53,7 +53,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Distribution</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
@@ -85,8 +85,8 @@
     <ConsolePause>False</ConsolePause>
     <MtouchArch>ARM64</MtouchArch>
     <BuildIpa>True</BuildIpa>
-    <CodesignProvision>Automatic:AdHoc</CodesignProvision>
-    <CodesignKey>iPhone Distribution</CodesignKey>
+    <CodesignProvision>HeartlandArtifactAdHocDistribution</CodesignProvision>
+    <CodesignKey>iPhone Distribution: Algoworks Technologies Pvt Ltd (8QF396N54V)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
     <MtouchLink>SdkOnly</MtouchLink>
@@ -123,6 +123,7 @@
     <BundleResource Include="Resources\ARIALBD.TTF" />
     <BundleResource Include="Resources\Helvetica-Bold.ttf" />
     <BundleResource Include="Resources\Helvetica.ttf" />
+    <Compile Include="AppleSignInService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\Contents.json">

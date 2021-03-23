@@ -1,6 +1,8 @@
 ﻿using Facebook.CoreKit;
 using Foundation;
 using Google.SignIn;
+using HeartlandArtifact.iOS.CustomRenderer;
+using HeartlandArtifact.Services;
 using HeartlandArtifact.Services.Contracts;
 using Prism;
 using Prism.Ioc;
@@ -26,8 +28,9 @@ namespace HeartlandArtifact.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             DependencyService.Register<IFacebookManager, FacebookManager>();
-
+            DependencyService.Register<IAppleManager, AppleSignInService>();
             DependencyService.Register<IGoogleManager, GoogleManager>();
+            Xamarin.Forms.DependencyService.Register<MessageIOS>();
             // var googleServiceDictionary = NSDictionary.FromFile("GoogleService-Info.plist");
             // SignIn.SharedInstance.ClientId = googleServiceDictionary["CLIENT_ID"].ToString();
 

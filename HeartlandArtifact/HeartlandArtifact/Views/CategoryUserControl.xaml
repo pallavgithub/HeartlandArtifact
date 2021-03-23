@@ -58,7 +58,7 @@
                                         </Image>
                                     </StackLayout>
                                     <StackLayout Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                    <Frame Padding="15" BackgroundColor="Transparent" OutlineColor="LightGray" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                    <Frame HasShadow="False" Padding="15" BackgroundColor="Transparent" OutlineColor="LightGray" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                         <Grid VerticalOptions="FillAndExpand">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>

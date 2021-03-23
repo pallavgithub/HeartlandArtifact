@@ -37,7 +37,12 @@
                         <Grid>
                             <Image Source="AppleCircle.png"/>
                             <Image Source="apple.png" Margin="30,22,30,30"/>
+                             <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding AppleLoginCommand}"/>
+                            </Grid.GestureRecognizers>
+                           
                         </Grid>
+                         <!--<Button Text="applebtn" Command="{Binding AppleLoginCommand}" />-->
                     </StackLayout>
                     <StackLayout Spacing="0" Margin="0,20,0,0">
                         <Label Text="Email" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
