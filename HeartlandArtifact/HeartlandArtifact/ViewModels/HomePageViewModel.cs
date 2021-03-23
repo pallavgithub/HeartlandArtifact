@@ -419,7 +419,7 @@ namespace HeartlandArtifact.ViewModels
                         ModifierId = (int)Application.Current.Properties["LogedInUserId"]
                     };
                     var response = await new ApiData().PutData<CollectionModel>("Collections/UpdateCollection", collection, true);
-                    if (response != null && response.status=="Success")
+                    if (response != null && response.status=="success")
                     {
                         GetUserCollections();
                         // AllCollections.Remove(CollectionData);
