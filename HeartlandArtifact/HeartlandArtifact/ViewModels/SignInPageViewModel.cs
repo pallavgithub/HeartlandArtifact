@@ -9,6 +9,7 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace HeartlandArtifact.ViewModels
@@ -104,9 +105,13 @@ namespace HeartlandArtifact.ViewModels
         }
         private async void AppleIdLogin()
         {
-            //var k = _appleManager.IsAvailable;
             var account = await  _appleManager.SignInAsync();
-            
+            if (account != null)
+            {
+                Preferences.Set(App.LoggedInKey, true);
+                await SecureStorage.SetAsync(App.AppleUserIdKey, account.UserId);
+              
+            }
         }
         private void FacebookLogout()
         {
