@@ -35,11 +35,11 @@ namespace HeartlandArtifact.ViewModels
             {
                 if (string.IsNullOrEmpty(EmailId))
                 {
-                    Toast.LongAlert("Email is required."); return;
+                    Toast.LongAlert("Please enter you email address."); return;
                 }
                 if (!Regex.IsMatch(EmailId.Trim(), @"^((?:[a-zA-Z0-9]+)|(([a-zA-Z0-9]+(\.|\+|\-|_))+[a-zA-Z0-9]+))@(([a-zA-Z0-9]+(\.|\-))+[a-zA-Z]{2,4})$", RegexOptions.IgnoreCase))
                 {
-                    Toast.LongAlert("Invalid email address."); return;
+                    Toast.LongAlert("Oops, this email address doesn't look right."); return;
                 }
                 else
                 {
@@ -49,7 +49,7 @@ namespace HeartlandArtifact.ViewModels
                     {
                         if (response.status == "Success")
                         {
-                            Toast.LongAlert("Otp sent.");
+                            Toast.LongAlert("We have sent an OTP to your entered email id. Please check your email inbox.");
                             var navigationParams = new NavigationParameters();
                             navigationParams.Add("FromForgetPassword", true);
                             navigationParams.Add("Email_Id", EmailId);

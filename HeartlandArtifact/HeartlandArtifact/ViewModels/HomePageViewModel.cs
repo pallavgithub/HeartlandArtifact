@@ -280,7 +280,12 @@ namespace HeartlandArtifact.ViewModels
             var Toast = DependencyService.Get<IMessage>();
             if (string.IsNullOrEmpty(NewCollectionName))
             {
-                Toast.LongAlert("Collection name is required.");
+                Toast.LongAlert("Please enter a collection name.");
+                return;
+            }
+            if (NewCollectionName.Length == 0 || NewCollectionName.Length > 30)
+            {
+                Toast.LongAlert("Collection name must be between 1 to 30 characters long.");
                 return;
             }
             else
@@ -326,7 +331,12 @@ namespace HeartlandArtifact.ViewModels
             var Toast = DependencyService.Get<IMessage>();
             if (string.IsNullOrEmpty(NewCategoryName))
             {
-                Toast.LongAlert("Category name is required.");
+                Toast.LongAlert("Please enter a category name.");
+                return;
+            }
+            if (NewCategoryName.Length == 0 || NewCategoryName.Length > 30)
+            {
+                Toast.LongAlert("Category name must be between 1 to 30 characters long.");
                 return;
             }
             else
@@ -344,7 +354,7 @@ namespace HeartlandArtifact.ViewModels
                     var response = await new ApiData().PostData<CategoryModel>("Category/AddNewCategory", newCategory, true);
                     if (response != null && response.data != null)
                     {
-                        AllCategories.Insert(0,response.data);
+                        AllCategories.Insert(0, response.data);
                     }
                     else
                     {
@@ -372,7 +382,12 @@ namespace HeartlandArtifact.ViewModels
             var Toast = DependencyService.Get<IMessage>();
             if (string.IsNullOrEmpty(NewCollectionName))
             {
-                Toast.LongAlert("Collection name is required.");
+                Toast.LongAlert("Please enter a collection name.");
+                return;
+            }
+            if (NewCollectionName.Length == 0 || NewCollectionName.Length > 30)
+            {
+                Toast.LongAlert("Collection name must be between 1 to 30 characters long.");
                 return;
             }
             else
@@ -410,7 +425,12 @@ namespace HeartlandArtifact.ViewModels
             var Toast = DependencyService.Get<IMessage>();
             if (string.IsNullOrEmpty(NewCategoryName))
             {
-                Toast.LongAlert("Category name is required.");
+                Toast.LongAlert("Please enter a category name.");
+                return;
+            }
+            if (NewCategoryName.Length == 0 || NewCategoryName.Length > 30)
+            {
+                Toast.LongAlert("Category name must be between 1 to 30 characters long.");
                 return;
             }
             else

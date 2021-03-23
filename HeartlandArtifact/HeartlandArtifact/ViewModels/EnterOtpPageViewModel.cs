@@ -89,20 +89,16 @@ namespace HeartlandArtifact.ViewModels
             {
                 if (TimerText == "0:00")
                 {
-                    Toast.LongAlert("Request time out."); return;
+                    Toast.LongAlert("Oops, request timeout. Please tap on resend OTP."); return;
                 }
                 else
                 {
-                    Toast.LongAlert("Please enter correct otp."); return;
+                    Toast.LongAlert("Entered OTP does not match."); return;
                 }
             }
             if (TimerText == "0:00")
             {
-                Toast.LongAlert("Request time out."); return;
-            }
-            if (TimerText == "0:00")
-            {
-                Toast.LongAlert("Request time out."); return;
+                Toast.LongAlert("Oops, request timeout. Please tap on resend OTP."); return;
             }
             else
             {
@@ -131,7 +127,7 @@ namespace HeartlandArtifact.ViewModels
                     {
                         if (App.SignUpDetails.Otp != OTP)
                         {
-                            Toast.LongAlert("Otp does not match."); return;
+                            Toast.LongAlert("Entered OTP does not match."); return;
                         }
                         else
                         {
@@ -144,7 +140,7 @@ namespace HeartlandArtifact.ViewModels
                                 Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
                                 Application.Current.Properties["UserName"] = newString;
                                 await Application.Current.SavePropertiesAsync();
-                                Toast.LongAlert("Signup Successful.");
+                                Toast.LongAlert("Welcome to Relic Collector.");
                                 await NavigationService.NavigateAsync("/HomePage");
                                 App.SignUpDetails.Otp = string.Empty;
                             }
@@ -175,7 +171,7 @@ namespace HeartlandArtifact.ViewModels
                 var response = await new ApiData().PostData<UserModel>("user/ForgotPassword?EmailId=" + Email + "&Otp=" + string.Empty, true);
                 if (response != null && response.data != null)
                 {
-                    Toast.LongAlert("Otp sent.");
+                    Toast.LongAlert("We have sent an OTP to your entered email id. Please check your email inbox.");
                 }
                 IsBusy = false;
             }
@@ -186,7 +182,7 @@ namespace HeartlandArtifact.ViewModels
                 if (response != null && response.data != null)
                 {
                     App.SignUpDetails.Otp = response.data.Otp;
-                    Toast.LongAlert("Otp sent.");
+                    Toast.LongAlert("We have sent an OTP to your entered email id.Please check your email inbox.");
                 }
                 IsBusy = false;
             }

@@ -130,7 +130,7 @@ namespace HeartlandArtifact.ViewModels
                     Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
                     Application.Current.Properties["UserName"] = newString;
                     await Application.Current.SavePropertiesAsync();
-                    toast.LongAlert("Login Successful");
+                    toast.LongAlert("Login Successful ! Welcome to Relic Collector.");
                     await NavigationService.NavigateAsync("/HomePage");
                 }
                 else
@@ -156,9 +156,6 @@ namespace HeartlandArtifact.ViewModels
                 form.Add(new StringContent(GoogleUser.Email), "EmailId");
                 form.Add(new StringContent("Google"), "Platform");
                 form.Add(new StringContent(string.Empty), "ContactNumber");
-                //var response = await client.PostAsync("https://hearlandartifactapi.azurewebsites.net/api/user/SocialMediaLogin", form);
-                // var result = await response.Content.ReadAsStringAsync();
-                // var data = JsonConvert.DeserializeObject<ResponseModel<UserModel>>(result);
                 var response = await new ApiData().PostFormData<UserModel>("user/SocialMediaLogin", form, true);
                 if (response != null && response.data != null)
                 {
@@ -168,7 +165,7 @@ namespace HeartlandArtifact.ViewModels
                     Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
                     Application.Current.Properties["UserName"] = newString;
                     await Application.Current.SavePropertiesAsync();
-                    toast.LongAlert("Login Successful");
+                    toast.LongAlert("Login Successful ! Welcome to Relic Collector.");
                     await NavigationService.NavigateAsync("/HomePage");
                 }
                 else
@@ -188,16 +185,16 @@ namespace HeartlandArtifact.ViewModels
                 var toast = DependencyService.Get<IMessage>();
                 if (string.IsNullOrEmpty(Email))
                 {
-                    toast.LongAlert("Please enter Email."); return;
+                    toast.LongAlert("Please enter your email address."); return;
                 }
                 //if (!Regex.IsMatch(Email.Trim(), @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase))
                 if (!Regex.IsMatch(Email.Trim(), @"^((?:[a-zA-Z0-9]+)|(([a-zA-Z0-9]+(\.|\+|\-|_))+[a-zA-Z0-9]+))@(([a-zA-Z0-9]+(\.|\-))+[a-zA-Z]{2,4})$", RegexOptions.IgnoreCase))
                 {
-                    toast.LongAlert("Invalid email address."); return;
+                    toast.LongAlert("Oops, this email address doesn't look right."); return;
                 }
                 if (string.IsNullOrEmpty(Password))
                 {
-                    toast.LongAlert("Please enter Password."); return;
+                    toast.LongAlert("Please enter your password."); return;
                 }
                 //if (Password.Trim().Length < 8)
                 //{
@@ -206,7 +203,7 @@ namespace HeartlandArtifact.ViewModels
                 if (!Regex.IsMatch(Password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$", RegexOptions.None) || Password.Trim().Length < 8)
                 {
                     // toast.LongAlert("Password must include at least one uppercase letter, one lowercase letter, one numeric digit, one special character."); return;
-                    toast.LongAlert("Password must be between 8 to 15 characters, including uppercase, lowercase letters, numbers, and special characters."); return;
+                    toast.LongAlert("Invalid Password. You could try resetting your password."); return;
                 }
                 else
                 {
@@ -221,7 +218,7 @@ namespace HeartlandArtifact.ViewModels
                     {
                         if (!(Password == response.data.Password))
                         {
-                            toast.LongAlert("Password does not match");
+                            toast.LongAlert("Invalid Password. You could try resetting your password.");
                         }
                         else if (response.status.ToLower() == "success")
                         {
@@ -230,7 +227,7 @@ namespace HeartlandArtifact.ViewModels
                             Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
                             Application.Current.Properties["UserName"] = newString;
                             await Application.Current.SavePropertiesAsync();
-                            toast.LongAlert(response.message);
+                            toast.LongAlert("Login Successful! Welcome to Relic Collector.");
                             await NavigationService.NavigateAsync("/HomePage");
                         }
                         else

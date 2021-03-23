@@ -143,7 +143,7 @@ namespace HeartlandArtifact.ViewModels
                     Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
                     Application.Current.Properties["UserName"] = newString;
                     await Application.Current.SavePropertiesAsync();
-                    toast.LongAlert(response.message);
+                    toast.LongAlert("Welcome to Relic Collector.");
                     await NavigationService.NavigateAsync("/HomePage");
                 }
                 else
@@ -177,7 +177,7 @@ namespace HeartlandArtifact.ViewModels
                     Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
                     Application.Current.Properties["UserName"] = newString;
                     await Application.Current.SavePropertiesAsync();
-                    toast.LongAlert(response.message);
+                    toast.LongAlert("Welcome to Relic Collector.");
                     await NavigationService.NavigateAsync("/HomePage");
                 }
                 else
@@ -213,6 +213,7 @@ namespace HeartlandArtifact.ViewModels
                     var response = await new ApiData().PostData<UserModel>("user/signup", App.SignUpDetails, true);
                     if (response != null && response.data != null)
                     {
+                        Toast.LongAlert("We have sent an OTP to your entered email id. Please check your email inbox.");
                         App.SignUpDetails.Otp = response.data.Otp;
                         var navigationParams = new NavigationParameters();
                         navigationParams.Add("FromForgetPassword", false);
@@ -236,52 +237,47 @@ namespace HeartlandArtifact.ViewModels
             var Toast = DependencyService.Get<IMessage>();
             if (string.IsNullOrEmpty(FirstName) && string.IsNullOrEmpty(LastName) && string.IsNullOrEmpty(Email) && string.IsNullOrEmpty(Password) && string.IsNullOrEmpty(ConfirmPassword))
             {
-                Toast.LongAlert("All fields are required."); IsValid = false; return;
+                Toast.LongAlert("All fields are mandatory."); IsValid = false; return;
             }
             if (string.IsNullOrEmpty(FirstName))
             {
-                Toast.LongAlert("First Name is required."); IsValid = false; return;
+                Toast.LongAlert("Please enter your first name."); IsValid = false; return;
             }
-            if (!Regex.IsMatch(FirstName.Trim(), @"^(?=(?:[^A-Za-z]*[A-Za-z]){3})(?![^\d~`?!^*¨ˆ;@=$%{}\[\]|\/<>#“.,]*[\d~`?!^*¨ˆ;@=$%{}\[\]|\/<>#“.,])\S+(?: \S+){0,2}$", RegexOptions.IgnoreCase))
+            if (FirstName.Length >= 30 || !Regex.IsMatch(FirstName.Trim(), @"^(?=(?:[^A-Za-z]*[A-Za-z]){3})(?![^\d~`?!^*¨ˆ;@=$%{}\[\]|\/<>#“.,]*[\d~`?!^*¨ˆ;@=$%{}\[\]|\/<>#“.,])\S+(?: \S+){0,2}$", RegexOptions.IgnoreCase))
             {
-                Toast.LongAlert("First name is not valid."); IsValid = false; return;
+                Toast.LongAlert("Are you sure you entered your first name correctly?"); IsValid = false; return;
             }
             if (string.IsNullOrEmpty(LastName))
             {
-                Toast.LongAlert("Last Name is required."); IsValid = false; return;
+                Toast.LongAlert("Please enter your last name."); IsValid = false; return;
             }
-            if (!Regex.IsMatch(LastName.Trim(), @"^(?=(?:[^A-Za-z]*[A-Za-z]){3})(?![^\d~`?!^*¨ˆ;@=$%{}\[\]|\/<>#“.,]*[\d~`?!^*¨ˆ;@=$%{}\[\]|\/<>#“.,])\S+(?: \S+){0,2}$", RegexOptions.IgnoreCase))
+            if (LastName.Length >= 30 || !Regex.IsMatch(LastName.Trim(), @"^(?=(?:[^A-Za-z]*[A-Za-z]){3})(?![^\d~`?!^*¨ˆ;@=$%{}\[\]|\/<>#“.,]*[\d~`?!^*¨ˆ;@=$%{}\[\]|\/<>#“.,])\S+(?: \S+){0,2}$", RegexOptions.IgnoreCase))
             {
-                Toast.LongAlert("Last Name is not valid."); IsValid = false; return;
+                Toast.LongAlert("Are you sure you entered your last name correctly?"); IsValid = false; return;
             }
             if (string.IsNullOrEmpty(Email))
             {
-                Toast.LongAlert("Email is required."); IsValid = false; return;
+                Toast.LongAlert("Please enter your email address."); IsValid = false; return;
             }
             if (!Regex.IsMatch(Email.Trim(), @"^((?:[a-zA-Z0-9]+)|(([a-zA-Z0-9]+(\.|\+|\-|_))+[a-zA-Z0-9]+))@(([a-zA-Z0-9]+(\.|\-))+[a-zA-Z]{2,4})$", RegexOptions.IgnoreCase))
             {
-                Toast.LongAlert("Invalid email address."); IsValid = false; return;
+                Toast.LongAlert("Oops, that email address doesn't look right."); IsValid = false; return;
             }
             if (string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Password.Trim()))
             {
-                Toast.LongAlert("Password is required."); IsValid = false; return;
+                Toast.LongAlert("Please enter your password."); IsValid = false; return;
             }
-            //if (Password.Trim().Length < 8)
-            //{
-            //    Toast.LongAlert("Password must be at least 8 characters, no more than 15 characters."); IsValid = false; return;
-            //}
-            if (!Regex.IsMatch(Password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$", RegexOptions.None)|| Password.Trim().Length < 8)
+            if (!Regex.IsMatch(Password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$", RegexOptions.None) || Password.Trim().Length < 8)
             {
-                //Toast.LongAlert("Password must include at least one uppercase letter, one lowercase letter, one numeric digit, one special character."); IsValid = false; return;
                 Toast.LongAlert("Password must be between 8 to 15 characters, including uppercase, lowercase letters, numbers, and special characters."); IsValid = false; return;
             }
             if (string.IsNullOrEmpty(ConfirmPassword))
             {
-                Toast.LongAlert("Confirm password is required."); IsValid = false; return;
+                Toast.LongAlert("Please re-enter your password."); IsValid = false; return;
             }
             if (Password != ConfirmPassword)
             {
-                Toast.LongAlert("Confirm password not match."); IsValid = false; return;
+                Toast.LongAlert("Hey, confirm password should be same as the new password."); IsValid = false; return;
             }
             if (IsAgree == false)
             {

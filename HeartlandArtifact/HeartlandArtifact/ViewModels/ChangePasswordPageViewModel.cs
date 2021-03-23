@@ -59,27 +59,23 @@ namespace HeartlandArtifact.ViewModels
             var Toast = DependencyService.Get<IMessage>();
             if (string.IsNullOrEmpty(NewPassword) && string.IsNullOrEmpty(ConfirmNewPassword))
             {
-                Toast.LongAlert("All fields are required"); return;
+                Toast.LongAlert("All fields are mandatory."); return;
             }
             if (string.IsNullOrEmpty(NewPassword))
             {
-                Toast.LongAlert("New password is required"); return;
+                Toast.LongAlert("Please enter your password."); return;
             }
-            //if (NewPassword.Trim().Length < 8)
-            //{
-            //    Toast.LongAlert("New Password must be at least 8 characters, no more than 15 characters."); return;
-            //}
             if (!Regex.IsMatch(NewPassword, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$", RegexOptions.None) || NewPassword.Trim().Length < 8)
             {
                 Toast.LongAlert("Password must be between 8 to 15 characters, including uppercase, lowercase letters, numbers, and special characters."); return;
             }
             if (string.IsNullOrEmpty(ConfirmNewPassword))
             {
-                Toast.LongAlert("Confirm New password is required"); return;
+                Toast.LongAlert("Please re-enter your password."); return;
             }
             if (NewPassword != ConfirmNewPassword)
             {
-                Toast.LongAlert("Confirm New password not match"); return;
+                Toast.LongAlert("Hey, confirm password should be same as the new password."); return;
             }
             else
             {
@@ -92,7 +88,7 @@ namespace HeartlandArtifact.ViewModels
                 var response = await new ApiData().PostData<UserModel>("user/ResetPassword", model, true);
                 if (response != null && response.status == "Success")
                 {
-                    Toast.LongAlert("Password has been updated successfully.");
+                    Toast.LongAlert("Password update successful!.");
                     await NavigationService.NavigateAsync("SignInPage");
                 }
                 else
