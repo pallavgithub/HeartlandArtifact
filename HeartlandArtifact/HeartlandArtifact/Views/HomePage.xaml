@@ -227,7 +227,7 @@
                                         <Image Source="Button.png" WidthRequest="210"/>
                                         <Label Text="Logout" FontSize="18" TextColor="#823E21" FontFamily="{StaticResource HelveticaBold}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,0,0,3"/>
                                         <Grid.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="ConfirmLogout_Tapped"/>
+                                            <TapGestureRecognizer Command="{Binding ConfirmLogoutCommand}"/>
                                         </Grid.GestureRecognizers>
                                     </Grid>                                        
                                 </StackLayout>

@@ -1,6 +1,7 @@
 ﻿using HeartlandArtifact.Helpers;
 using HeartlandArtifact.Interfaces;
 using HeartlandArtifact.Models;
+using HeartlandArtifact.Services.Contracts;
 using HeartlandArtifact.Views;
 using Prism.Commands;
 using Prism.Navigation;
@@ -194,16 +195,21 @@ namespace HeartlandArtifact.ViewModels
         public DelegateCommand CancelEditCategoryCommand { get; set; }
         public DelegateCommand DeleteCategoryCommand { get; set; }
         public DelegateCommand CancelDeleteCategoryCommand { get; set; }
+        public DelegateCommand ConfirmLogoutCommand { get; set; }
         public INavigationService _nav;
         public CollectionModel CollectionData { get; set; }
         public CategoryModel CategoryData { get; set; }
+        private readonly IGoogleManager _googleManager;
+        private readonly IFacebookManager _facebookManager;
         public HomePageViewModel(INavigationService navigationService) : base(navigationService)
         {
             _nav = navigationService;
             HomeIsVisible = true;
+            _facebookManager = DependencyService.Get<IFacebookManager>();
+            _googleManager = DependencyService.Get<IGoogleManager>();
             UserName = "Hi, " + Application.Current.Properties["UserName"].ToString();
             GetUserCollections();
-            LogoutCommand = new DelegateCommand(Logout);
+           // LogoutCommand = new DelegateCommand(Logout);
             EditCollectionCommand = new DelegateCommand(EditCollection);
             GoBackFromCollectionsCommand = new DelegateCommand(GoBackFromCollection);
             AddCollectionButtonCommand = new DelegateCommand(OpenCloseAddCollectionPopup);
@@ -221,12 +227,21 @@ namespace HeartlandArtifact.ViewModels
             CancelEditCategoryCommand = new DelegateCommand(CloseUpdateCategoryPopup);
             DeleteCategoryCommand = new DelegateCommand(DeleteCategory);
             CancelDeleteCategoryCommand = new DelegateCommand(CloseDeleteCategoryPopup);
+            ConfirmLogoutCommand = new DelegateCommand(Logout);
             GetListForDropdown();
         }
-        public void Logout()
+        public async void Logout()
         {
+            IsBusy = true;
+            LogoutPopupIsVisible = false;
+            _facebookManager.Logout();
+            _googleManager.Logout();
             Application.Current.Properties["IsLogedIn"] = false;
-            Application.Current.MainPage = new SignInPage();
+            Application.Current.Properties["LogedInUserId"] = 0;
+            Application.Current.Properties["UserName"] = string.Empty;
+            await Application.Current.SavePropertiesAsync();
+            await _nav.NavigateAsync("SignInPage");
+            IsBusy = false;
         }
         public async void GetUserCollections()
         {
@@ -404,11 +419,15 @@ namespace HeartlandArtifact.ViewModels
                         ModifierId = (int)Application.Current.Properties["LogedInUserId"]
                     };
                     var response = await new ApiData().PutData<CollectionModel>("Collections/UpdateCollection", collection, true);
-                    if (response != null)
+                    if (response != null && response.status=="Success")
                     {
                         GetUserCollections();
                         // AllCollections.Remove(CollectionData);
                         // AllCollections.Add(response.data);
+                    }
+                    else
+                    {
+                        Toast.LongAlert(response.message);
                     }
                     EditCollectionPopupIsVisible = false;
                     NewCollectionName = string.Empty;

@@ -45,7 +45,7 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>-->
                                 <StackLayout Orientation="Horizontal">
-                                    <StackLayout Margin="0,2,0,2" IsVisible="{Binding BindingContext.IsEditCategoryIconVisible, Source={x:Reference Category}}">
+                                    <StackLayout Margin="0,2,2,2" IsVisible="{Binding BindingContext.IsEditCategoryIconVisible, Source={x:Reference Category}}">
                                         <Image Source="Pen.png" HeightRequest="13" WidthRequest="14" VerticalOptions="FillAndExpand">
                                             <Image.GestureRecognizers>
                                                 <TapGestureRecognizer Tapped="EditIcon_Tapped" CommandParameter="{Binding .}"/>
@@ -62,9 +62,9 @@
                                         <Grid VerticalOptions="FillAndExpand">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="30"/>
+                                                <ColumnDefinition Width="13"/>
                                             </Grid.ColumnDefinitions>
-                                            <Label Text="{Binding CategoryName}" TextColor="Black" Margin="0,-2,0,0" FontFamily="{StaticResource HelveticaBold}" FontSize="16"/>
+                                            <Label Text="{Binding CategoryName}" TextColor="Black" Margin="0,-2,0,0" FontFamily="{StaticResource HelveticaBold}" FontSize="15"/>
                                             <Image Source="Arrow.png" Grid.Column="1" HorizontalOptions="EndAndExpand"/>
                                         </Grid>
                                     </Frame>
