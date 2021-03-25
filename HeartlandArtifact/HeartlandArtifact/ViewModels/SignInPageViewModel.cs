@@ -1,4 +1,4 @@
-﻿using HeartlandArtifact.Helpers;
+using HeartlandArtifact.Helpers;
 using HeartlandArtifact.Interfaces;
 using HeartlandArtifact.Models;
 using HeartlandArtifact.Services.Contracts;
@@ -154,8 +154,11 @@ namespace HeartlandArtifact.ViewModels
                     Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
                     Application.Current.Properties["UserName"] = newString;
                     await Application.Current.SavePropertiesAsync();
+<<<<<<< HEAD
                     toast.LongAlert("Welcome to Relic Collector.");
                     await NavigationService.NavigateAsync("/HomePage");
+=======
+                    toast.LongAl
                 }
                 else
                 {

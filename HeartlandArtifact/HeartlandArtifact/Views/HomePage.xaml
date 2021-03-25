@@ -4,6 +4,7 @@
              x:Class="HeartlandArtifact.Views.HomePage"
              xmlns:pages="clr-namespace:HeartlandArtifact.Views" xmlns:custom="clr-namespace:HeartlandArtifact.CustomRenderers"
                   FlowDirection="RightToLeft"
+                  
              NavigationPage.HasNavigationBar="False">
     <MasterDetailPage.Master>
         <pages:HomePageMaster x:Name="MasterPage"/>

@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:custom="clr-namespace:HeartlandArtifact.CustomRenderers" xmlns:converter="clr-namespace:HeartlandArtifact.Converters"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:custom="clr-namespace:HeartlandArtifact.CustomRenderers"
+             xmlns:converter="clr-namespace:HeartlandArtifact.Converters"
              x:Class="HeartlandArtifact.Views.SignUpPage"
+             
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -53,7 +56,7 @@
                             <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
                                 <StackLayout Orientation="Horizontal">
-                                    <custom:BorderLessEntry Text="{Binding Password}" IsPassword="True" x:Name="PasswordEntry"
+                                    <custom:BorderLessEntry Text="{Binding Password}" IsPassword="False" x:Name="PasswordEntry"
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="16"/>
                                     <Grid>
@@ -76,7 +79,7 @@
                             <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
                                 <StackLayout Orientation="Horizontal">
-                                    <custom:BorderLessEntry Text="{Binding ConfirmPassword}" IsPassword="True"  x:Name="ConfirmPasswordEntry" 
+                                    <custom:BorderLessEntry Text="{Binding ConfirmPassword}" IsPassword="False"  x:Name="ConfirmPasswordEntry" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="16"/>
                                     <Grid>

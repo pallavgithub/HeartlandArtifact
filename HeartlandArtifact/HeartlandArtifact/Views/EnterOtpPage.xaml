@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:converter="clr-namespace:HeartlandArtifact.Converters"
              x:Class="HeartlandArtifact.Views.EnterOtpPage"
+
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -22,7 +23,8 @@
                         <Label Text="&lt;" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Start" VerticalOptions="Start" TextColor="Black" TextTransform="Uppercase" FontSize="16"/>
                         <Label Text="BACK" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Center" TextColor="Black" TextTransform="Uppercase" FontSize="18"/>
                         <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
+                            <!--<TapGestureRecognizer Command="{Binding GoBackCommand}"/>-->
+                             <TapGestureRecognizer Tapped="Goback_Tapped"/>
                         </StackLayout.GestureRecognizers>
                     </StackLayout>
                     <Label Text="Enter Verification Code" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" FontSize="30" TextColor="Black"/>
@@ -50,7 +52,8 @@
                         <Image Source="Button.png"/>
                         <Label Text="Submit" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,3" FontFamily="{StaticResource HelveticaBold}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent"/>
                         <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding SubmitBtnCommand}"/>
+                            <!--<TapGestureRecognizer Command="{Binding SubmitBtnCommand}"/>-->
+                            <TapGestureRecognizer Tapped="SubmitBtn_Tapped"/>
                         </Grid.GestureRecognizers>
                     </Grid>
                 </StackLayout>

@@ -24,6 +24,7 @@ namespace HeartlandArtifact.Views
             _entries.Add(Entry_four);
             T.Interval = 1000;
             T.Elapsed += T_Tick;
+
             T.Start();
         }
         void T_Tick(object sender, ElapsedEventArgs e)
@@ -139,6 +140,18 @@ namespace HeartlandArtifact.Views
         {
             RestartTimer();
             (BindingContext as EnterOtpPageViewModel).ResendOtp();
+        }
+
+        void Goback_Tapped(System.Object sender, System.EventArgs e)
+        {
+            T.Stop();
+            (BindingContext as EnterOtpPageViewModel)._nav.GoBackAsync();
+        }
+
+        void SubmitBtn_Tapped(System.Object sender, System.EventArgs e)
+        {
+            T.Stop();
+            (BindingContext as EnterOtpPageViewModel).SubmitButtonClicked();
         }
     }
 }

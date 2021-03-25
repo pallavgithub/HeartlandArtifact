@@ -24,9 +24,9 @@ namespace HeartlandArtifact.ViewModels
             ContinueBtnCommand = new DelegateCommand(GoToEnterOtpPage);
             GoBackCommand = new DelegateCommand(GoBack);
         }
-        public void GoBack()
+        public async void GoBack()
         {
-            NavigationService.GoBackAsync();
+           await  NavigationService.GoBackAsync();
         }
         public async void GoToEnterOtpPage()
         {
@@ -67,6 +67,13 @@ namespace HeartlandArtifact.ViewModels
             {
 
             }
+        }
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+
+        }
+        public override void OnNavigatingTo(INavigationParameters parameters)
+        {
         }
     }
 }

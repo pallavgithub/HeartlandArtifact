@@ -53,12 +53,18 @@ namespace HeartlandArtifact.ViewModels
             get { return _timerText; }
             set { SetProperty(ref _timerText, value); }
         }
-        public DelegateCommand GoBackCommand { get; set; }
-        public DelegateCommand SubmitBtnCommand { get; set; }
+
+       // public bool FromResetPassword
+       // public DelegateCommand GoBackCommand { get; set; }
+       // public DelegateCommand SubmitBtnCommand { get; set; }
+
+        public INavigationService _nav;
+
         public EnterOtpPageViewModel(INavigationService navigationService) : base(navigationService)
         {
-            GoBackCommand = new DelegateCommand(GoBack);
-            SubmitBtnCommand = new DelegateCommand(SubmitButtonClicked);
+            _nav = navigationService;
+           // GoBackCommand = new DelegateCommand(GoBack);
+           // SubmitBtnCommand = new DelegateCommand(SubmitButtonClicked);
         }
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
@@ -77,10 +83,17 @@ namespace HeartlandArtifact.ViewModels
                     NavigationService.GoBackAsync();
             }
         }
-        public void GoBack()
-        {
-            NavigationService.GoBackAsync();
-        }
+        //public async void GoBack()
+        //{
+        //    try
+        //    {
+        //        var k = await NavigationService.GoBackAsync();
+        //    }
+        //    catch(Exception e)
+        //    {
+
+        //    }
+        //}
         public async void SubmitButtonClicked()
         {
             string OTP = Text1 + Text2 + Text3 + Text4;
@@ -141,7 +154,7 @@ namespace HeartlandArtifact.ViewModels
                                 Application.Current.Properties["UserName"] = newString;
                                 await Application.Current.SavePropertiesAsync();
                                 Toast.LongAlert("Welcome to Relic Collector.");
-                                await NavigationService.NavigateAsync("/HomePage");
+                                await NavigationService.NavigateAsync("HomePage");
                                 App.SignUpDetails.Otp = string.Empty;
                             }
                             else
@@ -187,5 +200,6 @@ namespace HeartlandArtifact.ViewModels
                 IsBusy = false;
             }
         }
+
     }
 }
