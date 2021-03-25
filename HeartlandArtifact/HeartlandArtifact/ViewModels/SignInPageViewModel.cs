@@ -105,12 +105,19 @@ namespace HeartlandArtifact.ViewModels
         }
         private async void AppleIdLogin()
         {
-            var account = await  _appleManager.SignInAsync();
-            if (account != null)
+            try
             {
-                Preferences.Set(App.LoggedInKey, true);
-                await SecureStorage.SetAsync(App.AppleUserIdKey, account.UserId);
-              
+                var account = await _appleManager.SignInAsync();
+                if (account != null)
+                {
+                    Preferences.Set(App.LoggedInKey, true);
+                    await SecureStorage.SetAsync(App.AppleUserIdKey, account.UserId);
+
+                }
+            }
+            catch(Exception e)
+            {
+
             }
         }
         private void FacebookLogout()
@@ -154,11 +161,8 @@ namespace HeartlandArtifact.ViewModels
                     Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
                     Application.Current.Properties["UserName"] = newString;
                     await Application.Current.SavePropertiesAsync();
-<<<<<<< HEAD
                     toast.LongAlert("Welcome to Relic Collector.");
                     await NavigationService.NavigateAsync("/HomePage");
-=======
-                    toast.LongAl
                 }
                 else
                 {

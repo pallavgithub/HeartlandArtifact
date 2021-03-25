@@ -98,20 +98,24 @@ namespace HeartlandArtifact.ViewModels
         {
             string OTP = Text1 + Text2 + Text3 + Text4;
             var Toast = DependencyService.Get<IMessage>();
-            if (string.IsNullOrEmpty(Text1) || string.IsNullOrEmpty(Text2) || string.IsNullOrEmpty(Text3) || string.IsNullOrEmpty(Text4))
-            {
-                if (TimerText == "0:00")
-                {
-                    Toast.LongAlert("Oops, request timeout. Please tap on resend OTP."); return;
-                }
-                else
-                {
-                    Toast.LongAlert("Entered OTP does not match."); return;
-                }
-            }
+            //if (string.IsNullOrEmpty(Text1) || string.IsNullOrEmpty(Text2) || string.IsNullOrEmpty(Text3) || string.IsNullOrEmpty(Text4))
+            //{
+            //    if (TimerText == "0:00")
+            //    {
+            //        Toast.LongAlert("Oops, request timeout. Please tap on resend OTP."); return;
+            //    }
+            //    else
+            //    {
+            //        Toast.LongAlert("Entered OTP does not match."); return;
+            //    }
+            //}
             if (TimerText == "0:00")
             {
                 Toast.LongAlert("Oops, request timeout. Please tap on resend OTP."); return;
+            }
+            if(string.IsNullOrEmpty(Text1) && string.IsNullOrEmpty(Text2) && string.IsNullOrEmpty(Text3) && string.IsNullOrEmpty(Text4))
+            {
+                Toast.LongAlert("Please enter OTP sent to your entered email id."); return;
             }
             else
             {
