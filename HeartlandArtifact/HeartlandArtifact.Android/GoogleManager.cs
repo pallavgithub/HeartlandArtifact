@@ -16,6 +16,7 @@ using Android.Widget;
 using HeartlandArtifact.Models;
 using HeartlandArtifact.Services.Contracts;
 using Xamarin.Forms;
+using static Android.OS.AsyncTask;
 
 namespace HeartlandArtifact.Droid
 {
@@ -50,7 +51,11 @@ namespace HeartlandArtifact.Droid
 
 		public void Logout()
 		{
-			_googleApiClient.Disconnect();
+			if (_googleApiClient != null && _googleApiClient.IsConnected)
+			{
+				_googleApiClient.ClearDefaultAccountAndReconnect();
+				_googleApiClient.Disconnect();
+			}
 		}
 
 		public void OnAuthCompleted(GoogleSignInResult result)

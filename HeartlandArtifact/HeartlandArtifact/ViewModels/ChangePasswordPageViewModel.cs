@@ -57,10 +57,10 @@ namespace HeartlandArtifact.ViewModels
         public async void SetNewPassword()
         {
             var Toast = DependencyService.Get<IMessage>();
-            if (string.IsNullOrEmpty(NewPassword) && string.IsNullOrEmpty(ConfirmNewPassword))
-            {
-                Toast.LongAlert("All fields are mandatory."); return;
-            }
+            //if (string.IsNullOrEmpty(NewPassword) && string.IsNullOrEmpty(ConfirmNewPassword))
+            //{
+            //    Toast.LongAlert("All fields are mandatory."); return;
+            //}
             if (string.IsNullOrEmpty(NewPassword))
             {
                 Toast.LongAlert("Please enter your password."); return;
@@ -88,7 +88,7 @@ namespace HeartlandArtifact.ViewModels
                 var response = await new ApiData().PostData<UserModel>("user/ResetPassword", model, true);
                 if (response != null && response.status == "Success")
                 {
-                    Toast.LongAlert("Password update successful!.");
+                    Toast.LongAlert("Password update successful!");
                     await NavigationService.NavigateAsync("SignInPage");
                 }
                 else

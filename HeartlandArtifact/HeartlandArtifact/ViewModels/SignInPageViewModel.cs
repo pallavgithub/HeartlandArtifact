@@ -136,6 +136,7 @@ namespace HeartlandArtifact.ViewModels
             var toast = DependencyService.Get<IMessage>();
             if (facebookUser != null)
             {
+                IsWorking = true;
                 FacebookUser = facebookUser;
                 HttpClient client = new HttpClient();
                 MultipartFormDataContent form = new MultipartFormDataContent();
@@ -153,13 +154,14 @@ namespace HeartlandArtifact.ViewModels
                     Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
                     Application.Current.Properties["UserName"] = newString;
                     await Application.Current.SavePropertiesAsync();
-                    toast.LongAlert("Login Successful ! Welcome to Relic Collector.");
+                    toast.LongAlert("Welcome to Relic Collector.");
                     await NavigationService.NavigateAsync("/HomePage");
                 }
                 else
                 {
                     toast.LongAlert(response.message);
                 }
+                IsWorking = false;
             }
             else
             {
@@ -172,6 +174,7 @@ namespace HeartlandArtifact.ViewModels
             if (googleUser != null)
             {
                 GoogleUser = googleUser;
+                IsWorking = true;
                 MultipartFormDataContent form = new MultipartFormDataContent();
 
                 form.Add(new StringContent(GoogleUser.Name.Split(' ')[0]), "FirstName");
@@ -188,13 +191,14 @@ namespace HeartlandArtifact.ViewModels
                     Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
                     Application.Current.Properties["UserName"] = newString;
                     await Application.Current.SavePropertiesAsync();
-                    toast.LongAlert("Login Successful ! Welcome to Relic Collector.");
+                    toast.LongAlert("Welcome to Relic Collector.");
                     await NavigationService.NavigateAsync("/HomePage");
                 }
                 else
                 {
                     toast.LongAlert(response.message);
                 }
+                IsWorking = false;
             }
             else
             {

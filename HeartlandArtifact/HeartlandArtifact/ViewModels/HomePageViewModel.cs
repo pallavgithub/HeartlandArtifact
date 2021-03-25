@@ -209,7 +209,7 @@ namespace HeartlandArtifact.ViewModels
             _googleManager = DependencyService.Get<IGoogleManager>();
             UserName = "Hi, " + Application.Current.Properties["UserName"].ToString();
             GetUserCollections();
-           // LogoutCommand = new DelegateCommand(Logout);
+            // LogoutCommand = new DelegateCommand(Logout);
             EditCollectionCommand = new DelegateCommand(EditCollection);
             GoBackFromCollectionsCommand = new DelegateCommand(GoBackFromCollection);
             AddCollectionButtonCommand = new DelegateCommand(OpenCloseAddCollectionPopup);
@@ -293,11 +293,11 @@ namespace HeartlandArtifact.ViewModels
         public async void CreateNewCollection()
         {
             var Toast = DependencyService.Get<IMessage>();
-            if (string.IsNullOrEmpty(NewCollectionName))
-            {
-                Toast.LongAlert("Please enter a collection name.");
-                return;
-            }
+            //if (string.IsNullOrEmpty(NewCollectionName))
+            //{
+            //    Toast.LongAlert("Please enter a collection name.");
+            //    return;
+            //}
             if (NewCollectionName.Length == 0 || NewCollectionName.Length > 30)
             {
                 Toast.LongAlert("Collection name must be between 1 to 30 characters long.");
@@ -344,11 +344,11 @@ namespace HeartlandArtifact.ViewModels
         public async void CreateNewCategory()
         {
             var Toast = DependencyService.Get<IMessage>();
-            if (string.IsNullOrEmpty(NewCategoryName))
-            {
-                Toast.LongAlert("Please enter a category name.");
-                return;
-            }
+            //if (string.IsNullOrEmpty(NewCategoryName))
+            //{
+            //    Toast.LongAlert("Please enter a category name.");
+            //    return;
+            //}
             if (NewCategoryName.Length == 0 || NewCategoryName.Length > 30)
             {
                 Toast.LongAlert("Category name must be between 1 to 30 characters long.");
@@ -395,11 +395,11 @@ namespace HeartlandArtifact.ViewModels
         public async void UpdateCollectionName()
         {
             var Toast = DependencyService.Get<IMessage>();
-            if (string.IsNullOrEmpty(NewCollectionName))
-            {
-                Toast.LongAlert("Please enter a collection name.");
-                return;
-            }
+            //if (string.IsNullOrEmpty(NewCollectionName))
+            //{
+            //    Toast.LongAlert("Please enter a collection name.");
+            //    return;
+            //}
             if (NewCollectionName.Length == 0 || NewCollectionName.Length > 30)
             {
                 Toast.LongAlert("Collection name must be between 1 to 30 characters long.");
@@ -419,15 +419,18 @@ namespace HeartlandArtifact.ViewModels
                         ModifierId = (int)Application.Current.Properties["LogedInUserId"]
                     };
                     var response = await new ApiData().PutData<CollectionModel>("Collections/UpdateCollection", collection, true);
-                    if (response != null && response.status=="success")
+                    if (response != null && response.status == "success")
                     {
-                        GetUserCollections();
-                        // AllCollections.Remove(CollectionData);
-                        // AllCollections.Add(response.data);
+                        AllCollections.Remove(CollectionData);
+                        AllCollections.Insert(0, response.data);
+                        AllCollections = new ObservableCollection<CollectionModel>(AllCollections);
+                        // GetUserCollections();
                     }
                     else
                     {
                         Toast.LongAlert(response.message);
+                        IsBusy = false;
+                        return;
                     }
                     EditCollectionPopupIsVisible = false;
                     NewCollectionName = string.Empty;
@@ -442,11 +445,11 @@ namespace HeartlandArtifact.ViewModels
         public async void UpdateCategoryName()
         {
             var Toast = DependencyService.Get<IMessage>();
-            if (string.IsNullOrEmpty(NewCategoryName))
-            {
-                Toast.LongAlert("Please enter a category name.");
-                return;
-            }
+            //if (string.IsNullOrEmpty(NewCategoryName))
+            //{
+            //    Toast.LongAlert("Please enter a category name.");
+            //    return;
+            //}
             if (NewCategoryName.Length == 0 || NewCategoryName.Length > 30)
             {
                 Toast.LongAlert("Category name must be between 1 to 30 characters long.");
@@ -470,7 +473,7 @@ namespace HeartlandArtifact.ViewModels
                     if (response != null && response.data != null)
                     {
                         AllCategories.Remove(CategoryData);
-                        AllCategories.Add(response.data);
+                        AllCategories.Insert(0, response.data);
                         AllCategories = new ObservableCollection<CategoryModel>(AllCategories);
                     }
                     else

@@ -126,6 +126,7 @@ namespace HeartlandArtifact.ViewModels
             var toast = DependencyService.Get<IMessage>();
             if (facebookUser != null)
             {
+                IsBusy = true;
                 FacebookUser = facebookUser;
                 HttpClient client = new HttpClient();
                 MultipartFormDataContent form = new MultipartFormDataContent();
@@ -150,6 +151,7 @@ namespace HeartlandArtifact.ViewModels
                 {
                     toast.LongAlert(response.message);
                 }
+                IsBusy = false;
             }
             else
             {
@@ -161,6 +163,7 @@ namespace HeartlandArtifact.ViewModels
             var toast = DependencyService.Get<IMessage>();
             if (googleUser != null)
             {
+                IsBusy = true;
                 GoogleUser = googleUser;
                 MultipartFormDataContent form = new MultipartFormDataContent();
                 form.Add(new StringContent(GoogleUser.Name.Split(' ')[0]), "FirstName");
@@ -184,6 +187,7 @@ namespace HeartlandArtifact.ViewModels
                 {
                     toast.LongAlert(response.message);
                 }
+                IsBusy = false;
             }
             else
             {
@@ -243,7 +247,7 @@ namespace HeartlandArtifact.ViewModels
             {
                 Toast.LongAlert("Please enter your first name."); IsValid = false; return;
             }
-            if (FirstName.Length >= 30 || !Regex.IsMatch(FirstName.Trim(), @"^(?=(?:[^A-Za-z]*[A-Za-z]){3})(?![^\d~`?!^*¨ˆ;@=$%{}\[\]|\/<>#“.,]*[\d~`?!^*¨ˆ;@=$%{}\[\]|\/<>#“.,])\S+(?: \S+){0,2}$", RegexOptions.IgnoreCase))
+            if (FirstName.Length > 30 || !Regex.IsMatch(FirstName.Trim(), @"^(?=(?:[^A-Za-z]*[A-Za-z]){3})(?![^\d~`?!^*¨ˆ;@=$%{}\[\]|\/<>#“.,]*[\d~`?!^*¨ˆ;@=$%{}\[\]|\/<>#“.,])\S+(?: \S+){0,2}$", RegexOptions.IgnoreCase))
             {
                 Toast.LongAlert("Are you sure you entered your first name correctly?"); IsValid = false; return;
             }
@@ -251,7 +255,7 @@ namespace HeartlandArtifact.ViewModels
             {
                 Toast.LongAlert("Please enter your last name."); IsValid = false; return;
             }
-            if (LastName.Length >= 30 || !Regex.IsMatch(LastName.Trim(), @"^(?=(?:[^A-Za-z]*[A-Za-z]){3})(?![^\d~`?!^*¨ˆ;@=$%{}\[\]|\/<>#“.,]*[\d~`?!^*¨ˆ;@=$%{}\[\]|\/<>#“.,])\S+(?: \S+){0,2}$", RegexOptions.IgnoreCase))
+            if (LastName.Length > 30 || !Regex.IsMatch(LastName.Trim(), @"^(?=(?:[^A-Za-z]*[A-Za-z]){3})(?![^\d~`?!^*¨ˆ;@=$%{}\[\]|\/<>#“.,]*[\d~`?!^*¨ˆ;@=$%{}\[\]|\/<>#“.,])\S+(?: \S+){0,2}$", RegexOptions.IgnoreCase))
             {
                 Toast.LongAlert("Are you sure you entered your last name correctly?"); IsValid = false; return;
             }
@@ -265,7 +269,7 @@ namespace HeartlandArtifact.ViewModels
             }
             if (string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Password.Trim()))
             {
-                Toast.LongAlert("Please enter your password."); IsValid = false; return;
+                Toast.LongAlert("Please enter new password."); IsValid = false; return;
             }
             if (!Regex.IsMatch(Password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$", RegexOptions.None) || Password.Trim().Length < 8)
             {
