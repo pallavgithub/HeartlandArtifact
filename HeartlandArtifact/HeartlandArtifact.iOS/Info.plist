@@ -25,7 +25,7 @@
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>CFBundleDisplayName</key>
-	<string>HeartlandArtifact</string>
+	<string>Relic Collector</string>
 	<key>CFBundleName</key>
 	<string>HeartlandArtifact</string>
 	<key>CFBundleIdentifier</key>
