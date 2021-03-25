@@ -69,7 +69,7 @@ namespace HeartlandArtifact.iOS
         #region IASAuthorizationController Delegate
 
         [Export("authorizationController:didCompleteWithAuthorization:")]
-        public void DidComplete(ASAuthorizationController controller, ASAuthorization authorization)
+        public void DidComplete(ASAuthorizationController controller, ASAuthorization authorization)    
         {
             var creds = authorization.GetCredential<ASAuthorizationAppleIdCredential>();
             tcsCredential?.TrySetResult(creds);
