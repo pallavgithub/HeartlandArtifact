@@ -108,11 +108,46 @@ namespace HeartlandArtifact.ViewModels
             try
             {
                 var account = await _appleManager.SignInAsync();
+                //if (account != null)
+                //{
+                //    Preferences.Set(App.LoggedInKey, true);
+                //    await SecureStorage.SetAsync(App.AppleUserIdKey, account.UserId);
+
+                //}
+
+                var toast = DependencyService.Get<IMessage>();
                 if (account != null)
                 {
-                    Preferences.Set(App.LoggedInKey, true);
-                    await SecureStorage.SetAsync(App.AppleUserIdKey, account.UserId);
+                   // GoogleUser = googleUser;
+                    IsWorking = true;
+                    MultipartFormDataContent form = new MultipartFormDataContent();
 
+                    form.Add(new StringContent(account.Name.Split(' ')[0]), "FirstName");
+                    form.Add(new StringContent(account.Name.Split(' ')[1]), "LastName");
+                    form.Add(new StringContent(account.Email), "EmailId");
+                    form.Add(new StringContent("Apple"), "Platform");
+                    form.Add(new StringContent(string.Empty), "ContactNumber");
+                    var response = await new ApiData().PostFormData<UserModel>("user/SocialMediaLogin", form, true);
+                    if (response != null && response.data != null)
+                    {
+                        IsLogedIn = true;
+                        string newString = new String(response.data.FirstName.Select((ch, index) => (index == 0) ? Char.ToUpper(ch) : Char.ToLower(ch)).ToArray());
+                        Application.Current.Properties["IsLogedIn"] = true;
+                        Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
+                        Application.Current.Properties["UserName"] = newString;
+                        await Application.Current.SavePropertiesAsync();
+                        toast.LongAlert("Welcome to Relic Collector.");
+                        await NavigationService.NavigateAsync("/HomePage");
+                    }
+                    else
+                    {
+                        toast.LongAlert(response.message);
+                    }
+                    IsWorking = false;
+                }
+                else
+                {
+                    toast.LongAlert("Something went wrong.");
                 }
             }
             catch(Exception e)
@@ -149,7 +184,7 @@ namespace HeartlandArtifact.ViewModels
                 MultipartFormDataContent form = new MultipartFormDataContent();
                 form.Add(new StringContent(FacebookUser.FirstName), "FirstName");
                 form.Add(new StringContent(FacebookUser.LastName), "LastName");
-                form.Add(new StringContent(FacebookUser.Email), "EmailId");
+                form.Add(new StringContent(FacebookUser.Email ?? ""), "EmailId");
                 form.Add(new StringContent("Facebook"), "Platform");
                 form.Add(new StringContent(string.Empty), "ContactNumber");
                 var response = await new ApiData().PostFormData<UserModel>("user/SocialMediaLogin", form, true);
