@@ -45,12 +45,12 @@
                                     </Grid.ColumnDefinitions>-->
                                 <StackLayout Orientation="Horizontal" >
                                     <StackLayout Margin="0,2,2,2" IsVisible="{Binding BindingContext.IsEditIconVisible, Source={x:Reference MyCollection}}">
-                                        <Image Source="Pen.png" HeightRequest="13" WidthRequest="14" VerticalOptions="FillAndExpand">
+                                        <Image Source="Pen.png" HeightRequest="14" WidthRequest="16" VerticalOptions="FillAndExpand">
                                             <Image.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding BindingContext.OpenUpdateCollectionPopupCommand, Source={x:Reference MyCollection}}" CommandParameter="{Binding .}"/>
                                             </Image.GestureRecognizers>
                                         </Image>
-                                        <Image Source="Trash.png" HeightRequest="12" WidthRequest="12" VerticalOptions="FillAndExpand">
+                                        <Image Source="Trash.png" HeightRequest="12" WidthRequest="13" VerticalOptions="FillAndExpand">
                                             <Image.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding BindingContext.OpenDeleteCollectionPopupCommand, Source={x:Reference MyCollection}}" CommandParameter="{Binding .}"/>
                                             </Image.GestureRecognizers>
