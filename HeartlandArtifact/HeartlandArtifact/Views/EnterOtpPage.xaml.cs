@@ -10,8 +10,8 @@ namespace HeartlandArtifact.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class EnterOtpPage : ContentPage
     {
-        private List<Entry> _entries; 
-        Timer T = new Timer();
+        private List<Entry> _entries;
+        public Timer T;
         int Minutes = 2;
         int Seconds = 0;
         public EnterOtpPage()
@@ -22,6 +22,7 @@ namespace HeartlandArtifact.Views
             _entries.Add(Entry_two);
             _entries.Add(Entry_three);
             _entries.Add(Entry_four);
+            T = new Timer();
             T.Interval = 1000;
             T.Elapsed += T_Tick;
 
@@ -62,7 +63,7 @@ namespace HeartlandArtifact.Views
         {
             var text = (sender as Entry).Text;
             if (text.Length == 1 && !string.IsNullOrEmpty(text))
-            {
+            {   
                 if (text != " ")
                     Entry_two.Focus();
             }

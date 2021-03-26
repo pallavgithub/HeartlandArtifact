@@ -66,7 +66,7 @@ namespace HeartlandArtifact.ViewModels
            // GoBackCommand = new DelegateCommand(GoBack);
            // SubmitBtnCommand = new DelegateCommand(SubmitButtonClicked);
         }
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             //IsFromForgotPassword = (bool)parameters["FromForgetPassword"];
             if (parameters.ContainsKey("FromForgetPassword"))
@@ -80,7 +80,18 @@ namespace HeartlandArtifact.ViewModels
             else if (parameters.ContainsKey("FromResetPassword"))
             {
                 if ((bool)parameters["FromResetPassword"])
-                    NavigationService.GoBackAsync();
+                {
+                    if (Device.RuntimePlatform == Device.Android)
+                    {
+                        await _nav.GoBackAsync();
+                    }
+                    //if (Device.RuntimePlatform == Device.iOS)
+                    //{
+                    //    await _nav.NavigateAsync("ForgotPasswordPage");
+                    //}
+
+                }
+
             }
         }
         //public async void GoBack()
@@ -94,6 +105,8 @@ namespace HeartlandArtifact.ViewModels
 
         //    }
         //}
+
+        
         public async void SubmitButtonClicked()
         {
             string OTP = Text1 + Text2 + Text3 + Text4;

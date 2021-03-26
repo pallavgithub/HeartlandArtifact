@@ -99,11 +99,23 @@ namespace HeartlandArtifact.ViewModels
                 IsBusy = false;
             }
         }
-        public void GoBack()
+        public async void GoBack()
         {
-            var navigationParams = new NavigationParameters();
-            navigationParams.Add("FromResetPassword", true);
-            NavigationService.GoBackAsync(navigationParams);
+            //var navigationParams = new NavigationParameters();
+            //navigationParams.Add("FromResetPassword", true);
+            //NavigationService.GoBackAsync(navigationParams);
+
+           
+            if (Device.RuntimePlatform == Device.Android)
+            {
+                await NavigationService.GoBackAsync();
+            }
+            if (Device.RuntimePlatform == Device.iOS)
+            {
+                var navigationParams = new NavigationParameters();
+                navigationParams.Add("Email", Email);
+                await NavigationService.NavigateAsync("ForgotPasswordPage", navigationParams);
+            }
         }
     }
 }

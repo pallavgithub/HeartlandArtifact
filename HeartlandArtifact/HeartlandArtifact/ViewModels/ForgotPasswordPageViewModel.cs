@@ -26,7 +26,14 @@ namespace HeartlandArtifact.ViewModels
         }
         public async void GoBack()
         {
-           await  NavigationService.GoBackAsync();
+            if (Device.RuntimePlatform == Device.Android)
+            {
+                await NavigationService.GoBackAsync();
+            }
+            if ((Device.RuntimePlatform == Device.iOS))
+            {
+                await NavigationService.NavigateAsync("SignInPage");
+            }
         }
         public async void GoToEnterOtpPage()
         {
@@ -70,7 +77,10 @@ namespace HeartlandArtifact.ViewModels
         }
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
-
+            if (parameters.ContainsKey("Email"))
+            {
+                EmailId = (string)parameters["Email"];
+            }
         }
         public override void OnNavigatingTo(INavigationParameters parameters)
         {
