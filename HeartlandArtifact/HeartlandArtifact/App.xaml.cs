@@ -37,12 +37,12 @@ namespace HeartlandArtifact
                     }
                     else
                     {
-                        await NavigationService.NavigateAsync("NavigationPage/SignInPage");
+                        await NavigationService.NavigateAsync("SignInPage");
                     }
                 }
                 else
                 {
-                    await NavigationService.NavigateAsync("NavigationPage/SignInPage");
+                    await NavigationService.NavigateAsync("SignInPage");
                 }
             }
 
