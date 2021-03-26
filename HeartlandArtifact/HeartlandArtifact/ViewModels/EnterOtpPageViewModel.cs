@@ -80,7 +80,8 @@ namespace HeartlandArtifact.ViewModels
             else if (parameters.ContainsKey("FromResetPassword"))
             {
                 if ((bool)parameters["FromResetPassword"])
-                    NavigationService.GoBackAsync();
+                    _nav.GoBackAsync();
+                    
             }
         }
         //public async void GoBack()

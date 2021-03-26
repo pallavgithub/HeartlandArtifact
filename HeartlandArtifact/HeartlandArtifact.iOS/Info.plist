@@ -58,7 +58,7 @@
 	<key>FacebookAppID</key>
 	<string>449940536450766</string>
 	<key>FacebookDisplayName</key>
-	<string>Relic Collector</string>
+	<string>AuctionApp</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
