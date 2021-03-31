@@ -137,6 +137,9 @@
                             <Grid>
                                 <Image Source="AppleCircle.png"/>
                                 <Image Source="apple.png" Margin="30,22,30,30"/>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding AppleLoginCommand}"/>
+                                </Grid.GestureRecognizers>
                             </Grid>
                         </StackLayout>
                         <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">

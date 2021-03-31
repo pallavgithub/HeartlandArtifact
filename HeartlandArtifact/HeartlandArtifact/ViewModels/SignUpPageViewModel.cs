@@ -15,6 +15,7 @@ namespace HeartlandArtifact.ViewModels
     public class SignUpPageViewModel : ViewModelBase
     {
         public bool IsValid { get; set; }
+        private readonly IAppleManager _appleManager;
         private readonly IGoogleManager _googleManager;
         private readonly IFacebookManager _facebookManager;
         private FacebookUser _facebookUser;
@@ -89,15 +90,19 @@ namespace HeartlandArtifact.ViewModels
         public DelegateCommand GoogleLogoutCommand { get; set; }
         public DelegateCommand GoBackToSignInPage { get; set; }
         public DelegateCommand SubmitBtnCommand { get; set; }
+        public DelegateCommand AppleLoginCommand { get; set; }
+        public DelegateCommand AppleLogoutCommand { get; set; }
         public SignUpPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             _facebookManager = DependencyService.Get<IFacebookManager>();
             _googleManager = DependencyService.Get<IGoogleManager>();
-
+            _appleManager = DependencyService.Get<IAppleManager>();
             IsLogedIn = false;
             FacebookLoginCommand = new DelegateCommand(FacebookLogin);
             GoogleLoginCommand = new DelegateCommand(GoogleLogin);
             FacebookLogoutCommand = new DelegateCommand(FacebookLogout);
+            AppleLoginCommand = new DelegateCommand(AppleIdLogin);
+            AppleLogoutCommand = new DelegateCommand(AppleIdLogout);
             GoogleLogoutCommand = new DelegateCommand(GoogleLogout);
             GoBackToSignInPage = new DelegateCommand(GoToSignInPage);
             SubmitBtnCommand = new DelegateCommand(GoToEnterOtpPage);
@@ -121,6 +126,54 @@ namespace HeartlandArtifact.ViewModels
             _googleManager.Login(OnGoogleLoginComplete);
 
         }
+        private void AppleIdLogout()
+        {
+            IsLogedIn = false;
+        }
+        private async void AppleIdLogin()
+        {
+            try
+            {
+                var account = await _appleManager.SignInAsync();               
+                var toast = DependencyService.Get<IMessage>();
+                if (account != null)
+                {
+                    IsBusy = true;
+                    MultipartFormDataContent form = new MultipartFormDataContent();
+
+                    form.Add(new StringContent(account.Name.Split(' ')[0]), "FirstName");
+                    form.Add(new StringContent(account.Name.Split(' ')[1]), "LastName");
+                    form.Add(new StringContent(account.Email), "EmailId");
+                    form.Add(new StringContent("Apple"), "Platform");
+                    form.Add(new StringContent(string.Empty), "ContactNumber");
+                    var response = await new ApiData().PostFormData<UserModel>("user/SocialMediaLogin", form, true);
+                    if (response != null && response.data != null)
+                    {
+                        IsLogedIn = true;
+                        string newString = new String(response.data.FirstName.Select((ch, index) => (index == 0) ? Char.ToUpper(ch) : Char.ToLower(ch)).ToArray());
+                        Application.Current.Properties["IsLogedIn"] = true;
+                        Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
+                        Application.Current.Properties["UserName"] = newString;
+                        await Application.Current.SavePropertiesAsync();
+                        toast.LongAlert("Welcome to Relic Collector.");
+                        await NavigationService.NavigateAsync("/HomePage");
+                    }
+                    else
+                    {
+                        toast.LongAlert(response.message);
+                    }
+                    IsBusy = false;
+                }
+                else
+                {
+                    toast.LongAlert("Something went wrong.");
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
         private async void OnFacebookLoginComplete(FacebookUser facebookUser, string message)
         {
             var toast = DependencyService.Get<IMessage>();
@@ -132,7 +185,7 @@ namespace HeartlandArtifact.ViewModels
                 MultipartFormDataContent form = new MultipartFormDataContent();
                 form.Add(new StringContent(FacebookUser.FirstName), "FirstName");
                 form.Add(new StringContent(FacebookUser.LastName), "LastName");
-                form.Add(new StringContent(FacebookUser.Email), "EmailId");
+                form.Add(new StringContent(FacebookUser.Email ?? ""), "EmailId");
                 form.Add(new StringContent("Facebook"), "Platform");
                 form.Add(new StringContent(string.Empty), "ContactNumber");
                 var response = await new ApiData().PostFormData<UserModel>("user/SocialMediaLogin", form, true);
