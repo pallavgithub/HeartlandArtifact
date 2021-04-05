@@ -124,7 +124,6 @@
     <BundleResource Include="Resources\Helvetica-Bold.ttf" />
     <BundleResource Include="Resources\Helvetica.ttf" />
     <Compile Include="AppleSignInService.cs" />
-    <BundleResource Include="Resources\AppIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\IconImg@2x.png">
@@ -154,9 +153,6 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-App-40x40@2x.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-App-40x40@3x.png">
-      <Visible>false</Visible>
-    </ImageAsset>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-App-60x60@3x.png">
       <Visible>false</Visible>
     </ImageAsset>
@@ -166,7 +162,10 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-App-83.5x83.5@2x.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\ItunesArtwork@2x.png">
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\IconImg%402x-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIconImg.png">
       <Visible>false</Visible>
     </ImageAsset>
   </ItemGroup>
