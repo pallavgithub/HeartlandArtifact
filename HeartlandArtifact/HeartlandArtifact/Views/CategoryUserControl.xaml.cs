@@ -36,7 +36,6 @@ namespace HeartlandArtifact.Views
             var viewModel = BindingContext as HomePageViewModel;
             viewModel.IsEditCategoryIconVisible = !viewModel.IsEditCategoryIconVisible;
         }
-
         private void EditIcon_Tapped(object sender, EventArgs e)
         {
             var selectedCategory = ((TappedEventArgs)e).Parameter as CategoryModel;
@@ -46,7 +45,6 @@ namespace HeartlandArtifact.Views
             viewModel.CategoryData = selectedCategory;
             viewModel.EditCategoryPopupIsVisible = !viewModel.EditCategoryPopupIsVisible;
         }
-
         private void DeleteIcon_Tapped(object sender, EventArgs e)
         {
             var selectedCategory = ((TappedEventArgs)e).Parameter as CategoryModel;
@@ -54,6 +52,18 @@ namespace HeartlandArtifact.Views
             viewModel.CategoryData = new CategoryModel();
             viewModel.CategoryData = selectedCategory;
             viewModel.DeleteCategoryPopupIsVisible = !viewModel.DeleteCategoryPopupIsVisible;
+        }
+        private void GoToItemsList_Tapped(object sender, EventArgs e)
+        {
+            var selectedCategory = ((TappedEventArgs)e).Parameter as CategoryModel;
+            var viewModel = BindingContext as HomePageViewModel;
+            viewModel.GetUserItems(selectedCategory);
+            if (viewModel.IsEditCategoryIconVisible)
+            {
+                viewModel.IsEditCategoryIconVisible = false;
+            }
+            viewModel.ItemsUserControlIsVisible = true;
+            viewModel.CategoryUserControlIsVisible = false;
         }
     }
 }

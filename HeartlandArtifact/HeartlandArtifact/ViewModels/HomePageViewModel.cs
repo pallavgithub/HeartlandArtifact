@@ -3,12 +3,17 @@ using HeartlandArtifact.Interfaces;
 using HeartlandArtifact.Models;
 using HeartlandArtifact.Services.Contracts;
 using HeartlandArtifact.Views;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
+using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
 using Xamarin.Forms;
 
 namespace HeartlandArtifact.ViewModels
@@ -26,6 +31,12 @@ namespace HeartlandArtifact.ViewModels
         {
             get { return _addNewItemUserControlIsVisible; }
             set { SetProperty(ref _addNewItemUserControlIsVisible, value); }
+        }
+        private bool _itemsUserControlIsVisible;
+        public bool ItemsUserControlIsVisible
+        {
+            get { return _itemsUserControlIsVisible; }
+            set { SetProperty(ref _itemsUserControlIsVisible, value); }
         }
         private bool _contentViewIsVisible;
         public bool ContentViewIsVisible
@@ -153,6 +164,99 @@ namespace HeartlandArtifact.ViewModels
             get { return _selectedCollectionName; }
             set { SetProperty(ref _selectedCollectionName, value); }
         }
+        private string _selectedCategoryName;
+        public string SelectedCategoryName
+        {
+            get { return _selectedCategoryName; }
+            set { SetProperty(ref _selectedCategoryName, value); }
+        }
+
+        //Add Item properties
+        private int _collectionIdForNewItem;
+        public int CollectionIdForNewItem
+        {
+            get { return _collectionIdForNewItem; }
+            set { SetProperty(ref _collectionIdForNewItem, value); }
+        }
+        private int _categoryIdForNewItem;
+        public int CategoryIdForNewItem
+        {
+            get { return _categoryIdForNewItem; }
+            set { SetProperty(ref _categoryIdForNewItem, value); }
+        }
+        private string _collectionNameForNewItem;
+        public string CollectionNameForNewItem
+        {
+            get { return _collectionNameForNewItem; }
+            set { SetProperty(ref _collectionNameForNewItem, value); }
+        }
+        private string _categoryNameForNewItem;
+        public string CategoryNameForNewItem
+        {
+            get { return _categoryNameForNewItem; }
+            set { SetProperty(ref _categoryNameForNewItem, value); }
+        }
+        private string _title;
+        public string Title
+        {
+            get { return _title; }
+            set { SetProperty(ref _title, value); }
+        }
+        private string _material;
+        public string Material
+        {
+            get { return _material; }
+            set { SetProperty(ref _material, value); }
+        }
+        private string _foundBy;
+        public string FoundBy
+        {
+            get { return _foundBy; }
+            set { SetProperty(ref _foundBy, value); }
+        }
+        private string _exCollection;
+        public string ExCollection
+        {
+            get { return _exCollection; }
+            set { SetProperty(ref _exCollection, value); }
+        }
+        private string _perceivedValue;
+        public string PerceivedValue
+        {
+            get { return _perceivedValue; }
+            set { SetProperty(ref _perceivedValue, value); }
+        }
+        private string _cost;
+        public string Cost
+        {
+            get { return _cost; }
+            set { SetProperty(ref _cost, value); }
+        }
+        private string _length;
+        public string Length
+        {
+            get { return _length; }
+            set { SetProperty(ref _length, value); }
+        }
+        private string _country;
+        public string Country
+        {
+            get { return _country; }
+            set { SetProperty(ref _country, value); }
+        }
+        private string _state;
+        public string State
+        {
+            get { return _state; }
+            set { SetProperty(ref _state, value); }
+        }
+        private string _notes;
+        public string Notes
+        {
+            get { return _notes; }
+            set { SetProperty(ref _notes, value); }
+        }
+
         private ObservableCollection<CollectionModel> _allCollections;
         public ObservableCollection<CollectionModel> AllCollections
         {
@@ -171,8 +275,8 @@ namespace HeartlandArtifact.ViewModels
             get { return _collectionList; }
             set { SetProperty(ref _collectionList, value); }
         }
-        private ObservableCollection<CollectionModel> _categoryList;
-        public ObservableCollection<CollectionModel> CategoryList
+        private ObservableCollection<CategoryModel> _categoryList;
+        public ObservableCollection<CategoryModel> CategoryList
         {
             get { return _categoryList; }
             set { SetProperty(ref _categoryList, value); }
@@ -196,11 +300,14 @@ namespace HeartlandArtifact.ViewModels
         public DelegateCommand DeleteCategoryCommand { get; set; }
         public DelegateCommand CancelDeleteCategoryCommand { get; set; }
         public DelegateCommand ConfirmLogoutCommand { get; set; }
+        public DelegateCommand AddNewItemCommand { get; set; }
         public INavigationService _nav;
         public CollectionModel CollectionData { get; set; }
         public CategoryModel CategoryData { get; set; }
         private readonly IGoogleManager _googleManager;
         private readonly IFacebookManager _facebookManager;
+        public Stream ImageStream { get; set; }
+        public List<IFormFile> ItemImages { get; set; }
         public HomePageViewModel(INavigationService navigationService) : base(navigationService)
         {
             _nav = navigationService;
@@ -228,7 +335,7 @@ namespace HeartlandArtifact.ViewModels
             DeleteCategoryCommand = new DelegateCommand(DeleteCategory);
             CancelDeleteCategoryCommand = new DelegateCommand(CloseDeleteCategoryPopup);
             ConfirmLogoutCommand = new DelegateCommand(Logout);
-            GetListForDropdown();
+            AddNewItemCommand = new DelegateCommand(AddNewItem);
         }
         public async void Logout()
         {
@@ -289,6 +396,10 @@ namespace HeartlandArtifact.ViewModels
             {
 
             }
+        }
+        public void GetUserItems(CategoryModel category)
+        {
+            SelectedCategoryName = category.CategoryName;
         }
         public async void CreateNewCollection()
         {
@@ -565,25 +676,6 @@ namespace HeartlandArtifact.ViewModels
             NewCollectionName = string.Empty;
             AddCollectionPopupIsVisible = !AddCollectionPopupIsVisible;
         }
-        public void GetListForDropdown()
-        {
-            CollectionList = new ObservableCollection<CollectionModel>()
-            {
-                new CollectionModel{CollectionName="Coins"},
-                new CollectionModel{CollectionName="Stones"},
-                new CollectionModel{CollectionName="Black stone"},
-                new CollectionModel{CollectionName="Black stone"},
-                new CollectionModel{CollectionName="Black stone"},
-            };
-            CategoryList = new ObservableCollection<CollectionModel>()
-            {
-                new CollectionModel{CollectionName="Coins"},
-                new CollectionModel{CollectionName="Stones"},
-                new CollectionModel{CollectionName="Black stone"},
-                new CollectionModel{CollectionName="Black stone"},
-                new CollectionModel{CollectionName="Black stone"},
-            };
-        }
         public void CloseAddCategoryPopup()
         {
             NewCategoryName = string.Empty;
@@ -600,31 +692,132 @@ namespace HeartlandArtifact.ViewModels
             IsEditCategoryIconVisible = false;
             DeleteCategoryPopupIsVisible = !DeleteCategoryPopupIsVisible;
         }
-        public async void RefreshCategoryList()
+        IFormFile file = default;
+        public async void AddNewItem()
         {
-            try
+            var Toast = DependencyService.Get<IMessage>();
+            if (CollectionIdForNewItem == 0)
             {
-                IsBusy = true;
-                var UserId = Application.Current.Properties["LogedInUserId"];
-                var response = await new ApiData().GetData<List<CategoryModel>>("Category/GetUserCategories?userId=" + UserId, true);
-                if (response != null)
+                Toast.LongAlert("Please select collection name."); return;
+            }
+            if (CategoryIdForNewItem == 0)
+            {
+                Toast.LongAlert("Please select category name."); return;
+            }
+            if (string.IsNullOrEmpty(Title))
+            {
+                Toast.LongAlert("Please enter Title."); return;
+            }
+            else
+            {
+                try
                 {
-                    AllCategories = new ObservableCollection<CategoryModel>();
-                    foreach (var item in response.data)
+                    IsBusy = true;
+                    FileStream fs = ImageStream as FileStream;
+                    HttpContent fileStreamContent = new StreamContent(ImageStream);
+                    fileStreamContent.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("form-data") { Name = "file", FileName = fs.Name };
+                    fileStreamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+                    ItemImages = new List<IFormFile>();
+                    //IFormFile file;
+                    var formFile = new FormFile(ImageStream, 0, ImageStream.Length, "streamFile", fs.Name);                 
+                    //imagefile.CopyTo(ImageStream);
+                    //file.CopyTo(ImageStream);
+                    // file.Headers.Add("Name", "file");
+                    // file.Headers.Add("FileName", fs.Name);
+                    //ItemImages.Add(file);
+
+                    var newItem = new ItemModel();
+                    newItem.ItemId = 0;
+                    newItem.CollectionId = CollectionIdForNewItem;
+                    newItem.CategoryId = CategoryIdForNewItem;
+                    newItem.Title = Title;
+                    newItem.Material = Material;
+                    newItem.FoundBy = FoundBy;
+                    newItem.ExCollection = ExCollection;
+                    newItem.PerceivedValue = PerceivedValue;
+                    newItem.Cost = Cost;
+                    newItem.Length = Length;
+                    newItem.Country = Country;
+                    newItem.State = State;
+                    newItem.Notes = Notes;
+                    newItem.CreatorId = (int)Application.Current.Properties["LogedInUserId"];
+                    newItem.ModifierId = (int)Application.Current.Properties["LogedInUserId"];
+                    newItem.ItemImages = new List<IFormFile>();
+                    newItem.ItemImages.Add(formFile);
+
+                    var response = await new ApiData().PostData<MyItemModel>("Artifact/AddNewItem", newItem, true);
+                    if (response != null)
                     {
-                        if (item.CollectionId == CollectionData.CollectionId)
-                            AllCategories.Add(item);
 
                     }
-                }
-                CategoryNotFoundLblIsVisible = AllCategories.Count > 0 ? false : true;
-                IsBusy = false;
-            }
-            catch (Exception e)
-            {
+                    //var url = "https://hearlandartifactapi.azurewebsites.net/api/" + "Artifact/AddNewItem";
+                    //using (var client = new HttpClient())
+                    //using (var form = new MultipartFormDataContent())
+                    //{
+                    //    form.Add(new StringContent(CollectionIdForNewItem.ToString()), "CollectionId");
+                    //    form.Add(new StringContent(CategoryIdForNewItem.ToString()), "CategoryId");
+                    //    form.Add(new StringContent(Title ?? ""), "Title");
+                    //    form.Add(new StringContent(Material ?? ""), "Material");
+                    //    form.Add(new StringContent(FoundBy ?? ""), "FoundBy");
+                    //    form.Add(new StringContent(ExCollection ?? ""), "ExCollection");
+                    //    form.Add(new StringContent(PerceivedValue ?? ""), "PerceivedValue");
+                    //    form.Add(new StringContent(Cost ?? ""), "Cost");
+                    //    form.Add(new StringContent(Length ?? ""), "Length");
+                    //    form.Add(new StringContent(Country ?? ""), "Country");
+                    //    form.Add(new StringContent(State ?? ""), "State");
+                    //    form.Add(new StringContent(Notes ?? ""), "Notes");
+                    //    //form.Add(fileStreamContent);
 
+                    //    var response = await client.PostAsync(url, form);
+                    //    var result = await response.Content.ReadAsStringAsync();
+                    //    if (response.IsSuccessStatusCode)
+                    //    {
+                    //        var res = JsonConvert.DeserializeObject<ResponseModel<MyItemModel>>(result);
+                    //        // Toast.LongAlert("Profile picture updated successfully");
+                    //    }
+                    IsBusy = false;
+
+                }
+                catch (Exception e)
+                {
+
+                }
             }
+
         }
+
+
+        //public async Task<bool> UploadImageAsync(Stream image, string fileName)
+        //{
+        //    OperationInProgress = true;
+        //    var UserId = (int)Application.Current.Properties.Where(x => x.Key == "LogedInUserID").First().Value;
+        //    var Toast = DependencyService.Get<IMessage>();
+        //    try
+        //    {
+        //        var url = "http://18.220.198.217/User/SaveProfilePicAsync?containerName=tmvcontainer&userId=" + UserId.ToString();
+        //        HttpContent fileStreamContent = new StreamContent(image);
+        //        fileStreamContent.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("form-data") { Name = "file", FileName = fileName };
+        //        fileStreamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+        //        using (var client = new HttpClient())
+        //        using (var formData = new MultipartFormDataContent())
+        //        {
+        //            formData.Add(fileStreamContent);
+        //            var response = await client.PostAsync(url, formData);
+        //            string imgUrl = await response.Content.ReadAsStringAsync();
+        //            if (response.IsSuccessStatusCode)
+        //            {
+        //                ProfileImage = JsonConvert.DeserializeObject<string>(imgUrl);
+        //                Toast.LongAlert("Profile picture updated successfully");
+        //            }
+        //            OperationInProgress = false;
+        //            return response.IsSuccessStatusCode;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return false;
+        //    }
+        //}
     }
 }
 

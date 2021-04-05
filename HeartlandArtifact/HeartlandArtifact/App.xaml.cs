@@ -24,6 +24,7 @@ namespace HeartlandArtifact
         protected override async void OnInitialized()
         {
             InitializeComponent();
+            await Plugin.Media.CrossMedia.Current.Initialize();
            // App.User = new UserDataModel();
             App.SignUpDetails = new UserModel();
             if (Application.Current.Properties != null)

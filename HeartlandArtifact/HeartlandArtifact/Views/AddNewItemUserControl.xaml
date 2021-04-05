@@ -25,139 +25,140 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>                   
-                    <Label Text="My Item" TextTransform="None" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="22" HorizontalOptions="Center"/>
-                    <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Start">
-                        <Label Text="&lt;" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Center" Margin="0,0,0,3" TextColor="Black" TextTransform="Uppercase" FontSize="14"/>
-                        <Label Text="BACK" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Center" TextColor="Black" TextTransform="Uppercase" FontSize="16"/>
-                        <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="GoBack_Tapped"/>
-                        </StackLayout.GestureRecognizers>
-                    </StackLayout>
-                        <StackLayout Grid.Row="2" BackgroundColor="LightSteelBlue" HeightRequest="180" WidthRequest="70" Margin="0,0,0,5">
-                        <Label Text="+ Add Photo" TextTransform="Uppercase" TextColor="Black" FontSize="16" FontFamily="{StaticResource HelveticaRegular}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
-                    </StackLayout>
+                        </Grid.RowDefinitions>
+                        <Label Text="My Item" TextTransform="None" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="22" HorizontalOptions="Center"/>
+                        <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Start">
+                            <Label Text="&lt;" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Center" Margin="0,0,0,3" TextColor="Black" TextTransform="Uppercase" FontSize="14"/>
+                            <Label Text="BACK" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Center" TextColor="Black" TextTransform="Uppercase" FontSize="16"/>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="GoBack_Tapped"/>
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                        <Grid Grid.Row="2" BackgroundColor="LightSteelBlue" HeightRequest="180" WidthRequest="70" Margin="0,0,0,5">
+                            <Label Text="+ Add Photo" TextTransform="Uppercase" TextColor="Black" FontSize="16" FontFamily="{StaticResource HelveticaRegular}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
+                            <Image Source="" x:Name="pic" Aspect="Fill"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="AddNewPhoto_Tapped"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
                         <StackLayout Spacing="0" Grid.Row="3">
-                        <Label Text="Collection*" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                        <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Label Text="Collection*" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-                            <!--<custom:BorderLessEntry Text="{Binding NewPassword}" IsPassword="True" 
-                                          HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
-                                          FontSize="16"/>-->
-                                <Label Text="Default" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}"/>
+                                <Label Text="{Binding CollectionNameForNewItem}" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}"/>
                                 <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="CollectionDropdown_Tapped"/>
-                            </Frame.GestureRecognizers>
-                        </Frame>
-                    </StackLayout>
+                                    <TapGestureRecognizer Tapped="CollectionDropdown_Tapped"/>
+                                </Frame.GestureRecognizers>
+                            </Frame>
+                        </StackLayout>
                         <StackLayout Spacing="0" Grid.Row="4">
-                        <Label Text="Category*" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                        <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Label Text="Category*" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-                                <Label Text="Default" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}"/>
+                                <Label Text="{Binding CategoryNameForNewItem}" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}"/>
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="CategoryDropdown_Tapped"/>
                                 </Frame.GestureRecognizers>
                             </Frame>
-                    </StackLayout>
+                        </StackLayout>
                         <StackLayout Spacing="0" Grid.Row="5">
-                        <Label Text="Title*" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                        <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Label Text="Title*" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-                            <custom:BorderLessEntry Text="{Binding NewPassword}" IsPassword="True" 
+                                <custom:BorderLessEntry Text="{Binding Title}"  
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="16"/>
-                        </Frame>
-                    </StackLayout>
+                            </Frame>
+                        </StackLayout>
                         <StackLayout Spacing="0" Grid.Row="6">
-                        <Label Text="Material*" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                        <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Label Text="Material" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-                            <custom:BorderLessEntry Text="{Binding NewPassword}" IsPassword="True" 
+                                <custom:BorderLessEntry Text="{Binding Material}"  
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="16"/>
-                        </Frame>
-                    </StackLayout>
+                            </Frame>
+                        </StackLayout>
                         <StackLayout Spacing="0" Grid.Row="7">
-                        <Label Text="Found By" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                        <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Label Text="Found By" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-                            <custom:BorderLessEntry Text="{Binding NewPassword}" IsPassword="True" 
+                                <custom:BorderLessEntry Text="{Binding FoundBy}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="16"/>
-                        </Frame>
-                    </StackLayout>
+                            </Frame>
+                        </StackLayout>
                         <StackLayout Spacing="0" Grid.Row="8">
-                        <Label Text="Ex Collection" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                        <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Label Text="Ex Collection" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-                            <custom:BorderLessEntry Text="{Binding NewPassword}" IsPassword="True" 
+                                <custom:BorderLessEntry Text="{Binding ExCollection}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="16"/>
-                        </Frame>
-                    </StackLayout>
+                            </Frame>
+                        </StackLayout>
                         <StackLayout Spacing="0" Grid.Row="9">
-                        <Label Text="Perceived Value ($)" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                        <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Label Text="Perceived Value ($)" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-                            <custom:BorderLessEntry Text="{Binding NewPassword}" IsPassword="True" 
+                                <custom:BorderLessEntry Text="{Binding PerceivedValue}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="16"/>
-                        </Frame>
-                    </StackLayout>
+                            </Frame>
+                        </StackLayout>
                         <StackLayout Spacing="0" Grid.Row="10">
-                        <Label Text="Cost ($)*" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                        <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Label Text="Cost ($)" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-                            <custom:BorderLessEntry Text="{Binding NewPassword}" IsPassword="True" 
+                                <custom:BorderLessEntry Text="{Binding Cost}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="16"/>
-                        </Frame>
-                    </StackLayout>
+                            </Frame>
+                        </StackLayout>
                         <StackLayout Spacing="0" Grid.Row="11">
-                        <Label Text="Length (Inches)*" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                        <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Label Text="Length (Inches)" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-                            <custom:BorderLessEntry Text="{Binding NewPassword}" IsPassword="True" 
+                                <custom:BorderLessEntry Text="{Binding Length}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="16"/>
-                        </Frame>
-                    </StackLayout>
+                            </Frame>
+                        </StackLayout>
                         <StackLayout Spacing="0" Grid.Row="12">
-                        <Label Text="Country*" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                        <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Label Text="Country" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-                            <custom:BorderLessEntry Text="{Binding NewPassword}" IsPassword="True" 
+                                <custom:BorderLessEntry Text="{Binding Country}"  
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="16"/>
-                        </Frame>
-                    </StackLayout>
+                            </Frame>
+                        </StackLayout>
                         <StackLayout Spacing="0" Grid.Row="13">
-                        <Label Text="State*" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                        <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Label Text="State" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-                            <custom:BorderLessEntry Text="{Binding NewPassword}" IsPassword="True" 
+                                <custom:BorderLessEntry Text="{Binding State}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="16"/>
-                        </Frame>
-                    </StackLayout>
+                            </Frame>
+                        </StackLayout>
                         <StackLayout Spacing="0" Grid.Row="14">
-                        <Label Text="Notes" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                        <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Label Text="Notes" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-                            <custom:BorderLessEntry Text="{Binding NewPassword}" IsPassword="True" 
+                                <custom:BorderLessEntry Text="{Binding Notes}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="16"/>
-                        </Frame>
-                    </StackLayout>
+                            </Frame>
+                        </StackLayout>
                         <Label Grid.Row="15" Text="* Indicates required fields" FontFamily="{StaticResource HelveticaRegular}" HorizontalOptions="Center" TextColor="Black" FontSize="14"/>
                         <Grid Grid.Row="16" HorizontalOptions="CenterAndExpand" VerticalOptions="Start">
-                        <Image Source="Button.png"/>
-                        <Label Text="save" TextTransform="Uppercase" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,3" FontFamily="{StaticResource HelveticaRegular}" FontSize="24" TextColor="Black" BackgroundColor="Transparent"/>
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer/>
-                        </Grid.GestureRecognizers>
-                    </Grid>
+                            <Image Source="Button.png"/>
+                            <Label Text="save" TextTransform="Uppercase" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,3" FontFamily="{StaticResource HelveticaRegular}" FontSize="24" TextColor="Black" BackgroundColor="Transparent"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding AddNewItemCommand}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
                         <ContentView x:Name="_contentView" Grid.RowSpan="17" IsVisible="{Binding ContentViewIsVisible}">
                             <ContentView.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="ContentView_Tapped"/>
@@ -165,12 +166,15 @@
                         </ContentView>
                         <Grid Grid.Row="4" Grid.RowSpan="3" x:Name="CollectionDropdown" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Transparent" IsVisible="{Binding CollectionDropdownIsVisible}">
                             <Frame HasShadow="False" OutlineColor="Gray">
-                                <ListView ItemsSource="{Binding CollectionList}" SelectionMode="None" BackgroundColor="White" VerticalScrollBarVisibility="Never">
+                                <ListView ItemsSource="{Binding AllCollections}" SelectionMode="None" BackgroundColor="White" VerticalScrollBarVisibility="Never">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
                                             <ViewCell>
                                                 <StackLayout Padding="10">
                                                     <Label Text="{Binding CollectionName}" TextColor="Black" FontSize="14" FontFamily="{StaticResource HelveticaRegular}" VerticalOptions="CenterAndExpand"/>
+                                                    <StackLayout.GestureRecognizers>
+                                                        <TapGestureRecognizer Tapped="CollectionDropdownRow_Tapped" CommandParameter="{Binding .}"/>
+                                                    </StackLayout.GestureRecognizers>
                                                 </StackLayout>
                                             </ViewCell>
                                         </DataTemplate>
@@ -180,12 +184,15 @@
                         </Grid>
                         <Grid Grid.Row="5" Grid.RowSpan="3" x:Name="CategoryDropdown" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Transparent" IsVisible="{Binding CategoryDropdownIsVisible}">
                             <Frame HasShadow="False" OutlineColor="Gray">
-                                <ListView ItemsSource="{Binding CategoryList}" SelectionMode="None" BackgroundColor="White" VerticalScrollBarVisibility="Never">
+                                <ListView ItemsSource="{Binding CategoryList}" x:Name="CategoryDropdownList" SelectionMode="None" BackgroundColor="White" VerticalScrollBarVisibility="Never">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
                                             <ViewCell>
                                                 <StackLayout Padding="10">
-                                                    <Label Text="{Binding CollectionName}" TextColor="Black" FontSize="14" FontFamily="{StaticResource HelveticaRegular}" VerticalOptions="CenterAndExpand"/>
+                                                    <Label Text="{Binding CategoryName}" TextColor="Black" FontSize="14" FontFamily="{StaticResource HelveticaRegular}" VerticalOptions="CenterAndExpand"/>
+                                                    <StackLayout.GestureRecognizers>
+                                                        <TapGestureRecognizer Tapped="CategoryDropdownRow_Tapped" CommandParameter="{Binding .}"/>
+                                                    </StackLayout.GestureRecognizers>
                                                 </StackLayout>
                                             </ViewCell>
                                         </DataTemplate>
@@ -197,23 +204,7 @@
                     </Grid>
                 </StackLayout>
             </ScrollView>
-            <!--<Grid x:Name="CollectionDropdown" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Transparent" IsVisible="{Binding CollectionDropdownIsVisible}">
-                <ContentView/>
-                <StackLayout>
-                    <ListView ItemsSource="{Binding CollectionList}" BackgroundColor="White">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <ViewCell>
-                                    <StackLayout>
-                                        <Label Text="{Binding CollectionName}"/>
-                                    </StackLayout>
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </StackLayout>               
-            </Grid>-->
-            
+
         </Grid>
     </ContentView.Content>
 </ContentView>
