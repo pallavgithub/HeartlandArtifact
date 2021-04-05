@@ -25,5 +25,11 @@ namespace HeartlandArtifact.Views
             viewModel.ItemsUserControlIsVisible = false;
             viewModel.HomeIsVisible = true;
         }
+
+        private void DeleteItemButton_Tapped(object sender, EventArgs e)
+        {
+            var viewModel = BindingContext as HomePageViewModel;
+            viewModel.DeleteItemIconIsVisible = !viewModel.DeleteItemIconIsVisible;
+        }
     }
 }

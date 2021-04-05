@@ -2,7 +2,8 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:converter="clr-namespace:HeartlandArtifact.Converters"
-             x:Class="HeartlandArtifact.Views.ItemsUserControl">
+             x:Class="HeartlandArtifact.Views.ItemsUserControl"
+             x:Name="Items">
     <ContentView.Resources>
         <ResourceDictionary>
             <converter:InverseBoolConverter x:Key="InverseBoolConverter"></converter:InverseBoolConverter>
@@ -28,36 +29,38 @@
                     <Image Source="Button.png"/>
                     <Label Text="Delete Item" VerticalOptions="Center" FontSize="16" HorizontalOptions="Center" Margin="0,0,0,3" TextColor="Black" TextTransform="Uppercase"/>
                     <Grid.GestureRecognizers>
-                        <TapGestureRecognizer />
+                        <TapGestureRecognizer Tapped="DeleteItemButton_Tapped"/>
                     </Grid.GestureRecognizers>
                 </Grid>
                 <StackLayout Orientation="Horizontal" Grid.Column="2">
                     <Label Text="Search" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Center" HorizontalOptions="EndAndExpand" Margin="0" TextColor="Black" FontSize="16"/>
                 </StackLayout>
             </Grid>
-            <Label Text="Item not found." TextColor="Black" FontSize="16" HorizontalOptions="Center" IsVisible="{Binding CategoryNotFoundLblIsVisible}"/>
-            <ListView ItemsSource="{Binding AllCategories}" SelectionMode="None" SeparatorVisibility="None" HasUnevenRows="True">
+            <Label Text="Item not found." TextColor="Black" FontSize="16" HorizontalOptions="Center" IsVisible="{Binding ItemNotFoundLblIsVisible}"/>
+            <ListView ItemsSource="{Binding AllItems}" SelectionMode="None" SeparatorVisibility="None" HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout HeightRequest="50" Margin="0,10,0,10">
-                                <StackLayout Orientation="Horizontal">
-                                    <StackLayout Margin="0,2,2,2" IsVisible="False">
-                                        <Image Source="Trash.png" HeightRequest="12" WidthRequest="13" VerticalOptions="FillAndExpand">
+                            <StackLayout HeightRequest="100" Margin="0,7,0,7">
+                                <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand">
+                                    <StackLayout Margin="0,2,2,2" IsVisible="{Binding BindingContext.DeleteItemIconIsVisible, Source={x:Reference Items}}" VerticalOptions="CenterAndExpand">
+                                        <Image Source="Trash.png" HeightRequest="16" WidthRequest="16" VerticalOptions="FillAndExpand">
                                             <Image.GestureRecognizers>
                                                 <TapGestureRecognizer />
                                             </Image.GestureRecognizers>
                                         </Image>
                                     </StackLayout>
-                                    <StackLayout Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                        <Frame HasShadow="False" Padding="15" BackgroundColor="Transparent" OutlineColor="LightGray" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                        <Frame HasShadow="False" Padding="0" BackgroundColor="Transparent" OutlineColor="LightGray" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                             <Grid VerticalOptions="FillAndExpand">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="13"/>
+                                                    <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
-                                                <Label Text="{Binding CategoryName}" TextColor="Black" Margin="0,-2,0,0" FontFamily="{StaticResource HelveticaBold}" FontSize="15"/>
-                                                <Image Source="Arrow.png" Grid.Column="1" HorizontalOptions="EndAndExpand"/>
+                                                <StackLayout Grid.Column="0" BackgroundColor="LightGray">
+                                                <Image Source="{Binding ImageUrl}" HorizontalOptions="EndAndExpand"/>
+                                                </StackLayout>
+                                                <Label Text="{Binding Title}" Grid.Column="1" TextColor="Black" Margin="15" FontFamily="{StaticResource HelveticaBold}" FontSize="15"/>
                                             </Grid>
                                         </Frame>
                                     </StackLayout>
