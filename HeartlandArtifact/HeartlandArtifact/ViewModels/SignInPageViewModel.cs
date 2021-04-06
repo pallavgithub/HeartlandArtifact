@@ -28,9 +28,11 @@ namespace HeartlandArtifact.ViewModels
         public DelegateCommand GoToSignUpPageCommand { get; set; }
         public DelegateCommand GoToForgotPasswordPageCommand { get; set; }
         public DelegateCommand ContinueCommand { get; set; }
+        public DelegateCommand SubmitFbIdButtonCommand { get; set; }
+        public DelegateCommand CrossButtonCommand { get; set; }
         private FacebookUser _facebookUser;
         private GoogleUser _googleUser;
-       
+
         private bool _isLogedIn;
         public bool IsLogedIn
         {
@@ -43,19 +45,29 @@ namespace HeartlandArtifact.ViewModels
             get { return _isWorking; }
             set { SetProperty(ref _isWorking, value); }
         }
-
         private bool _showPassword;
-
         public bool ShowPassword
         {
             get { return _showPassword; }
             set { SetProperty(ref _showPassword, value); }
+        }
+        private bool _facebookEmailPopupIsVisible;
+        public bool FacebookEmailPopupIsVisible
+        {
+            get { return _facebookEmailPopupIsVisible; }
+            set { SetProperty(ref _facebookEmailPopupIsVisible, value); }
         }
         private string _email;
         public string Email
         {
             get { return _email; }
             set { SetProperty(ref _email, value); }
+        }
+        private string _facebookEmailId;
+        public string FacebookEmailId
+        {
+            get { return _facebookEmailId; }
+            set { SetProperty(ref _facebookEmailId, value); }
         }
         private string _password;
         public string Password
@@ -89,6 +101,8 @@ namespace HeartlandArtifact.ViewModels
             GoToSignUpPageCommand = new DelegateCommand(GoToSignUpPage);
             GoToForgotPasswordPageCommand = new DelegateCommand(GoToForgotPasswordPage);
             ContinueCommand = new DelegateCommand(SignIn);
+            SubmitFbIdButtonCommand = new DelegateCommand(UpdateFacebookEmailId);
+            CrossButtonCommand = new DelegateCommand(CloseEmailPopup);
         }
         public void GoToSignUpPage()
         {
@@ -100,7 +114,7 @@ namespace HeartlandArtifact.ViewModels
         }
         private void AppleIdLogout()
         {
-           // _facebookManager.Logout();
+            // _facebookManager.Logout();
             IsLogedIn = false;
         }
         private async void AppleIdLogin()
@@ -118,7 +132,7 @@ namespace HeartlandArtifact.ViewModels
                 var toast = DependencyService.Get<IMessage>();
                 if (account != null)
                 {
-                   // GoogleUser = googleUser;
+                    // GoogleUser = googleUser;
                     IsWorking = true;
                     MultipartFormDataContent form = new MultipartFormDataContent();
 
@@ -150,7 +164,7 @@ namespace HeartlandArtifact.ViewModels
                     toast.LongAlert("Something went wrong.");
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
 
             }
@@ -182,6 +196,7 @@ namespace HeartlandArtifact.ViewModels
                 FacebookUser = facebookUser;
                 HttpClient client = new HttpClient();
                 MultipartFormDataContent form = new MultipartFormDataContent();
+                form.Add(new StringContent(FacebookUser.Id), "FacebookId");
                 form.Add(new StringContent(FacebookUser.FirstName), "FirstName");
                 form.Add(new StringContent(FacebookUser.LastName), "LastName");
                 form.Add(new StringContent(FacebookUser.Email ?? ""), "EmailId");
@@ -190,16 +205,21 @@ namespace HeartlandArtifact.ViewModels
                 var response = await new ApiData().PostFormData<UserModel>("user/SocialMediaLogin", form, true);
                 if (response != null && response.data != null)
                 {
-                    string newString = new String(response.data.FirstName.Select((ch, index) => (index == 0) ? Char.ToUpper(ch) : Char.ToLower(ch)).ToArray());
-                    IsLogedIn = true;
-                    Application.Current.Properties["IsLogedIn"] = true;
-                    Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
-                    Application.Current.Properties["UserName"] = newString;
-                    await Application.Current.SavePropertiesAsync();
-
-                    toast.LongAlert("Welcome to Relic Collector.");
-                    await NavigationService.NavigateAsync("/HomePage");
-
+                    if (response.status == "400")
+                    {
+                        FacebookEmailPopupIsVisible = true;
+                    }
+                    else
+                    {
+                        string newString = new String(response.data.FirstName.Select((ch, index) => (index == 0) ? Char.ToUpper(ch) : Char.ToLower(ch)).ToArray());
+                        IsLogedIn = true;
+                        Application.Current.Properties["IsLogedIn"] = true;
+                        Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
+                        Application.Current.Properties["UserName"] = newString;
+                        await Application.Current.SavePropertiesAsync();
+                        toast.LongAlert("Welcome to Relic Collector.");
+                        await NavigationService.NavigateAsync("/HomePage");
+                    }
                 }
                 else
                 {
@@ -317,6 +337,38 @@ namespace HeartlandArtifact.ViewModels
             {
 
             }
+        }
+        public async void UpdateFacebookEmailId()
+        {
+            var toast = DependencyService.Get<IMessage>();
+            if (string.IsNullOrEmpty(FacebookEmailId))
+            {
+                toast.LongAlert("Please enter your email address."); return;
+            }
+            else
+            {
+                IsWorking = true;
+                var response = await new ApiData().PutData<UserModel>("User/UpdateFacebookSignUpEmail?FacebookId=" + FacebookUser.Id + "&Email=" + FacebookEmailId, true);
+                if (response != null && response.data != null)
+                {
+                    FacebookEmailPopupIsVisible = false;
+                    string newString = new String(response.data.FirstName.Select((ch, index) => (index == 0) ? Char.ToUpper(ch) : Char.ToLower(ch)).ToArray());
+                    IsLogedIn = true;
+                    Application.Current.Properties["IsLogedIn"] = true;
+                    Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
+                    Application.Current.Properties["UserName"] = newString;
+                    await Application.Current.SavePropertiesAsync();
+                    toast.LongAlert("Welcome to Relic Collector.");
+                    await NavigationService.NavigateAsync("/HomePage");
+                }
+                IsWorking = false;
+            }
+
+        }
+        public void CloseEmailPopup()
+        {
+            FacebookEmailPopupIsVisible = false;
+
         }
     }
 }

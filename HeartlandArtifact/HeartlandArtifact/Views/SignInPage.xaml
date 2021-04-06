@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:custom="clr-namespace:HeartlandArtifact.CustomRenderers" xmlns:converter="clr-namespace:HeartlandArtifact.Converters"
-             x:Class="HeartlandArtifact.Views.SignInPage"
-          
+             x:Class="HeartlandArtifact.Views.SignInPage"          
              NavigationPage.HasNavigationBar="False" FlowDirection="LeftToRight">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -99,7 +98,30 @@
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
-
+            <Grid IsVisible="{Binding FacebookEmailPopupIsVisible}" x:Name="AddEmailPopup">
+                <ContentView BackgroundColor="LightGray" Opacity="0.7"/>
+                <StackLayout BackgroundColor="White" Padding="15" Margin="20,0,20,0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                    <Image HorizontalOptions="End" Source="Cross.png" HeightRequest="20" WidthRequest="20">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CrossButtonCommand}"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <Label Text="Please Enter your Email." FontSize="18" TextColor="Black" HorizontalTextAlignment="Center" FontFamily="{StaticResource HelveticaRegular}"/>
+                    <Frame Margin="2,5,2,8" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="25"
+                           HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
+                        <custom:BorderLessEntry Text="{Binding FacebookEmailId}" 
+                                          HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                                          FontSize="16" TextColor="Black"/>
+                    </Frame>
+                    <Grid>
+                        <Image Source="Button.png" WidthRequest="210"/>
+                        <Label Text="Submit" FontSize="16" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,0,0,3"/>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SubmitFbIdButtonCommand}"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </StackLayout>
+            </Grid>
             <Grid IsVisible="{Binding IsWorking}">
                 <ContentView BackgroundColor="LightGray" Opacity="0.67">
                     <ActivityIndicator IsVisible="{Binding IsWorking}" IsRunning="{Binding IsWorking}" VerticalOptions="Center" HorizontalOptions="Center" Color="Black"/>

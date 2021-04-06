@@ -46,6 +46,7 @@
                                     <pages:MyCollectionUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding MyCollectionVisible}"/>
                                     <pages:CategoryUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding CategoryUserControlIsVisible}"/>
                                     <pages:ItemsUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding ItemsUserControlIsVisible}"/>
+                                    <pages:ItemDetailsUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding ItemDetailsUserControlIsVisible}"/>
                                     <pages:SoldItemsUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding SoldItemsIsVisible}"/>
                                 </Grid>
                             </StackLayout>

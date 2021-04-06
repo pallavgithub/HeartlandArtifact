@@ -31,6 +31,12 @@ namespace HeartlandArtifact.ViewModels
         {
             get { return _addNewItemUserControlIsVisible; }
             set { SetProperty(ref _addNewItemUserControlIsVisible, value); }
+        } 
+        private bool _itemDetailsUserControlIsVisible;
+        public bool ItemDetailsUserControlIsVisible
+        {
+            get { return _itemDetailsUserControlIsVisible; }
+            set { SetProperty(ref _itemDetailsUserControlIsVisible, value); }
         }
         private bool _itemsUserControlIsVisible;
         public bool ItemsUserControlIsVisible
@@ -834,39 +840,12 @@ namespace HeartlandArtifact.ViewModels
             }
             return byteArray;
         }
+        public void GetItemDetailsById(int ItemID)
+        {
+
+        }
 
 
-        //public async Task<bool> UploadImageAsync(Stream image, string fileName)
-        //{
-        //    OperationInProgress = true;
-        //    var UserId = (int)Application.Current.Properties.Where(x => x.Key == "LogedInUserID").First().Value;
-        //    var Toast = DependencyService.Get<IMessage>();
-        //    try
-        //    {
-        //        var url = "http://18.220.198.217/User/SaveProfilePicAsync?containerName=tmvcontainer&userId=" + UserId.ToString();
-        //        HttpContent fileStreamContent = new StreamContent(image);
-        //        fileStreamContent.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("form-data") { Name = "file", FileName = fileName };
-        //        fileStreamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
-        //        using (var client = new HttpClient())
-        //        using (var formData = new MultipartFormDataContent())
-        //        {
-        //            formData.Add(fileStreamContent);
-        //            var response = await client.PostAsync(url, formData);
-        //            string imgUrl = await response.Content.ReadAsStringAsync();
-        //            if (response.IsSuccessStatusCode)
-        //            {
-        //                ProfileImage = JsonConvert.DeserializeObject<string>(imgUrl);
-        //                Toast.LongAlert("Profile picture updated successfully");
-        //            }
-        //            OperationInProgress = false;
-        //            return response.IsSuccessStatusCode;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return false;
-        //    }
-        //}
     }
 }
 

@@ -1,4 +1,5 @@
-﻿using HeartlandArtifact.ViewModels;
+﻿using HeartlandArtifact.Models;
+using HeartlandArtifact.ViewModels;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -30,6 +31,19 @@ namespace HeartlandArtifact.Views
         {
             var viewModel = BindingContext as HomePageViewModel;
             viewModel.DeleteItemIconIsVisible = !viewModel.DeleteItemIconIsVisible;
+        }
+
+        private void GoToItemDetails_Tapped(object sender, EventArgs e)
+        {
+            var selectedItem = ((TappedEventArgs)e).Parameter as MyItemModel;
+            var viewModel = BindingContext as HomePageViewModel;
+            viewModel.GetItemDetailsById(selectedItem.ItemId);
+            if (viewModel.DeleteItemIconIsVisible)
+            {
+                viewModel.DeleteItemIconIsVisible = false;
+            }
+            viewModel.ItemDetailsUserControlIsVisible = true;
+            viewModel.ItemsUserControlIsVisible = false;
         }
     }
 }
