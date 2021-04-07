@@ -4,68 +4,70 @@
              x:Class="HeartlandArtifact.Views.ItemDetailsUserControl"
              NavigationPage.HasNavigationBar="False"
              x:Name="ItemDetails">
-  <ContentView.Content>
+    <ContentView.Content>
         <StackLayout>
             <ScrollView VerticalScrollBarVisibility="Never">
-        <StackLayout Padding="25,5,25,30">
-            <Label Text="My Collection" HorizontalOptions="Center" TextColor="Black" FontSize="22" FontFamily="{StaticResource HelveticaBold}"/>
-            <Grid ColumnSpacing="0" HeightRequest="50">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="80"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="80"/>
-                </Grid.ColumnDefinitions>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
-                    <Label Text="&lt;" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Center" Margin="0,0,0,3" TextColor="Black" TextTransform="Uppercase" FontSize="14"/>
-                    <Label Text="BACK" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Center" TextColor="Black" TextTransform="Uppercase" FontSize="16"/>
-                    <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="GoBack_Tapped"/>
-                    </StackLayout.GestureRecognizers>
-                </StackLayout>
-                <Grid IsVisible="True" Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="60">
-                    <Image Source="Button.png"/>
-                    <Label Text="Edit Item" VerticalOptions="Center" FontSize="16" HorizontalOptions="Center" Margin="0,0,0,3" TextColor="Black" TextTransform="Uppercase"/>
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer />
-                    </Grid.GestureRecognizers>
-                </Grid>
-            </Grid>
-            <StackLayout HeightRequest="200" HorizontalOptions="FillAndExpand" VerticalOptions="Start" BackgroundColor="Gray"/>
-            <Label Text="Dovetail" HorizontalOptions="Center" TextColor="Black" FontSize="22" FontFamily="{StaticResource HelveticaBold}"/>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Label Text="Material" Grid.Row="0" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
-                <Label Text="Material" Grid.Row="0" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
-                <Label Text="FoundBy" Grid.Row="1" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
-                <Label Text="Material" Grid.Row="1" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
-                <Label Text="Ex Collection" Grid.Row="2" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
-                <Label Text="Material" Grid.Row="2" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
-                <Label Text="Perceived Value" Grid.Row="3" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
-                <Label Text="Material" Grid.Row="3" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
-                <Label Text="Cost" Grid.Row="4" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
-                <Label Text="Material" Grid.Row="4" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
-                <Label Text="Length" Grid.Row="5" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
-                <Label Text="Material" Grid.Row="5" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
-                <Label Text="Country" Grid.Row="6" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
-                <Label Text="Material" Grid.Row="6" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
-                <Label Text="State" Grid.Row="7" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
-                <Label Text="Material" Grid.Row="7" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
-            </Grid>
+                <StackLayout Padding="25,5,25,30">
+                    <Label Text="My Collection" HorizontalOptions="Center" TextColor="Black" FontSize="22" FontFamily="{StaticResource HelveticaBold}"/>
+                    <Grid ColumnSpacing="0" HeightRequest="50">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="80"/>
+                        </Grid.ColumnDefinitions>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                            <Label Text="&lt;" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Center" Margin="0,0,0,3" TextColor="Black" TextTransform="Uppercase" FontSize="14"/>
+                            <Label Text="BACK" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Center" TextColor="Black" TextTransform="Uppercase" FontSize="16"/>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="GoBack_Tapped"/>
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                        <Grid IsVisible="True" Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="60">
+                            <Image Source="Button.png"/>
+                            <Label Text="Edit Item" VerticalOptions="Center" FontSize="16" HorizontalOptions="Center" Margin="0,0,0,3" TextColor="Black" TextTransform="Uppercase"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </Grid>
+                    <Grid HeightRequest="200" HorizontalOptions="FillAndExpand" VerticalOptions="Start" BackgroundColor="Gray">
+                        <Image Source="{Binding ItemImageSource}" Aspect="Fill"/>
+                    </Grid>
+                    <Label Text="{Binding Title}" HorizontalOptions="Center" TextColor="Black" FontSize="22" FontFamily="{StaticResource HelveticaBold}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Text="Material" Grid.Row="0" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="{Binding Material}" Grid.Row="0" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="FoundBy" Grid.Row="1" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="{Binding FoundBy}" Grid.Row="1" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="Ex Collection" Grid.Row="2" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="{Binding ExCollection}" Grid.Row="2" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="Perceived Value" Grid.Row="3" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="{Binding PerceivedValue}" Grid.Row="3" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="Cost" Grid.Row="4" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="{Binding Cost}" Grid.Row="4" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="Length" Grid.Row="5" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="{Binding Length}" Grid.Row="5" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="Country" Grid.Row="6" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="{Binding Country}" Grid.Row="6" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="State" Grid.Row="7" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="{Binding State}" Grid.Row="7" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
+                    </Grid>
                     <Label Text="Notes" TextColor="Black" FontFamily="{StaticResource HelveticaBold}" FontSize="14" Padding="10,10,10,0"/>
-                    <Label Text="ABCD ABCD" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" FontSize="18" Padding="30,0,0,0"/>
+                    <Label Text="{Binding Notes}" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" FontSize="18" Padding="30,0,0,0"/>
                     <Grid HorizontalOptions="CenterAndExpand" HeightRequest="70" VerticalOptions="End">
                         <Image Source="Button.png"/>
                         <Label Text="+ Add Another Item" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,3" FontFamily="{StaticResource HelveticaRegular}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent"/>

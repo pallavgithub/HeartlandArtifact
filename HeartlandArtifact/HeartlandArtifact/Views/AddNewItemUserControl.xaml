@@ -1,13 +1,18 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:custom="clr-namespace:HeartlandArtifact.CustomRenderers"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:custom="clr-namespace:HeartlandArtifact.CustomRenderers" xmlns:converter="clr-namespace:HeartlandArtifact.Converters"
              x:Class="HeartlandArtifact.Views.AddNewItemUserControl"
              NavigationPage.HasNavigationBar="False">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converter:InverseBoolConverter x:Key="InverseBoolConverter"></converter:InverseBoolConverter>
+        </ResourceDictionary>
+    </ContentView.Resources>
     <ContentView.Content>
         <Grid>
             <ScrollView VerticalScrollBarVisibility="Never">
-                <StackLayout Padding="27,0,27,0">
-                    <Grid>
+                <Grid Padding="27,0,27,0">
+                    <Grid IsVisible="{Binding AddMultipleItemPhotosIsVisible, Converter={StaticResource InverseBoolConverter}}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
@@ -36,9 +41,9 @@
                         </StackLayout>
                         <Grid Grid.Row="2" BackgroundColor="LightSteelBlue" HeightRequest="180" WidthRequest="70" Margin="0,0,0,5">
                             <Label Text="+ Add Photo" TextTransform="Uppercase" TextColor="Black" FontSize="16" FontFamily="{StaticResource HelveticaRegular}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
-                            <Image Source="" x:Name="pic" Aspect="Fill"/>
+                            <Image Source="{Binding ItemImageSource}" x:Name="pic" Aspect="Fill"/>
                             <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="AddNewPhoto_Tapped"/>
+                                <TapGestureRecognizer Tapped="AddMultiplePhotos_Tapped"/>
                             </Grid.GestureRecognizers>
                         </Grid>
                         <StackLayout Spacing="0" Grid.Row="3">
@@ -156,7 +161,7 @@
                             <Image Source="Button.png"/>
                             <Label Text="save" TextTransform="Uppercase" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,3" FontFamily="{StaticResource HelveticaRegular}" FontSize="24" TextColor="Black" BackgroundColor="Transparent"/>
                             <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding AddNewItemCommand}"/>
+                                <TapGestureRecognizer Tapped="SaveBtn_Tapped"/>
                             </Grid.GestureRecognizers>
                         </Grid>
                         <ContentView x:Name="_contentView" Grid.RowSpan="17" IsVisible="{Binding ContentViewIsVisible}">
@@ -202,7 +207,45 @@
                         </Grid>
 
                     </Grid>
-                </StackLayout>
+                    <StackLayout IsVisible="{Binding AddMultipleItemPhotosIsVisible}">
+                        <Label Text="My Item" TextTransform="None" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="22" HorizontalOptions="Center"/>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                            <Label Text="&lt;" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Center" Margin="0,0,0,3" TextColor="Black" TextTransform="Uppercase" FontSize="14"/>
+                            <Label Text="BACK" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Center" TextColor="Black" TextTransform="Uppercase" FontSize="16"/>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="GoBack_Tapped"/>
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                        <Grid BackgroundColor="LightSteelBlue" HeightRequest="180" WidthRequest="70" Margin="0,0,0,5">
+                            <Label Text="+ Add Photo" TextTransform="Uppercase" TextColor="Black" FontSize="16" FontFamily="{StaticResource HelveticaRegular}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
+                            <Image Source="" x:Name="pic1" Aspect="Fill"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="AddNewPhoto_Tapped"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                        <Grid BackgroundColor="LightSteelBlue" HeightRequest="180" WidthRequest="70" Margin="0,0,0,5">
+                            <Label Text="+ Add Photo" TextTransform="Uppercase" TextColor="Black" FontSize="16" FontFamily="{StaticResource HelveticaRegular}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
+                            <Image Source="" x:Name="pic2" Aspect="Fill"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="AddNewPhoto_Tapped"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                        <Grid BackgroundColor="LightSteelBlue" HeightRequest="180" WidthRequest="70" Margin="0,0,0,5">
+                            <Label Text="+ Add Photo" TextTransform="Uppercase" TextColor="Black" FontSize="16" FontFamily="{StaticResource HelveticaRegular}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
+                            <Image Source="" x:Name="pic3" Aspect="Fill"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="AddNewPhoto_Tapped"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                        <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="0,15,0,30">
+                            <Image Source="Button.png"/>
+                            <Label Text="save" TextTransform="Uppercase" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,3" FontFamily="{StaticResource HelveticaRegular}" FontSize="24" TextColor="Black" BackgroundColor="Transparent"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="SaveBtn_Tapped"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </StackLayout>
+                </Grid>
             </ScrollView>
 
         </Grid>

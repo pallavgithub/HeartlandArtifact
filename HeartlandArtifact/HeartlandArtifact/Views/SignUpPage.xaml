@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:custom="clr-namespace:HeartlandArtifact.CustomRenderers"
              xmlns:converter="clr-namespace:HeartlandArtifact.Converters"
-             x:Class="HeartlandArtifact.Views.SignUpPage"
-             
+             x:Class="HeartlandArtifact.Views.SignUpPage"             
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
         <ResourceDictionary>
