@@ -23,8 +23,15 @@ namespace HeartlandArtifact.Views
         private void GoBack_Tapped(object sender, EventArgs e)
         {
             var viewModel = BindingContext as HomePageViewModel;
-            viewModel.ItemsUserControlIsVisible = false;
-            viewModel.HomeIsVisible = true;
+            if (viewModel.DeleteItemIconIsVisible)
+            {
+                viewModel.DeleteItemIconIsVisible = false;
+            }
+            else
+            {
+                viewModel.ItemsUserControlIsVisible = false;
+                viewModel.HomeIsVisible = true;
+            }
         }
 
         private void DeleteItemButton_Tapped(object sender, EventArgs e)
@@ -44,6 +51,15 @@ namespace HeartlandArtifact.Views
             }
             viewModel.ItemDetailsUserControlIsVisible = true;
             viewModel.ItemsUserControlIsVisible = false;
+        }
+
+        private void DeleteIcon_Tapped(object sender, EventArgs e)
+        {
+            var selectedItem = ((TappedEventArgs)e).Parameter as MyItemModel;
+            var viewModel = BindingContext as HomePageViewModel;
+            viewModel.ItemData = new MyItemModel();
+            viewModel.ItemData = selectedItem;
+            viewModel.DeleteItemPopupIsVisible = !viewModel.DeleteItemPopupIsVisible;
         }
     }
 }

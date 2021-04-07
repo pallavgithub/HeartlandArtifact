@@ -219,6 +219,33 @@
                                     </Grid>
                                 </StackLayout>
                             </Grid>
+                            <!--Items Popup-->
+                            <Grid IsVisible="{Binding DeleteItemPopupIsVisible}" x:Name="DeleteItemPopup">
+                                <ContentView BackgroundColor="LightGray" Opacity="0.7"/>
+                                <StackLayout BackgroundColor="White" Padding="15" Spacing="30" Margin="20,0,20,0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                                    <Label Text="Are you sure you want to DELETE this item?" FontSize="20" TextColor="Black" HorizontalTextAlignment="Center" FontFamily="{StaticResource HelveticaRegular}"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Padding="0,10,0,10" HeightRequest="38">
+                                            <Image Source="Button.png" Aspect="Fill"/>
+                                            <Label Text="No,Don't Delete" FontSize="16" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,0,0,3"/>
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding CancelDeleteItemCommand}"/>
+                                            </Grid.GestureRecognizers>
+                                        </Grid>
+                                        <Grid Grid.Column="1">
+                                            <Image Source="RedBtn.png"/>
+                                            <Label Text="Yes, Delete" FontSize="16" TextColor="White" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="0,0,0,3"/>
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding DeleteItemCommand}"/>
+                                            </Grid.GestureRecognizers>
+                                        </Grid>
+                                    </Grid>
+                                </StackLayout>
+                            </Grid>
                             <!--Logout Popup-->
                             <Grid IsVisible="{Binding LogoutPopupIsVisible}" x:Name="LogoutPopup">
                                 <ContentView BackgroundColor="LightGray" Opacity="0.7"/>

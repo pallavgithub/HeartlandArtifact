@@ -9,7 +9,7 @@
             <converter:InverseBoolConverter x:Key="InverseBoolConverter"></converter:InverseBoolConverter>
         </ResourceDictionary>
     </ContentView.Resources>
-  <ContentView.Content>
+    <ContentView.Content>
         <StackLayout Padding="20,0,20,30">
             <Label Text="{Binding SelectedCategoryName}" HorizontalOptions="Center" TextColor="Black" FontSize="22" FontFamily="{StaticResource HelveticaBold}"/>
             <Grid ColumnSpacing="0" HeightRequest="120">
@@ -25,7 +25,7 @@
                         <TapGestureRecognizer Tapped="GoBack_Tapped"/>
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
-                <Grid IsVisible="True" Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="60">
+                <Grid IsVisible="{Binding DeleteItemIconIsVisible, Converter={StaticResource InverseBoolConverter}}" Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="60">
                     <Image Source="Button.png"/>
                     <Label Text="Delete Item" VerticalOptions="Center" FontSize="16" HorizontalOptions="Center" Margin="0,0,0,3" TextColor="Black" TextTransform="Uppercase"/>
                     <Grid.GestureRecognizers>
@@ -46,7 +46,7 @@
                                     <StackLayout Margin="0,2,2,2" IsVisible="{Binding BindingContext.DeleteItemIconIsVisible, Source={x:Reference Items}}" VerticalOptions="CenterAndExpand">
                                         <Image Source="Trash.png" HeightRequest="16" WidthRequest="16" VerticalOptions="FillAndExpand">
                                             <Image.GestureRecognizers>
-                                                <TapGestureRecognizer />
+                                                <TapGestureRecognizer Tapped="DeleteIcon_Tapped" CommandParameter="{Binding .}"/>
                                             </Image.GestureRecognizers>
                                         </Image>
                                     </StackLayout>
@@ -58,7 +58,7 @@
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
                                                 <StackLayout Grid.Column="0" BackgroundColor="LightGray">
-                                                <Image Source="{Binding ImageUrl}" HorizontalOptions="EndAndExpand"/>
+                                                    <Image Source="{Binding ImageUrl}" HorizontalOptions="EndAndExpand"/>
                                                 </StackLayout>
                                                 <Label Text="{Binding Title}" Grid.Column="1" TextColor="Black" Margin="15" FontFamily="{StaticResource HelveticaBold}" FontSize="15"/>
                                             </Grid>
@@ -81,5 +81,5 @@
                 </Grid.GestureRecognizers>
             </Grid>
         </StackLayout>
-  </ContentView.Content>
+    </ContentView.Content>
 </ContentView>

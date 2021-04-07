@@ -170,6 +170,12 @@ namespace HeartlandArtifact.ViewModels
             get { return _deleteCategoryPopupIsVisible; }
             set { SetProperty(ref _deleteCategoryPopupIsVisible, value); }
         }
+        private bool _deleteItemPopupIsVisible;
+        public bool DeleteItemPopupIsVisible
+        {
+            get { return _deleteItemPopupIsVisible; }
+            set { SetProperty(ref _deleteItemPopupIsVisible, value); }
+        }
         private bool _addMultipleItemPhotosIsVisible;
         public bool AddMultipleItemPhotosIsVisible
         {
@@ -341,10 +347,13 @@ namespace HeartlandArtifact.ViewModels
         public DelegateCommand DeleteCategoryCommand { get; set; }
         public DelegateCommand CancelDeleteCategoryCommand { get; set; }
         public DelegateCommand ConfirmLogoutCommand { get; set; }
+        public DelegateCommand DeleteItemCommand { get; set; }
+        public DelegateCommand CancelDeleteItemCommand { get; set; }
         public DelegateCommand AddNewItemCommand { get; set; }
         public INavigationService _nav;
         public CollectionModel CollectionData { get; set; }
         public CategoryModel CategoryData { get; set; }
+        public MyItemModel ItemData { get; set; }
         private readonly IGoogleManager _googleManager;
         private readonly IFacebookManager _facebookManager;
         public Stream ImageStream { get; set; }
@@ -379,6 +388,8 @@ namespace HeartlandArtifact.ViewModels
             CancelDeleteCategoryCommand = new DelegateCommand(CloseDeleteCategoryPopup);
             ConfirmLogoutCommand = new DelegateCommand(Logout);
             AddNewItemCommand = new DelegateCommand(AddNewItem);
+            DeleteItemCommand = new DelegateCommand(DeleteItem);
+            CancelDeleteItemCommand = new DelegateCommand(CloseDeleteItemPopup);
         }
         public async void Logout()
         {
@@ -890,8 +901,25 @@ namespace HeartlandArtifact.ViewModels
 
             }
         }
-
-
+        public async void DeleteItem()
+        {
+            DeleteItemIconIsVisible = false;
+            IsBusy = true;
+            var response = await new ApiData().DeleteData<string>("Artifact/DeleteItemById?itemId=" + ItemData.ItemId, true);
+            if (response != null)
+            {
+                AllItems.Remove(ItemData);
+                AllItems = new ObservableCollection<MyItemModel>(AllItems);
+            }
+            ItemNotFoundLblIsVisible = AllItems.Count > 0 ? false : true;
+            DeleteItemPopupIsVisible = !DeleteItemPopupIsVisible;
+            IsBusy = false;
+        }
+        public void CloseDeleteItemPopup()
+        {
+            DeleteItemIconIsVisible = false;
+            DeleteItemPopupIsVisible = !DeleteItemPopupIsVisible;
+        }
     }
 }
 
