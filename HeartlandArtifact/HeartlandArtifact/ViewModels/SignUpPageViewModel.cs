@@ -156,9 +156,17 @@ namespace HeartlandArtifact.ViewModels
                 {
                     IsBusy = true;
                     MultipartFormDataContent form = new MultipartFormDataContent();
-
-                    form.Add(new StringContent(account.Name.Split(' ')[0]), "FirstName");
-                    form.Add(new StringContent(account.Name.Split(' ')[1]), "LastName");
+                    if (string.IsNullOrEmpty(account.Name))
+                    {
+                        form.Add(new StringContent(account.Name.Split(' ')[0]), "FirstName");
+                        form.Add(new StringContent(account.Name.Split(' ')[1]), "LastName");
+                    }
+                    else
+                    {
+                        form.Add(new StringContent(""), "FirstName");
+                        form.Add(new StringContent(""), "LastName");
+                    }
+                    form.Add(new StringContent(account.UserId ?? ""), "AppleAccountId");
                     form.Add(new StringContent(account.Email), "EmailId");
                     form.Add(new StringContent("Apple"), "Platform");
                     form.Add(new StringContent(string.Empty), "ContactNumber");

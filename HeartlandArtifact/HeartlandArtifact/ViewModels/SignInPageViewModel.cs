@@ -122,23 +122,24 @@ namespace HeartlandArtifact.ViewModels
             try
             {
                 var account = await _appleManager.SignInAsync();
-                //if (account != null)
-                //{
-                //    Preferences.Set(App.LoggedInKey, true);
-                //    await SecureStorage.SetAsync(App.AppleUserIdKey, account.UserId);
-
-                //}
 
                 var toast = DependencyService.Get<IMessage>();
                 if (account != null)
                 {
-                    // GoogleUser = googleUser;
                     IsWorking = true;
                     MultipartFormDataContent form = new MultipartFormDataContent();
-
-                    form.Add(new StringContent(account.Name.Split(' ')[0]), "FirstName");
-                    form.Add(new StringContent(account.Name.Split(' ')[1]), "LastName");
-                    form.Add(new StringContent(account.Email), "EmailId");
+                    if (string.IsNullOrEmpty(account.Name))
+                    {
+                        form.Add(new StringContent(account.Name.Split(' ')[0]), "FirstName");
+                        form.Add(new StringContent(account.Name.Split(' ')[1]), "LastName");
+                    }
+                    else
+                    {
+                        form.Add(new StringContent(""), "FirstName");
+                        form.Add(new StringContent(""), "LastName");
+                    }
+                    form.Add(new StringContent(account.UserId ?? ""), "AppleAccountId");
+                    form.Add(new StringContent(account.Email??""), "EmailId");
                     form.Add(new StringContent("Apple"), "Platform");
                     form.Add(new StringContent(string.Empty), "ContactNumber");
                     var response = await new ApiData().PostFormData<UserModel>("user/SocialMediaLogin", form, true);

@@ -124,11 +124,19 @@
     <BundleResource Include="Resources\Helvetica-Bold.ttf" />
     <BundleResource Include="Resources\Helvetica.ttf" />
     <Compile Include="AppleSignInService.cs" />
+    <BundleResource Include="Resources\1024.png" />
+    <BundleResource Include="Resources\180.png" />
+    <BundleResource Include="Resources\120.png" />
+    <BundleResource Include="Resources\114.png" />
+    <BundleResource Include="Resources\87.png" />
+    <BundleResource Include="Resources\80.png" />
+    <BundleResource Include="Resources\60.png" />
+    <BundleResource Include="Resources\58.png" />
+    <BundleResource Include="Resources\57.png" />
+    <BundleResource Include="Resources\40.png" />
+    <BundleResource Include="Resources\29.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\IconImg@2x.png">
-      <Visible>false</Visible>
-    </ImageAsset>
     <ImageAsset Include="Assets.xcassets\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
@@ -144,18 +152,6 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-App-20x20@3x.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-App-29x29@2x.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-App-29x29@3x.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-App-40x40@2x.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-App-60x60@3x.png">
-      <Visible>false</Visible>
-    </ImageAsset>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-App-76x76@2x.png">
       <Visible>false</Visible>
     </ImageAsset>
@@ -165,9 +161,15 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\IconImg%402x-1.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIconImg.png">
-      <Visible>false</Visible>
-    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\40.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\60.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\58.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\87.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\80.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\180.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\1024.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h@2x.png" />
