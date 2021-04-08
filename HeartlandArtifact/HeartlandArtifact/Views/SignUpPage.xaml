@@ -96,8 +96,19 @@
                                 </StackLayout>
                             </Frame>
                         </StackLayout>
-                        <StackLayout Orientation="Horizontal">
-                            <CheckBox Color="LightGray" IsChecked="{Binding IsAgree}"/>
+                        <StackLayout Orientation="Horizontal" Spacing="15">
+                            <Grid>
+                                <Image Source="checked.png" IsVisible="{Binding IsAgree}" HeightRequest="30" WidthRequest="30">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ToggleCheckboxCommand}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <Image Source="unchecked.png" IsVisible="{Binding IsAgree, Converter={StaticResource InverseBoolConverter}}" HeightRequest="30" WidthRequest="30">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ToggleCheckboxCommand}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Grid>
                             <Label TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" FontSize="14">
                                 <Label.FormattedText>
                                     <FormattedString>
@@ -108,8 +119,6 @@
                                 </Label.FormattedText>
                             </Label>
                         </StackLayout>
-                        <!--<Button Text="Submit" FontFamily="{StaticResource HelveticaBold}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent" BorderColor="Black" BorderWidth="1" 
-                        CornerRadius="30" Command="{Binding SubmitBtnCommand}"/>-->
                         <Grid  Margin="15,0,15,0" HorizontalOptions="CenterAndExpand">
                             <Image Source="Button.png"/>
                             <Label Text="Submit" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,3" FontFamily="{StaticResource HelveticaBold}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent"/>

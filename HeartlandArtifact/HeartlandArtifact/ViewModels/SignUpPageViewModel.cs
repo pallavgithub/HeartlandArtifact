@@ -106,6 +106,7 @@ namespace HeartlandArtifact.ViewModels
         public DelegateCommand AppleLogoutCommand { get; set; }
         public DelegateCommand SubmitFbIdButtonCommand { get; set; }
         public DelegateCommand CrossButtonCommand { get; set; }
+        public DelegateCommand ToggleCheckboxCommand { get; set; }
         public SignUpPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             _facebookManager = DependencyService.Get<IFacebookManager>();
@@ -122,6 +123,7 @@ namespace HeartlandArtifact.ViewModels
             SubmitBtnCommand = new DelegateCommand(GoToEnterOtpPage);
             SubmitFbIdButtonCommand = new DelegateCommand(UpdateFacebookEmailId);
             CrossButtonCommand = new DelegateCommand(CloseEmailPopup);
+            ToggleCheckboxCommand = new DelegateCommand(ToggleCheckbox);
         }
         private void FacebookLogout()
         {
@@ -357,7 +359,7 @@ namespace HeartlandArtifact.ViewModels
                 Toast.LongAlert("Please enter new password."); IsValid = false; return;
             }
             //if (!Regex.IsMatch(Password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$", RegexOptions.None) || Password.Trim().Length < 8)
-            if (!Regex.IsMatch(Password, @"^[a-zA-Z]{8,15}$", RegexOptions.None) || Password.Trim().Length < 8)
+            if (!Regex.IsMatch(Password, @"^(?=.*[a-z])(?=.*[A-Z])\S{8,15}$", RegexOptions.None) || Password.Trim().Length < 8)
             {
                 Toast.LongAlert("Password must be between 8 to 15 characters, including uppercase, lowercase letters."); IsValid = false; return;
             }
@@ -406,6 +408,10 @@ namespace HeartlandArtifact.ViewModels
         {
             FacebookEmailPopupIsVisible = false;
 
+        }
+        public void ToggleCheckbox()
+        {
+            IsAgree = !IsAgree;
         }
     }
 }

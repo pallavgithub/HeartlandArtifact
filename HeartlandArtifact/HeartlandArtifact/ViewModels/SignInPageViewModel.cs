@@ -292,7 +292,7 @@ namespace HeartlandArtifact.ViewModels
                 //{
                 //    toast.LongAlert("Password must be at least 8 characters, no more than 15 characters."); return;
                 //}
-                if (!Regex.IsMatch(Password, @"^[a-zA-Z]{8,15}$", RegexOptions.None) || Password.Trim().Length < 8)
+                if (!Regex.IsMatch(Password, @"^(?=.*[a-z])(?=.*[A-Z])\S{8,15}$", RegexOptions.None) || Password.Trim().Length < 8)
                 {
                     toast.LongAlert("Invalid Password. You could try resetting your password."); return;
                 }

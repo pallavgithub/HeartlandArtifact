@@ -65,7 +65,7 @@ namespace HeartlandArtifact.ViewModels
             {
                 Toast.LongAlert("Please enter your password."); return;
             }
-            if (!Regex.IsMatch(NewPassword, @"^[a-zA-Z]{8,15}$", RegexOptions.None) || NewPassword.Trim().Length < 8)
+            if (!Regex.IsMatch(NewPassword, @"^(?=.*[a-z])(?=.*[A-Z])\S{8,15}$", RegexOptions.None) || NewPassword.Trim().Length < 8)
             {
                 Toast.LongAlert("Password must be between 8 to 15 characters, including uppercase, lowercase letters."); return;
             }
