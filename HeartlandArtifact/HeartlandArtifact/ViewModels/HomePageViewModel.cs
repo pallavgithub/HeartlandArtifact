@@ -31,6 +31,12 @@ namespace HeartlandArtifact.ViewModels
         {
             get { return _addNewItemUserControlIsVisible; }
             set { SetProperty(ref _addNewItemUserControlIsVisible, value); }
+        } 
+        private bool _soldItemDetailsUserControlIsVisible;
+        public bool SoldItemDetailsUserControlIsVisible
+        {
+            get { return _soldItemDetailsUserControlIsVisible; }
+            set { SetProperty(ref _soldItemDetailsUserControlIsVisible, value); }
         }
         private bool _itemDetailsUserControlIsVisible;
         public bool ItemDetailsUserControlIsVisible
@@ -182,6 +188,12 @@ namespace HeartlandArtifact.ViewModels
             get { return _addMultipleItemPhotosIsVisible; }
             set { SetProperty(ref _addMultipleItemPhotosIsVisible, value); }
         }
+        private bool _markAsSoldDetailsIsVisible;
+        public bool MarkAsSoldDetailsIsVisible
+        {
+            get { return _markAsSoldDetailsIsVisible; }
+            set { SetProperty(ref _markAsSoldDetailsIsVisible, value); }
+        }
         private string _newCategoryName;
         public string NewCategoryName
         {
@@ -202,6 +214,7 @@ namespace HeartlandArtifact.ViewModels
         }
 
         //Add Item properties
+
         private int _collectionIdForNewItem;
         public int CollectionIdForNewItem
         {
@@ -292,6 +305,18 @@ namespace HeartlandArtifact.ViewModels
             get { return _itemImageSource; }
             set { SetProperty(ref _itemImageSource, value); }
         }
+        private string _soldPrice;
+        public string SoldPrice
+        {
+            get { return _soldPrice; }
+            set { SetProperty(ref _soldPrice, value); }
+        }
+        private string _soldDate;
+        public string SoldDate
+        {
+            get { return _soldDate; }
+            set { SetProperty(ref _soldDate, value); }
+        }
         private ObservableCollection<CategoryModel> _allUserCategories;
         public ObservableCollection<CategoryModel> AllUserCategories
         {
@@ -354,6 +379,7 @@ namespace HeartlandArtifact.ViewModels
         public CollectionModel CollectionData { get; set; }
         public CategoryModel CategoryData { get; set; }
         public MyItemModel ItemData { get; set; }
+        public int ItemId { get; set; }
         private readonly IGoogleManager _googleManager;
         private readonly IFacebookManager _facebookManager;
         public Stream ImageStream { get; set; }
@@ -882,6 +908,7 @@ namespace HeartlandArtifact.ViewModels
                         var ItemDetails = Item.data;
                         if (ItemDetails.images.Count > 0)
                             ItemImageSource = ItemDetails.images[0];
+                        ItemId = ItemDetails.item.ItemId;
                         Title = ItemDetails.item.Title ?? "";
                         Material = ItemDetails.item.Material ?? "";
                         FoundBy = ItemDetails.item.FoundBy ?? "";
@@ -919,6 +946,44 @@ namespace HeartlandArtifact.ViewModels
         {
             DeleteItemIconIsVisible = false;
             DeleteItemPopupIsVisible = !DeleteItemPopupIsVisible;
+        }
+        public async void ItemMarkAsSold()
+        {
+            var Toast = DependencyService.Get<IMessage>();
+            if (string.IsNullOrEmpty(SoldPrice))
+            {
+                Toast.LongAlert("Please enter sold price."); return;
+            }
+            if (string.IsNullOrEmpty(SoldDate))
+            {
+                Toast.LongAlert("Please enter sold date."); return;
+            }
+            else
+            {
+                if (ItemId > 0)
+                {
+                    IsBusy = true;
+                    MultipartFormDataContent form = new MultipartFormDataContent();
+                    form.Add(new StringContent("0"), "Id");
+                    form.Add(new StringContent(ItemId.ToString()), "ItemId");
+                    form.Add(new StringContent(PerceivedValue ?? ""), "PerceivedValue");
+                    form.Add(new StringContent(Cost ?? ""), "Cost");
+                    form.Add(new StringContent(SoldPrice), "SoldPrice");
+                    form.Add(new StringContent(SoldDate), "SoldDate");
+                    var response = await new ApiData().PostFormData<ItemMarkAsSoldModel>("Artifact/MarkItemAsSold", form, true);
+                    if (response != null && response.data != null)
+                    {
+                        Toast.LongAlert(response.message);
+
+                       // SoldItemDetailsUserControlIsVisible = true;
+                    }
+                    else
+                    {
+                        Toast.LongAlert(response.message);
+                    }
+                    IsBusy = false;
+                }
+            }
         }
     }
 }

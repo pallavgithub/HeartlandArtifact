@@ -48,6 +48,7 @@
                                     <pages:ItemsUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding ItemsUserControlIsVisible}"/>
                                     <pages:ItemDetailsUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding ItemDetailsUserControlIsVisible}"/>
                                     <pages:SoldItemsUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding SoldItemsIsVisible}"/>
+                                    <pages:SoldItemDetailsUserControl VerticalOptions="FillAndExpand" IsVisible="{Binding SoldItemDetailsUserControlIsVisible}"/>
                                 </Grid>
                             </StackLayout>
                             <!--Collection Popups-->

@@ -1,9 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:converter="clr-namespace:HeartlandArtifact.Converters" xmlns:custom="clr-namespace:HeartlandArtifact.CustomRenderers"
              x:Class="HeartlandArtifact.Views.ItemDetailsUserControl"
              NavigationPage.HasNavigationBar="False"
              x:Name="ItemDetails">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converter:InverseBoolConverter x:Key="InverseBoolConverter"></converter:InverseBoolConverter>
+        </ResourceDictionary>
+    </ContentView.Resources>
     <ContentView.Content>
         <StackLayout>
             <ScrollView VerticalScrollBarVisibility="Never">
@@ -68,21 +73,59 @@
                     </Grid>
                     <Label Text="Notes" TextColor="Black" FontFamily="{StaticResource HelveticaBold}" FontSize="14" Padding="10,10,10,0"/>
                     <Label Text="{Binding Notes}" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" FontSize="18" Padding="30,0,0,0"/>
-                    <Grid HorizontalOptions="CenterAndExpand" HeightRequest="70" VerticalOptions="End">
+                    <Grid HorizontalOptions="CenterAndExpand" IsVisible="{Binding MarkAsSoldDetailsIsVisible, Converter={StaticResource InverseBoolConverter}}" HeightRequest="70" VerticalOptions="End">
                         <Image Source="Button.png"/>
                         <Label Text="+ Add Another Item" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,3" FontFamily="{StaticResource HelveticaRegular}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent"/>
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer />
                         </Grid.GestureRecognizers>
                     </Grid>
+                    <StackLayout IsVisible="{Binding MarkAsSoldDetailsIsVisible}">
+                        <StackLayout Spacing="0" Grid.Row="5">
+                            <Label Text="Sold Price ($)*" FontFamily="{StaticResource HelveticaBold}" FontSize="14" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                           HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
+                                <custom:BorderLessEntry Text="{Binding SoldPrice}"  
+                                          HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                                          FontSize="16"/>
+                            </Frame>
+                        </StackLayout>
+                        <StackLayout Spacing="0" Grid.Row="5">
+                            <Label Text="Cost ($)" FontFamily="{StaticResource HelveticaBold}" FontSize="14" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                           HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
+                                <custom:BorderLessEntry Text="{Binding Cost}"  
+                                          HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                                          FontSize="16"/>
+                            </Frame>
+                        </StackLayout>
+                        <StackLayout Spacing="0" Grid.Row="5">
+                            <Label Text="Perceived Value ($)" FontFamily="{StaticResource HelveticaBold}" FontSize="14" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                           HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
+                                <custom:BorderLessEntry Text="{Binding PerceivedValue}"  
+                                          HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                                          FontSize="16"/>
+                            </Frame>
+                        </StackLayout>
+                        <StackLayout Spacing="0" Grid.Row="5">
+                            <Label Text="Date Sold*" FontFamily="{StaticResource HelveticaBold}" FontSize="14" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                           HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
+                                <Grid>
+                                    <DatePicker Format="MM/dd/yyyy" Date="{Binding SoldDate}"/>
+                                </Grid>
+                            </Frame>
+                        </StackLayout>
+                        <Label Text="* indicates required feilds." HorizontalOptions="CenterAndExpand"/>
+                    </StackLayout>
                     <Grid HorizontalOptions="CenterAndExpand" HeightRequest="60" VerticalOptions="End">
                         <Image Source="Button.png"/>
                         <Label Text="Sold Item" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,3" FontFamily="{StaticResource HelveticaRegular}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent"/>
                         <Grid.GestureRecognizers>
-                            <TapGestureRecognizer />
+                            <TapGestureRecognizer Tapped="MarkAsSoldBtn_Tapped"/>
                         </Grid.GestureRecognizers>
                     </Grid>
-
                 </StackLayout>
             </ScrollView>
         </StackLayout>

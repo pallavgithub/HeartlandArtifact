@@ -66,6 +66,9 @@ namespace HeartlandArtifact
             ViewModelLocationProvider.Register<MyCollectionUserControl, HomePageViewModel>();
             ViewModelLocationProvider.Register<AddNewItemUserControl, HomePageViewModel>();
             ViewModelLocationProvider.Register<CategoryUserControl, HomePageViewModel>();
+            ViewModelLocationProvider.Register<ItemsUserControl, HomePageViewModel>();
+            ViewModelLocationProvider.Register<ItemDetailsUserControl, HomePageViewModel>();
+            ViewModelLocationProvider.Register<SoldItemDetailsUserControl, HomePageViewModel>();
         }
     }
 }
