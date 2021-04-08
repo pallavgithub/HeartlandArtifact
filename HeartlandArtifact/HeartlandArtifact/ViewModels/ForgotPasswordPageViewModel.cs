@@ -26,11 +26,11 @@ namespace HeartlandArtifact.ViewModels
         }
         public async void GoBack()
         {
-            if (Device.RuntimePlatform == Device.Android)
-            {
-                await NavigationService.GoBackAsync();
-            }
-            if ((Device.RuntimePlatform == Device.iOS))
+            //if (Device.RuntimePlatform == Device.Android)
+            //{
+            //    await NavigationService.GoBackAsync();
+            //}
+            if ((Device.RuntimePlatform == Device.iOS)|| Device.RuntimePlatform == Device.Android)
             {
                 await NavigationService.NavigateAsync("SignInPage");
             }

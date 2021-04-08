@@ -40,5 +40,29 @@ namespace HeartlandArtifact.Views
                 _vm.MarkAsSoldDetailsIsVisible = true;
             }
         }
+
+        private void DatePicker_Tapped(object sender, EventArgs e)
+        {
+            Date_Picker.IsVisible = true;
+            Date_Picker.Focus();
+        }
+
+        private void Date_Picker_Unfocused(object sender, FocusEventArgs e)
+        {
+            var _vm = BindingContext as HomePageViewModel;
+            if (Date_Picker.Date != null)
+            {
+                _vm.SoldDate = Date_Picker.Date.ToString("MM-dd-yyyy");
+                _vm.DateLabelIsVisible = true;
+            }
+            Date_Picker.IsVisible = false;
+        }
+
+        private void Date_Picker_DateSelected(object sender, DateChangedEventArgs e)
+        {
+            var _vm = BindingContext as HomePageViewModel;
+            _vm.SoldDate = Date_Picker.Date.ToString("MM-dd-yyyy");
+            _vm.DateLabelIsVisible = true;
+        }
     }
 }

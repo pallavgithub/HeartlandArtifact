@@ -106,11 +106,11 @@ namespace HeartlandArtifact.ViewModels
             //NavigationService.GoBackAsync(navigationParams);
 
            
-            if (Device.RuntimePlatform == Device.Android)
-            {
-                await NavigationService.GoBackAsync();
-            }
-            if (Device.RuntimePlatform == Device.iOS)
+            //if (Device.RuntimePlatform == Device.Android)
+            //{
+            //    await NavigationService.GoBackAsync();
+            //}
+            if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
             {
                 var navigationParams = new NavigationParameters();
                 navigationParams.Add("Email", Email);

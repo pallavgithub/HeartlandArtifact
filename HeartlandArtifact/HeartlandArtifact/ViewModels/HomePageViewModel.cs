@@ -193,6 +193,12 @@ namespace HeartlandArtifact.ViewModels
         {
             get { return _markAsSoldDetailsIsVisible; }
             set { SetProperty(ref _markAsSoldDetailsIsVisible, value); }
+        }   
+        private bool _dateLabelIsVisible;
+        public bool DateLabelIsVisible
+        {
+            get { return _dateLabelIsVisible; }
+            set { SetProperty(ref _dateLabelIsVisible, value); }
         }
         private string _newCategoryName;
         public string NewCategoryName
