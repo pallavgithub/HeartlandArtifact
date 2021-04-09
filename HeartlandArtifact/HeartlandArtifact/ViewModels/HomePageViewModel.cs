@@ -359,6 +359,12 @@ namespace HeartlandArtifact.ViewModels
             get { return _categoryList; }
             set { SetProperty(ref _categoryList, value); }
         }
+        private ObservableCollection<MyItemModel> _itemImagesForCarousel;
+        public ObservableCollection<MyItemModel> ItemImagesForCarousel
+        {
+            get { return _itemImagesForCarousel; }
+            set { SetProperty(ref _itemImagesForCarousel, value); }
+        }
         public DelegateCommand LogoutCommand { get; set; }
         public DelegateCommand EditCollectionCommand { get; set; }
         public DelegateCommand GoBackFromCollectionsCommand { get; set; }
@@ -925,6 +931,12 @@ namespace HeartlandArtifact.ViewModels
                         Country = ItemDetails.item.Country ?? "";
                         State = ItemDetails.item.State ?? "";
                         Notes = ItemDetails.item.Notes ?? "";
+                        ItemImagesForCarousel = new ObservableCollection<MyItemModel>();
+                        if (ItemDetails.images.Count > 0)
+                            foreach (var i in ItemDetails.images)
+                            {
+                                ItemImagesForCarousel.Add(new MyItemModel { ImageUrl = i });
+                            }
                     }
                     IsBusy = false;
                 }

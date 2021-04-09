@@ -35,8 +35,19 @@
                             </Grid.GestureRecognizers>
                         </Grid>
                     </Grid>
-                    <Grid HeightRequest="200" HorizontalOptions="FillAndExpand" VerticalOptions="Start" BackgroundColor="Gray">
-                        <Image Source="{Binding ItemImageSource}" Aspect="Fill"/>
+                    <Grid HeightRequest="200" HorizontalOptions="FillAndExpand" VerticalOptions="Start" BackgroundColor="Gray" Margin="0,0,0,20">
+                        <StackLayout>
+                            <CarouselView IndicatorView="indicatorView" HeightRequest="200" ItemsSource="{Binding ItemImagesForCarousel}" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand">
+                            <CarouselView.ItemTemplate>
+                                <DataTemplate>
+                                        <Grid>
+                                            <Image Source="{Binding ImageUrl}" Aspect="Fill"/>
+                                        </Grid>
+                                </DataTemplate>
+                            </CarouselView.ItemTemplate>
+                            </CarouselView>
+                            <IndicatorView x:Name="indicatorView" IndicatorColor="LightGray" SelectedIndicatorColor="Black" HorizontalOptions="Center" Margin="0,-30,0,0"/>
+                        </StackLayout>
                     </Grid>
                     <Label Text="{Binding Title}" HorizontalOptions="Center" TextColor="Black" FontSize="22" FontFamily="{StaticResource HelveticaBold}"/>
                     <Grid>
