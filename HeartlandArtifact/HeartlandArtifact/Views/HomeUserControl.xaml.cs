@@ -19,8 +19,10 @@ namespace HeartlandArtifact.Views
         }
         private void MyCollection_Tapped(object sender, System.EventArgs e)
         {
-            (BindingContext as HomePageViewModel).MyCollectionVisible = true;
-            (BindingContext as HomePageViewModel).HomeIsVisible = false;
+            var _vm = BindingContext as HomePageViewModel;
+            _vm.GetUserCollections();
+            _vm.MyCollectionVisible = true;
+            _vm.HomeIsVisible = false;
 
         } 
         private void MyProfile_Tapped(object sender, System.EventArgs e)
