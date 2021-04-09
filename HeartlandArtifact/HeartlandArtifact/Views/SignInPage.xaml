@@ -34,14 +34,26 @@
                                 <TapGestureRecognizer Command="{Binding GoogleLoginCommand}"/>
                             </Grid.GestureRecognizers>
                         </Grid>
-                        <Grid>
+                        <OnPlatform>
+                            <On Platform="iOS">
+                                <Grid>
+                                    <Image Source="AppleCircle.png"/>
+                                    <Image Source="apple.png" Margin="30,22,30,30"/>
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding AppleLoginCommand}"/>
+                                    </Grid.GestureRecognizers>
+
+                                </Grid>
+                            </On>
+                        </OnPlatform>
+                        <!--<Grid>
                             <Image Source="AppleCircle.png"/>
                             <Image Source="apple.png" Margin="30,22,30,30"/>
                              <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding AppleLoginCommand}"/>
                             </Grid.GestureRecognizers>
                            
-                        </Grid>
+                        </Grid>-->
                          <!--<Button Text="applebtn" Command="{Binding AppleLoginCommand}" />-->
                     </StackLayout>
                     <StackLayout Spacing="0" Margin="0,20,0,0">
