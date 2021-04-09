@@ -142,7 +142,7 @@
                                     <TapGestureRecognizer Command="{Binding GoogleLoginCommand}"/>
                                 </Grid.GestureRecognizers>
                             </Grid>
-                            <OnPlatform>
+                            <!--<OnPlatform>
                                 <On Platform="iOS">
                                     <Grid>
                                         <Image Source="AppleCircle.png"/>
@@ -153,14 +153,17 @@
 
                                     </Grid>
                                 </On>
-                            </OnPlatform>
-                            <!--<Grid>
+                            </OnPlatform>-->
+                            <Grid>
                                 <Image Source="AppleCircle.png"/>
                                 <Image Source="apple.png" Margin="30,22,30,30"/>
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding AppleLoginCommand}"/>
                                 </Grid.GestureRecognizers>
-                            </Grid>-->
+                                <Grid.IsVisible>
+                                    <OnPlatform x:TypeArguments="x:Boolean" iOS="True" Android="False"/>
+                                </Grid.IsVisible>
+                            </Grid>
                         </StackLayout>
                         <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
                             <Label Text="Have an existing account?" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" HorizontalTextAlignment="End" FontSize="17"/>

@@ -117,7 +117,11 @@ namespace HeartlandArtifact.ViewModels
             // _facebookManager.Logout();
             IsLogedIn = false;
         }
-        private async void AppleIdLogin()
+        private void AppleIdLogin()
+        {
+            AppleLogin();
+        }
+        private async void AppleLogin()
         {
             try
             {
@@ -128,7 +132,7 @@ namespace HeartlandArtifact.ViewModels
                 {
                     IsWorking = true;
                     MultipartFormDataContent form = new MultipartFormDataContent();
-                    if (string.IsNullOrEmpty(account.Name))
+                    if (!string.IsNullOrEmpty(account.Name))
                     {
                         form.Add(new StringContent(account.Name.Split(' ')[0]), "FirstName");
                         form.Add(new StringContent(account.Name.Split(' ')[1]), "LastName");
