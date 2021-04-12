@@ -64,5 +64,12 @@ namespace HeartlandArtifact.Views
             _vm.SoldDate = Date_Picker.Date.ToString("MM-dd-yyyy");
             _vm.DateLabelIsVisible = true;
         }
+
+        private void AddAnotherItemBtn_Tapped(object sender, EventArgs e)
+        {
+            var _vm = BindingContext as HomePageViewModel;
+            _vm.ItemDetailsUserControlIsVisible = false;
+            _vm.AddNewItemUserControlIsVisible = true;
+        }
     }
 }

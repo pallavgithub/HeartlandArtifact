@@ -88,7 +88,7 @@
                         <Image Source="Button.png"/>
                         <Label Text="+ Add Another Item" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,3" FontFamily="{StaticResource HelveticaRegular}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent"/>
                         <Grid.GestureRecognizers>
-                            <TapGestureRecognizer />
+                            <TapGestureRecognizer Tapped="AddAnotherItemBtn_Tapped"/>
                         </Grid.GestureRecognizers>
                     </Grid>
                     <StackLayout IsVisible="{Binding MarkAsSoldDetailsIsVisible}">
@@ -125,7 +125,7 @@
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
                                 <Grid>
                                     <DatePicker x:Name="Date_Picker" DateSelected="Date_Picker_DateSelected" Unfocused="Date_Picker_Unfocused" Format="MM/dd/yyyy" Date="{Binding SoldDate}" IsVisible="False"/>
-                                    <Label Text="{Binding SoldDate}" IsVisible="{Binding DateLabelIsVisible}"/>
+                                    <Label Text="{Binding SoldDate}" IsVisible="{Binding DateLabelIsVisible}" TextColor="Black"/>
                                     <Grid.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="DatePicker_Tapped"/>
                                     </Grid.GestureRecognizers>

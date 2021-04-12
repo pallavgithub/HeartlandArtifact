@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using HeartlandArtifact.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,6 +11,10 @@ namespace HeartlandArtifact.Views
         {
             InitializeComponent();
         }
-        protected override bool OnBackButtonPressed() => true;
+        protected override bool OnBackButtonPressed()
+        {
+            (BindingContext as ForgotPasswordPageViewModel).GoBack();
+            return true;
+        }
     }
 }

@@ -880,7 +880,8 @@ namespace HeartlandArtifact.ViewModels
                 if (response != null && response.data != null)
                 {
                     Toast.LongAlert("Item added successfully.");
-                    HomeIsVisible = true;
+                    GetItemDetailsById(response.data.item.ItemId);
+                    ItemDetailsUserControlIsVisible = true;
                     AddNewItemUserControlIsVisible = false;
                     CollectionNameForNewItem = string.Empty;
                     CategoryNameForNewItem = string.Empty;

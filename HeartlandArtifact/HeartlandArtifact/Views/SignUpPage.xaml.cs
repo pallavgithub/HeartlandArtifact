@@ -13,7 +13,7 @@ namespace HeartlandArtifact.Views
         {
             InitializeComponent();
         }
-        protected override bool OnBackButtonPressed() => true;
+       // protected override bool OnBackButtonPressed() => false;
         private async void ShowPassword_Tapped(object sender, EventArgs e)
         {
             (BindingContext as SignUpPageViewModel).ShowPassword = !(BindingContext as SignUpPageViewModel).ShowPassword;

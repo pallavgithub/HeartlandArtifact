@@ -1,4 +1,5 @@
-﻿using HeartlandArtifact.Services.Contracts;
+﻿using HeartlandArtifact.Interfaces;
+using HeartlandArtifact.Services.Contracts;
 using HeartlandArtifact.ViewModels;
 using System;
 using Xamarin.Forms;
@@ -9,6 +10,7 @@ namespace HeartlandArtifact.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HomePage : MasterDetailPage
     {
+        long lastPress;
         private readonly IGoogleManager _googleManager;
         private readonly IFacebookManager _facebookManager;
         public HomePage()
@@ -29,7 +31,74 @@ namespace HeartlandArtifact.Views
             (BindingContext as HomePageViewModel).LogoutPopupIsVisible = true;
             IsPresented = false;
         }
-        protected override bool OnBackButtonPressed() => true;
+        protected override bool OnBackButtonPressed()
+        {
+            var _vm = BindingContext as HomePageViewModel;
+            if (_vm.MyCollectionVisible)
+            {
+                _vm.DeleteCollectionPopupIsVisible = false;
+                _vm.AddCollectionPopupIsVisible = false;
+                _vm.EditCollectionPopupIsVisible = false;
+                _vm.IsEditIconVisible = false;
+                _vm.MyCollectionVisible = false;
+                _vm.HomeIsVisible = true;
+            }
+            if (_vm.CategoryUserControlIsVisible)
+            {
+                _vm.DeleteCategoryPopupIsVisible = false;
+                _vm.AddCategoryPopupIsVisible = false;
+                _vm.EditCategoryPopupIsVisible = false;
+                _vm.IsEditCategoryIconVisible = false;
+                _vm.CategoryUserControlIsVisible = false;
+                _vm.MyCollectionVisible = true;
+            }
+            if (_vm.ItemsUserControlIsVisible)
+            {
+                _vm.DeleteItemIconIsVisible = false;
+                _vm.DeleteItemPopupIsVisible = false;
+                _vm.ItemsUserControlIsVisible = false;
+                _vm.CategoryUserControlIsVisible = true;
+            }
+            if (_vm.ItemDetailsUserControlIsVisible)
+            {
+                _vm.ItemDetailsUserControlIsVisible = false;
+                _vm.ItemsUserControlIsVisible = true;
+            }
+            if (_vm.AddNewItemUserControlIsVisible)
+            {
+                if (_vm.AddMultipleItemPhotosIsVisible)
+                {
+                    _vm.AddMultipleItemPhotosIsVisible = false;
+                }
+                else
+                {
+                    _vm.AddNewItemUserControlIsVisible = false;
+                    if (_vm.AllItems == null)
+                    {
+                        _vm.HomeIsVisible = true;
+                    }
+                    else
+                    {
+                        _vm.ItemsUserControlIsVisible = true;
+                    }
+                }
+            }
+            else if (_vm.HomeIsVisible)
+            {
+                var Toast = DependencyService.Get<IMessage>();
+                long currentTime = DateTime.UtcNow.Ticks / TimeSpan.TicksPerMillisecond;               
+                if (currentTime - lastPress > 3000)
+                {
+                    Toast.ShortAlert("Press again to exit.");
+                    lastPress = currentTime;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var item = e.SelectedItem as HomePageMasterMenuItem;

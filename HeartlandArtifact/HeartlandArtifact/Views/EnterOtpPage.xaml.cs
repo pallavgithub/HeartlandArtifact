@@ -41,12 +41,12 @@ namespace HeartlandArtifact.Views
                 {
                     Seconds--;
                 }
-                (BindingContext as EnterOtpPageViewModel).TimerText = $"{Minutes}:{Seconds.ToString("D2")}";
+                (BindingContext as EnterOtpPageViewModel).TimerText = $"{Minutes.ToString("D2")}:{Seconds.ToString("D2")}";
             }
             if (Minutes == -1)
             {
                 T.Stop();
-                (BindingContext as EnterOtpPageViewModel).TimerText = "0:00";
+                (BindingContext as EnterOtpPageViewModel).TimerText = "00:00";
             }
         }
 
@@ -55,7 +55,7 @@ namespace HeartlandArtifact.Views
             T.Stop();
             Minutes = 2;
             Seconds = 0;
-            (BindingContext as EnterOtpPageViewModel).TimerText = "2:00";
+            (BindingContext as EnterOtpPageViewModel).TimerText = "02:00";
             T.Start();
         }
 
@@ -135,7 +135,7 @@ namespace HeartlandArtifact.Views
             var previousEntry = _entries[indexOfCurrentEntry - 1];
             return previousEntry;
         }
-        protected override bool OnBackButtonPressed() => true;
+      //  protected override bool OnBackButtonPressed() => false;
 
         private void ResendOtp_Tapped(object sender, EventArgs e)
         {

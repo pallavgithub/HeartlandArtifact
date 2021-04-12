@@ -40,7 +40,14 @@ namespace HeartlandArtifact.Views
                 viewModel.Notes = string.Empty;
                 pic.Source = string.Empty;
                 viewModel.AddNewItemUserControlIsVisible = false;
-                viewModel.ItemsUserControlIsVisible = true;
+                if (viewModel.AllItems == null)
+                {
+                    viewModel.HomeIsVisible = true;
+                }
+                else
+                {
+                    viewModel.ItemsUserControlIsVisible = true;
+                }
             }
         }
         private void CollectionDropdown_Tapped(object sender, EventArgs e)
@@ -119,7 +126,7 @@ namespace HeartlandArtifact.Views
         {
             var ViewModel = BindingContext as HomePageViewModel;
             var Toast = DependencyService.Get<IMessage>();
-            ViewModel.AddMultipleItemPhotosIsVisible = true;           
+            ViewModel.AddMultipleItemPhotosIsVisible = true;
         }
         private async void AddNewPhoto_Tapped(object sender, EventArgs e)
         {
@@ -152,7 +159,7 @@ namespace HeartlandArtifact.Views
                     var stream = file.GetStream();
                     return stream;
                 });
-               
+
                 ViewModel.ImageStream = st;
                 byte[] byteArray = ConvertToByteArrayFromStream();
                 string base64Img = Convert.ToBase64String(byteArray);
@@ -208,7 +215,7 @@ namespace HeartlandArtifact.Views
                     Toast.LongAlert("Please add atleast one image."); return;
                 }
                 else
-                {                   
+                {
                     _vm.AddNewItem();
                 }
             }
