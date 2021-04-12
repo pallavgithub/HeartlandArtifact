@@ -60,7 +60,7 @@
                     </StackLayout>
                     <StackLayout Spacing="0" Margin="0,20,0,0">
                         <Label Text="Email" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                        <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
+                        <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" HeightRequest="30"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
                             <custom:BorderLessEntry Text="{Binding Email}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
@@ -69,7 +69,7 @@
                     </StackLayout>
                     <StackLayout Spacing="0">
                         <Label Text="Password" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                        <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="30"
+                        <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" HeightRequest="30"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
                             <StackLayout Orientation="Horizontal">
                                 <custom:BorderLessEntry Text="{Binding Password}" IsPassword="True" x:Name="PasswordEntry" 
@@ -121,7 +121,7 @@
                         </Image.GestureRecognizers>
                     </Image>
                     <Label Text="Please Enter your Email." FontSize="18" TextColor="Black" HorizontalTextAlignment="Center" FontFamily="{StaticResource HelveticaRegular}"/>
-                    <Frame Margin="2,5,2,8" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="25"
+                    <Frame Margin="2,5,2,8" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" HeightRequest="25"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
                         <custom:BorderLessEntry Text="{Binding FacebookEmailId}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 

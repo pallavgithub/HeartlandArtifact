@@ -48,7 +48,7 @@
                         </Grid>
                         <StackLayout Spacing="0" Grid.Row="3">
                             <Label Text="Collection*" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
                                 <Label Text="{Binding CollectionNameForNewItem}" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}"/>
                                 <Frame.GestureRecognizers>
@@ -58,7 +58,7 @@
                         </StackLayout>
                         <StackLayout Spacing="0" Grid.Row="4">
                             <Label Text="Category*" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
                                 <Label Text="{Binding CategoryNameForNewItem}" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}"/>
                                 <Frame.GestureRecognizers>
@@ -68,7 +68,7 @@
                         </StackLayout>
                         <StackLayout Spacing="0" Grid.Row="5">
                             <Label Text="Title*" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
                                 <custom:BorderLessEntry Text="{Binding Title}"  
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
@@ -77,7 +77,7 @@
                         </StackLayout>
                         <StackLayout Spacing="0" Grid.Row="6">
                             <Label Text="Material" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
                                 <custom:BorderLessEntry Text="{Binding Material}"  
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
@@ -86,7 +86,7 @@
                         </StackLayout>
                         <StackLayout Spacing="0" Grid.Row="7">
                             <Label Text="Found By" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
                                 <custom:BorderLessEntry Text="{Binding FoundBy}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
@@ -95,7 +95,7 @@
                         </StackLayout>
                         <StackLayout Spacing="0" Grid.Row="8">
                             <Label Text="Ex Collection" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
                                 <custom:BorderLessEntry Text="{Binding ExCollection}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
@@ -104,7 +104,7 @@
                         </StackLayout>
                         <StackLayout Spacing="0" Grid.Row="9">
                             <Label Text="Perceived Value ($)" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
                                 <custom:BorderLessEntry Text="{Binding PerceivedValue}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
@@ -113,7 +113,7 @@
                         </StackLayout>
                         <StackLayout Spacing="0" Grid.Row="10">
                             <Label Text="Cost ($)" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
                                 <custom:BorderLessEntry Text="{Binding Cost}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
@@ -122,7 +122,7 @@
                         </StackLayout>
                         <StackLayout Spacing="0" Grid.Row="11">
                             <Label Text="Length (Inches)" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
                                 <custom:BorderLessEntry Text="{Binding Length}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
@@ -131,7 +131,7 @@
                         </StackLayout>
                         <StackLayout Spacing="0" Grid.Row="12">
                             <Label Text="Country" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
                                 <custom:BorderLessEntry Text="{Binding Country}"  
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
@@ -140,7 +140,7 @@
                         </StackLayout>
                         <StackLayout Spacing="0" Grid.Row="13">
                             <Label Text="State" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
                                 <custom:BorderLessEntry Text="{Binding State}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
@@ -149,7 +149,7 @@
                         </StackLayout>
                         <StackLayout Spacing="0" Grid.Row="14">
                             <Label Text="Notes" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
                                 <custom:BorderLessEntry Text="{Binding Notes}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 

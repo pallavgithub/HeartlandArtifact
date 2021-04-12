@@ -143,7 +143,7 @@ namespace HeartlandArtifact.ViewModels
                         form.Add(new StringContent(""), "LastName");
                     }
                     form.Add(new StringContent(account.UserId ?? ""), "AppleAccountId");
-                    form.Add(new StringContent(account.Email??""), "EmailId");
+                    form.Add(new StringContent(account.Email ?? ""), "EmailId");
                     form.Add(new StringContent("Apple"), "Platform");
                     form.Add(new StringContent(string.Empty), "ContactNumber");
                     var response = await new ApiData().PostFormData<UserModel>("user/SocialMediaLogin", form, true);
@@ -199,36 +199,51 @@ namespace HeartlandArtifact.ViewModels
             {
                 IsWorking = true;
                 FacebookUser = facebookUser;
-                HttpClient client = new HttpClient();
-                MultipartFormDataContent form = new MultipartFormDataContent();
-                form.Add(new StringContent(FacebookUser.Id), "FacebookId");
-                form.Add(new StringContent(FacebookUser.FirstName), "FirstName");
-                form.Add(new StringContent(FacebookUser.LastName), "LastName");
-                form.Add(new StringContent(FacebookUser.Email ?? ""), "EmailId");
-                form.Add(new StringContent("Facebook"), "Platform");
-                form.Add(new StringContent(string.Empty), "ContactNumber");
-                var response = await new ApiData().PostFormData<UserModel>("user/SocialMediaLogin", form, true);
-                if (response != null && response.data != null)
+                // HttpClient client = new HttpClient();
+                if (string.IsNullOrEmpty(FacebookUser.Email))
                 {
-                    if (response.status == "400")
+                    App.FacebookUserDetails = new UserSocialMediaDetailsModel()
                     {
-                        FacebookEmailPopupIsVisible = true;
-                    }
-                    else
-                    {
-                        string newString = new String(response.data.FirstName.Select((ch, index) => (index == 0) ? Char.ToUpper(ch) : Char.ToLower(ch)).ToArray());
-                        IsLogedIn = true;
-                        Application.Current.Properties["IsLogedIn"] = true;
-                        Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
-                        Application.Current.Properties["UserName"] = newString;
-                        await Application.Current.SavePropertiesAsync();
-                        toast.LongAlert("Welcome to Relic Collector.");
-                        await NavigationService.NavigateAsync("HomePage");
-                    }
+                        FirstName = FacebookUser.FirstName,
+                        LastName = FacebookUser.LastName,
+                        EmailId = string.Empty,
+                        FacebookId = FacebookUser.Id,
+                        Platform = "Facebook"
+                    };
+                    FacebookEmailPopupIsVisible = true;
                 }
                 else
                 {
-                    toast.LongAlert(response.message);
+                    MultipartFormDataContent form = new MultipartFormDataContent();
+                    form.Add(new StringContent(FacebookUser.Id), "FacebookId");
+                    form.Add(new StringContent(FacebookUser.FirstName), "FirstName");
+                    form.Add(new StringContent(FacebookUser.LastName), "LastName");
+                    form.Add(new StringContent(FacebookUser.Email ?? ""), "EmailId");
+                    form.Add(new StringContent("Facebook"), "Platform");
+                    form.Add(new StringContent(string.Empty), "ContactNumber");
+                    var response = await new ApiData().PostFormData<UserModel>("user/SocialMediaLogin", form, true);
+                    if (response != null && response.data != null)
+                    {
+                        if (response.status == "400")
+                        {
+                            // FacebookEmailPopupIsVisible = true;
+                        }
+                        else
+                        {
+                            string newString = new String(response.data.FirstName.Select((ch, index) => (index == 0) ? Char.ToUpper(ch) : Char.ToLower(ch)).ToArray());
+                            IsLogedIn = true;
+                            Application.Current.Properties["IsLogedIn"] = true;
+                            Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
+                            Application.Current.Properties["UserName"] = newString;
+                            await Application.Current.SavePropertiesAsync();
+                            toast.LongAlert("Welcome to Relic Collector.");
+                            await NavigationService.NavigateAsync("HomePage");
+                        }
+                    }
+                    else
+                    {
+                        toast.LongAlert(response.message);
+                    }
                 }
                 IsWorking = false;
             }
@@ -344,35 +359,62 @@ namespace HeartlandArtifact.ViewModels
         }
         public async void UpdateFacebookEmailId()
         {
-            var toast = DependencyService.Get<IMessage>();
-            if (string.IsNullOrEmpty(FacebookEmailId))
+            try
             {
-                toast.LongAlert("Please enter your email address."); return;
-            }
-            else
-            {
-                IsWorking = true;
-                var response = await new ApiData().PutData<UserModel>("User/UpdateFacebookSignUpEmail?FacebookId=" + FacebookUser.Id + "&Email=" + FacebookEmailId, true);
-                if (response != null && response.data != null)
+                var toast = DependencyService.Get<IMessage>();
+                if (string.IsNullOrEmpty(FacebookEmailId))
                 {
-                    FacebookEmailPopupIsVisible = false;
-                    string newString = new String(response.data.FirstName.Select((ch, index) => (index == 0) ? Char.ToUpper(ch) : Char.ToLower(ch)).ToArray());
-                    IsLogedIn = true;
-                    Application.Current.Properties["IsLogedIn"] = true;
-                    Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
-                    Application.Current.Properties["UserName"] = newString;
-                    await Application.Current.SavePropertiesAsync();
-                    toast.LongAlert("Welcome to Relic Collector.");
-                    await NavigationService.NavigateAsync("/HomePage");
+                    toast.LongAlert("Please enter your email address."); return;
                 }
-                IsWorking = false;
+                if (!Regex.IsMatch(FacebookEmailId.Trim(), @"^((?:[a-zA-Z0-9]+)|(([a-zA-Z0-9]+(\.|\+|\-|_))+[a-zA-Z0-9]+))@(([a-zA-Z0-9]+(\.|\-))+[a-zA-Z]{2,4})$", RegexOptions.IgnoreCase))
+                {
+                    toast.LongAlert("Oops, this email address doesn't look right."); return;
+                }
+                else
+                {
+                    IsWorking = true;
+                    var response = await new ApiData().PostData<UserModel>("User/VerifyFBEmail?Email=" + FacebookEmailId + "&otp=" + string.Empty, true);
+                    if (response != null && response.data != null)
+                    {
+                        App.FacebookUserDetails.Otp = response.data.Otp;
+                        App.FacebookUserDetails.EmailId = FacebookEmailId;
+                        FacebookEmailId = string.Empty;
+                        var navParams = new NavigationParameters();
+                        navParams.Add("IsFbEmailVerification", true);
+                        await NavigationService.NavigateAsync("EnterOtpPage", navParams);
+
+                    }
+                    else
+                    {
+                        toast.LongAlert(response.message);
+                    }
+                    //var response = await new ApiData().PutData<UserModel>("User/UpdateFacebookSignUpEmail?FacebookId=" + FacebookUser.Id + "&Email=" + FacebookEmailId, true);
+                    //if (response != null && response.data != null)
+                    //{
+                    //    FacebookEmailPopupIsVisible = false;
+                    //    string newString = new String(response.data.FirstName.Select((ch, index) => (index == 0) ? Char.ToUpper(ch) : Char.ToLower(ch)).ToArray());
+                    //    IsLogedIn = true;
+                    //    Application.Current.Properties["IsLogedIn"] = true;
+                    //    Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
+                    //    Application.Current.Properties["UserName"] = newString;
+                    //    await Application.Current.SavePropertiesAsync();
+                    //    toast.LongAlert("Welcome to Relic Collector.");
+                    //    await NavigationService.NavigateAsync("/HomePage");
+                    //}
+                    IsWorking = false;
+                }
+
             }
 
+            catch (Exception e)
+            {
+
+            }
         }
         public void CloseEmailPopup()
         {
             FacebookEmailPopupIsVisible = false;
-
+            FacebookEmailId = string.Empty;
         }
     }
 }

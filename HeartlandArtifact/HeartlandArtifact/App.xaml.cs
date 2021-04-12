@@ -13,6 +13,7 @@ namespace HeartlandArtifact
     public partial class App
     {
         public static UserModel SignUpDetails { get; set; }
+        public static UserSocialMediaDetailsModel FacebookUserDetails { get; set; }
         public const string LoggedInKey = "LoggedIn";
         public const string AppleUserIdKey = "AppleUserIdKey";
         // public static UserDataModel User { get; set; }

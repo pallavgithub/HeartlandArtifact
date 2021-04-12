@@ -61,7 +61,7 @@
                                         </Image.GestureRecognizers>
                                     </Image>
                                     <Label Text="Add New Collection" FontSize="22" TextColor="Black" HorizontalTextAlignment="Center" FontFamily="{StaticResource HelveticaRegular}"/>
-                                    <Frame Margin="2,5,2,8" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="25"
+                                    <Frame Margin="2,5,2,8" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" HeightRequest="25"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
                                         <custom:BorderLessEntry Text="{Binding NewCollectionName}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
@@ -80,7 +80,7 @@
                                 <ContentView BackgroundColor="LightGray" Opacity="0.7"/>
                                 <StackLayout BackgroundColor="White" Padding="15" Margin="20,0,20,0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
                                     <Label Text="Edit Collection" FontSize="22" TextColor="Black" HorizontalTextAlignment="Center" FontFamily="{StaticResource HelveticaRegular}"/>
-                                    <Frame Margin="2,5,2,8" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="25"
+                                    <Frame Margin="2,5,2,8" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" HeightRequest="25"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
                                         <custom:BorderLessEntry Text="{Binding NewCollectionName}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
@@ -147,7 +147,7 @@
                                         </Image.GestureRecognizers>
                                     </Image>
                                     <Label Text="Add New Category" FontSize="22" TextColor="Black" HorizontalTextAlignment="Center" FontFamily="{StaticResource HelveticaRegular}"/>
-                                    <Frame Margin="2,5,2,8" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="25"
+                                    <Frame Margin="2,5,2,8" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" HeightRequest="25"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
                                         <custom:BorderLessEntry Text="{Binding NewCategoryName}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
@@ -166,7 +166,7 @@
                                 <ContentView BackgroundColor="LightGray" Opacity="0.7"/>
                                 <StackLayout BackgroundColor="White" Padding="15" Margin="20,0,20,0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
                                     <Label Text="Edit Category" FontSize="22" TextColor="Black" HorizontalTextAlignment="Center" FontFamily="{StaticResource HelveticaRegular}"/>
-                                    <Frame Margin="2,5,2,8" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="25"
+                                    <Frame Margin="2,5,2,8" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" HeightRequest="25"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" >
                                         <custom:BorderLessEntry Text="{Binding NewCategoryName}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 

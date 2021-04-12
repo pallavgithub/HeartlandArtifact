@@ -5,6 +5,7 @@ using Prism.Commands;
 using Prism.Navigation;
 using System;
 using System.Linq;
+using System.Net.Http;
 using Xamarin.Forms;
 
 namespace HeartlandArtifact.ViewModels
@@ -16,6 +17,12 @@ namespace HeartlandArtifact.ViewModels
         {
             get { return _isFromForgotPassword; }
             set { SetProperty(ref _isFromForgotPassword, value); }
+        }
+        private bool _isFbEmailVerification;
+        public bool IsFbEmailVerification
+        {
+            get { return _isFbEmailVerification; }
+            set { SetProperty(ref _isFbEmailVerification, value); }
         }
         private string _email;
         public string Email
@@ -54,17 +61,17 @@ namespace HeartlandArtifact.ViewModels
             set { SetProperty(ref _timerText, value); }
         }
 
-       // public bool FromResetPassword
-       // public DelegateCommand GoBackCommand { get; set; }
-       // public DelegateCommand SubmitBtnCommand { get; set; }
+        // public bool FromResetPassword
+        // public DelegateCommand GoBackCommand { get; set; }
+        // public DelegateCommand SubmitBtnCommand { get; set; }
 
         public INavigationService _nav;
 
         public EnterOtpPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             _nav = navigationService;
-           // GoBackCommand = new DelegateCommand(GoBack);
-           // SubmitBtnCommand = new DelegateCommand(SubmitButtonClicked);
+            // GoBackCommand = new DelegateCommand(GoBack);
+            // SubmitBtnCommand = new DelegateCommand(SubmitButtonClicked);
         }
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
@@ -85,13 +92,14 @@ namespace HeartlandArtifact.ViewModels
                     {
                         await _nav.GoBackAsync();
                     }
-                    //if (Device.RuntimePlatform == Device.iOS)
-                    //{
-                    //    await _nav.NavigateAsync("ForgotPasswordPage");
-                    //}
-
                 }
-
+            }
+            else if (parameters.ContainsKey("IsFbEmailVerification"))
+            {
+                if ((bool)parameters["IsFbEmailVerification"])
+                {
+                    IsFbEmailVerification = true;
+                }
             }
         }
         //public async void GoBack()
@@ -106,27 +114,16 @@ namespace HeartlandArtifact.ViewModels
         //    }
         //}
 
-        
+
         public async void SubmitButtonClicked()
         {
             string OTP = Text1 + Text2 + Text3 + Text4;
             var Toast = DependencyService.Get<IMessage>();
-            //if (string.IsNullOrEmpty(Text1) || string.IsNullOrEmpty(Text2) || string.IsNullOrEmpty(Text3) || string.IsNullOrEmpty(Text4))
-            //{
-            //    if (TimerText == "0:00")
-            //    {
-            //        Toast.LongAlert("Oops, request timeout. Please tap on resend OTP."); return;
-            //    }
-            //    else
-            //    {
-            //        Toast.LongAlert("Entered OTP does not match."); return;
-            //    }
-            //}
             if (TimerText == "0:00")
             {
                 Toast.LongAlert("Oops, request timeout. Please tap on resend OTP."); return;
             }
-            if(string.IsNullOrEmpty(Text1) && string.IsNullOrEmpty(Text2) && string.IsNullOrEmpty(Text3) && string.IsNullOrEmpty(Text4))
+            if (string.IsNullOrEmpty(Text1) && string.IsNullOrEmpty(Text2) && string.IsNullOrEmpty(Text3) && string.IsNullOrEmpty(Text4))
             {
                 Toast.LongAlert("Please enter OTP sent to your entered email id."); return;
             }
@@ -152,6 +149,44 @@ namespace HeartlandArtifact.ViewModels
                             Toast.LongAlert(response.message);
                         }
                         IsBusy = false;
+                    }
+                    else if (IsFbEmailVerification)
+                    {
+                        if (App.FacebookUserDetails.Otp != OTP)
+                        {
+                            Toast.LongAlert("Entered OTP does not match."); return;
+                        }
+                        else
+                        {
+                            IsBusy = true;
+                            if (App.FacebookUserDetails != null)
+                            {
+                                MultipartFormDataContent form = new MultipartFormDataContent();
+                                form.Add(new StringContent(App.FacebookUserDetails.FacebookId), "FacebookId");
+                                form.Add(new StringContent(App.FacebookUserDetails.FirstName), "FirstName");
+                                form.Add(new StringContent(App.FacebookUserDetails.LastName), "LastName");
+                                form.Add(new StringContent(App.FacebookUserDetails.EmailId ?? ""), "EmailId");
+                                form.Add(new StringContent("Facebook"), "Platform");
+                                form.Add(new StringContent(string.Empty), "ContactNumber");
+                                var response = await new ApiData().PostFormData<UserModel>("user/SocialMediaLogin", form, true);
+                                if (response != null && response.data != null)
+                                {
+                                    string newString = new String(response.data.FirstName.Select((ch, index) => (index == 0) ? Char.ToUpper(ch) : Char.ToLower(ch)).ToArray());
+                                    Application.Current.Properties["IsLogedIn"] = true;
+                                    Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
+                                    Application.Current.Properties["UserName"] = newString;
+                                    await Application.Current.SavePropertiesAsync();
+                                    Toast.LongAlert("Welcome to Relic Collector.");
+                                    await NavigationService.NavigateAsync("HomePage");
+                                    App.FacebookUserDetails.Otp = string.Empty;
+                                }
+                                else
+                                {
+                                    Toast.LongAlert(response.message);
+                                }
+                                IsBusy = false;
+                            }
+                        }
                     }
                     else
                     {
@@ -201,6 +236,17 @@ namespace HeartlandArtifact.ViewModels
                 var response = await new ApiData().PostData<UserModel>("user/ForgotPassword?EmailId=" + Email + "&Otp=" + string.Empty, true);
                 if (response != null && response.data != null)
                 {
+                    Toast.LongAlert("We have sent an OTP to your entered email id. Please check your email inbox.");
+                }
+                IsBusy = false;
+            }
+            else if (IsFbEmailVerification)
+            {
+                IsBusy = true;
+                var response = await new ApiData().PostData<UserModel>("User/VerifyFBEmail?Email=" + App.FacebookUserDetails.EmailId + "&otp=" + string.Empty, true);
+                if (response != null && response.data != null)
+                {
+                    App.FacebookUserDetails.Otp = response.data.Otp;
                     Toast.LongAlert("We have sent an OTP to your entered email id. Please check your email inbox.");
                 }
                 IsBusy = false;
