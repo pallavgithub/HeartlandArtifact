@@ -134,12 +134,10 @@ namespace HeartlandArtifact.Views
         {
             IsPresented = !IsPresented;
         }
-
         private void CancelLogout_Tapped(object sender, EventArgs e)
         {
             (BindingContext as HomePageViewModel).LogoutPopupIsVisible = false;
         }
-
         private async void ConfirmLogout_Tapped(object sender, EventArgs e)
         {
             IsBusy = true;

@@ -311,6 +311,70 @@ namespace HeartlandArtifact.ViewModels
             get { return _itemImageSource; }
             set { SetProperty(ref _itemImageSource, value); }
         }
+       
+
+        // Item Properties
+       
+        private string _itemTitle;
+        public string ItemTitle
+        {
+            get { return _itemTitle; }
+            set { SetProperty(ref _itemTitle, value); }
+        }
+        private string _itemMaterial;
+        public string ItemMaterial
+        {
+            get { return _itemMaterial; }
+            set { SetProperty(ref _itemMaterial, value); }
+        }
+        private string _itemFoundBy;
+        public string ItemFoundBy
+        {
+            get { return _itemFoundBy; }
+            set { SetProperty(ref _itemFoundBy, value); }
+        }
+        private string _itemExCollection;
+        public string ItemExCollection
+        {
+            get { return _itemExCollection; }
+            set { SetProperty(ref _itemExCollection, value); }
+        }
+        private string _itemPerceivedValue;
+        public string ItemPerceivedValue
+        {
+            get { return _itemPerceivedValue; }
+            set { SetProperty(ref _itemPerceivedValue, value); }
+        }
+        private string _itemCost;
+        public string ItemCost
+        {
+            get { return _itemCost; }
+            set { SetProperty(ref _itemCost, value); }
+        }
+        private string _itemLength;
+        public string ItemLength
+        {
+            get { return _itemLength; }
+            set { SetProperty(ref _itemLength, value); }
+        }
+        private string _itemCountry;
+        public string ItemCountry
+        {
+            get { return _itemCountry; }
+            set { SetProperty(ref _itemCountry, value); }
+        }
+        private string _itemState;
+        public string ItemState
+        {
+            get { return _itemState; }
+            set { SetProperty(ref _itemState, value); }
+        }
+        private string _itemNotes;
+        public string ItemNotes
+        {
+            get { return _itemNotes; }
+            set { SetProperty(ref _itemNotes, value); }
+        }
         private string _soldPrice;
         public string SoldPrice
         {
@@ -549,9 +613,6 @@ namespace HeartlandArtifact.ViewModels
                                 ImageUrl = item.images.Count > 0 ? item.images[0] : ""
                             });
                         }
-
-                        // if (item.CollectionId == CategoryData.CollectionId && item.CategoryId == CategoryData.CategoryId)
-                        //   AllItems.Add(item);
                     }
                 }
                 ItemNotFoundLblIsVisible = AllItems.Count > 0 ? false : true;
@@ -919,20 +980,18 @@ namespace HeartlandArtifact.ViewModels
                     var Item = await new ApiData().GetData<ApiItemModel>("Artifact/GeItemDetailByItemId?itemId=" + ItemID, true);
                     if (Item != null)
                     {
-                        var ItemDetails = Item.data;
-                        if (ItemDetails.images.Count > 0)
-                            ItemImageSource = ItemDetails.images[0];
+                        var ItemDetails = Item.data;                      
                         ItemId = ItemDetails.item.ItemId;
-                        Title = ItemDetails.item.Title ?? "";
-                        Material = ItemDetails.item.Material ?? "";
-                        FoundBy = ItemDetails.item.FoundBy ?? "";
-                        ExCollection = ItemDetails.item.ExCollection ?? "";
-                        PerceivedValue = ItemDetails.item.PerceivedValue ?? "";
-                        Cost = ItemDetails.item.Cost ?? "";
-                        Length = ItemDetails.item.Length ?? "";
-                        Country = ItemDetails.item.Country ?? "";
-                        State = ItemDetails.item.State ?? "";
-                        Notes = ItemDetails.item.Notes ?? "";
+                        ItemTitle = ItemDetails.item.Title ?? "";
+                        ItemMaterial = ItemDetails.item.Material ?? "";
+                        ItemFoundBy = ItemDetails.item.FoundBy ?? "";
+                        ItemExCollection = ItemDetails.item.ExCollection ?? "";
+                        ItemPerceivedValue = ItemDetails.item.PerceivedValue ?? "";
+                        ItemCost = ItemDetails.item.Cost ?? "";
+                        ItemLength = ItemDetails.item.Length ?? "";
+                        ItemCountry = ItemDetails.item.Country ?? "";
+                        ItemState = ItemDetails.item.State ?? "";
+                        ItemNotes = ItemDetails.item.Notes ?? "";
                         ItemImagesForCarousel = new ObservableCollection<MyItemModel>();
                         if (ItemDetails.images.Count > 0)
                             foreach (var i in ItemDetails.images)
