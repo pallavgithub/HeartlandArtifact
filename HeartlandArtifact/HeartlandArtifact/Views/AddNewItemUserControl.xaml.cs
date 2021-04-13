@@ -40,13 +40,17 @@ namespace HeartlandArtifact.Views
                 viewModel.Notes = string.Empty;
                 pic.Source = string.Empty;
                 viewModel.AddNewItemUserControlIsVisible = false;
-                if (viewModel.AllItems == null)
+                if(viewModel.GoBackFromAddItem== "ItemDetailsUserControl")
                 {
-                    viewModel.HomeIsVisible = true;
+                    viewModel.ItemDetailsUserControlIsVisible = true;
                 }
-                else
+                else if (viewModel.GoBackFromAddItem == "ItemUserControl")
                 {
                     viewModel.ItemsUserControlIsVisible = true;
+                }
+                else if (viewModel.GoBackFromAddItem == "HomeUserControl")
+                {
+                    viewModel.HomeIsVisible = true;
                 }
             }
         }

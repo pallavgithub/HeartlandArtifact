@@ -13,9 +13,10 @@ namespace HeartlandArtifact.Views
         }
         private void AddItem_Tapped(object sender, System.EventArgs e)
         {
-            (BindingContext as HomePageViewModel).AddNewItemUserControlIsVisible = true;
-            (BindingContext as HomePageViewModel).HomeIsVisible = false;
-
+            var _vm = (BindingContext as HomePageViewModel);
+            _vm.GoBackFromAddItem = "HomeUserControl";
+            _vm.AddNewItemUserControlIsVisible = true;
+            _vm.HomeIsVisible = false;
         }
         private void MyCollection_Tapped(object sender, System.EventArgs e)
         {
@@ -23,7 +24,6 @@ namespace HeartlandArtifact.Views
             _vm.GetUserCollections();
             _vm.MyCollectionVisible = true;
             _vm.HomeIsVisible = false;
-
         } 
         private void MyProfile_Tapped(object sender, System.EventArgs e)
         {

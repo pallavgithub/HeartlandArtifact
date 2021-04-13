@@ -211,50 +211,43 @@ namespace HeartlandArtifact.ViewModels
             {
                 IsBusy = true;
                 FacebookUser = facebookUser;
-                if (string.IsNullOrEmpty(FacebookUser.Email))
+                MultipartFormDataContent form = new MultipartFormDataContent();
+                form.Add(new StringContent(FacebookUser.Id), "FacebookId");
+                form.Add(new StringContent(FacebookUser.FirstName), "FirstName");
+                form.Add(new StringContent(FacebookUser.LastName), "LastName");
+                form.Add(new StringContent(FacebookUser.Email ?? ""), "EmailId");
+                form.Add(new StringContent("Facebook"), "Platform");
+                form.Add(new StringContent(string.Empty), "ContactNumber");
+                var response = await new ApiData().PostFormData<UserModel>("user/SocialMediaLogin", form, true);
+                if (response != null && response.data != null)
                 {
-                    App.FacebookUserDetails = new UserSocialMediaDetailsModel()
+                    if (response.status == "400")
                     {
-                        FirstName = FacebookUser.FirstName,
-                        LastName = FacebookUser.LastName,
-                        EmailId = string.Empty,
-                        FacebookId = FacebookUser.Id,
-                        Platform = "Facebook"
-                    };
-                    FacebookEmailPopupIsVisible = true;
-                }
-                else
-                {
-                    MultipartFormDataContent form = new MultipartFormDataContent();
-                    form.Add(new StringContent(FacebookUser.Id), "FacebookId");
-                    form.Add(new StringContent(FacebookUser.FirstName), "FirstName");
-                    form.Add(new StringContent(FacebookUser.LastName), "LastName");
-                    form.Add(new StringContent(FacebookUser.Email ?? ""), "EmailId");
-                    form.Add(new StringContent("Facebook"), "Platform");
-                    form.Add(new StringContent(string.Empty), "ContactNumber");
-                    var response = await new ApiData().PostFormData<UserModel>("user/SocialMediaLogin", form, true);
-                    if (response != null && response.data != null)
-                    {
-                        if (response.status == "400")
+                        App.FacebookUserDetails = new UserSocialMediaDetailsModel()
                         {
-                            // FacebookEmailPopupIsVisible = true;
-                        }
-                        else
-                        {
-                            string newString = new String(response.data.FirstName.Select((ch, index) => (index == 0) ? Char.ToUpper(ch) : Char.ToLower(ch)).ToArray());
-                            IsLogedIn = true;
-                            Application.Current.Properties["IsLogedIn"] = true;
-                            Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
-                            Application.Current.Properties["UserName"] = newString;
-                            await Application.Current.SavePropertiesAsync();
-                            toast.LongAlert("Welcome to Relic Collector.");
-                            await NavigationService.NavigateAsync("HomePage");
-                        }
+                            FirstName = FacebookUser.FirstName,
+                            LastName = FacebookUser.LastName,
+                            EmailId = string.Empty,
+                            FacebookId = FacebookUser.Id,
+                            Platform = "Facebook"
+                        };
+                        FacebookEmailPopupIsVisible = true;
                     }
                     else
                     {
-                        toast.LongAlert(response.message);
+                        string newString = new String(response.data.FirstName.Select((ch, index) => (index == 0) ? Char.ToUpper(ch) : Char.ToLower(ch)).ToArray());
+                        IsLogedIn = true;
+                        Application.Current.Properties["IsLogedIn"] = true;
+                        Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
+                        Application.Current.Properties["UserName"] = newString;
+                        await Application.Current.SavePropertiesAsync();                        
+                        await NavigationService.NavigateAsync("HomePage");
+                        toast.LongAlert("Welcome to Relic Collector.");
                     }
+                }
+                else
+                {
+                    toast.LongAlert(response.message);
                 }
                 IsBusy = false;
             }
@@ -419,6 +412,7 @@ namespace HeartlandArtifact.ViewModels
                         var navParams = new NavigationParameters();
                         navParams.Add("IsFbEmailVerification", true);
                         await NavigationService.NavigateAsync("EnterOtpPage", navParams);
+                        toast.LongAlert("We have sent an OTP to your entered email id. Please check your email inbox.");
                     }
                     else
                     {

@@ -68,6 +68,7 @@ namespace HeartlandArtifact.Views
         private void AddAnotherItemBtn_Tapped(object sender, EventArgs e)
         {
             var _vm = BindingContext as HomePageViewModel;
+            _vm.GoBackFromAddItem = "ItemDetailsUserControl";
             _vm.ItemDetailsUserControlIsVisible = false;
             _vm.AddNewItemUserControlIsVisible = true;
         }

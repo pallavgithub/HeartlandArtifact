@@ -396,6 +396,7 @@ namespace HeartlandArtifact.ViewModels
         private readonly IFacebookManager _facebookManager;
         public Stream ImageStream { get; set; }
         public List<string> Base64ItemImagesList { get; set; }
+        public string GoBackFromAddItem { get; set; }
         public HomePageViewModel(INavigationService navigationService) : base(navigationService)
         {
             _nav = navigationService;

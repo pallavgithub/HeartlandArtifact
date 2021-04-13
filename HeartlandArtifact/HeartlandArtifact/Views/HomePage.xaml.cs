@@ -73,13 +73,17 @@ namespace HeartlandArtifact.Views
                 else
                 {
                     _vm.AddNewItemUserControlIsVisible = false;
-                    if (_vm.AllItems == null)
+                    if (_vm.GoBackFromAddItem == "ItemDetailsUserControl")
                     {
-                        _vm.HomeIsVisible = true;
+                        _vm.ItemDetailsUserControlIsVisible = true;
                     }
-                    else
+                    else if (_vm.GoBackFromAddItem == "ItemUserControl")
                     {
                         _vm.ItemsUserControlIsVisible = true;
+                    }
+                    else if (_vm.GoBackFromAddItem == "HomeUserControl")
+                    {
+                        _vm.HomeIsVisible = true;
                     }
                 }
             }

@@ -157,8 +157,8 @@ namespace HeartlandArtifact.ViewModels
                                     Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
                                     Application.Current.Properties["UserName"] = newString;
                                     await Application.Current.SavePropertiesAsync();
-                                    Toast.LongAlert("Welcome to Relic Collector.");
                                     await NavigationService.NavigateAsync("HomePage");
+                                    Toast.LongAlert("Welcome to Relic Collector.");
                                     App.FacebookUserDetails.Otp = string.Empty;
                                 }
                                 else

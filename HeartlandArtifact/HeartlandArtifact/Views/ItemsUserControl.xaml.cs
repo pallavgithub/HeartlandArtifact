@@ -16,8 +16,10 @@ namespace HeartlandArtifact.Views
 
         private void AddItemBtn_Tapped(object sender, EventArgs e)
         {
-            (BindingContext as HomePageViewModel).ItemsUserControlIsVisible = false;
-            (BindingContext as HomePageViewModel).AddNewItemUserControlIsVisible = true;
+            var _vm = BindingContext as HomePageViewModel;
+            _vm.GoBackFromAddItem = "ItemUserControl";
+            _vm.ItemsUserControlIsVisible = false;
+            _vm.AddNewItemUserControlIsVisible = true;
         }
 
         private void GoBack_Tapped(object sender, EventArgs e)
@@ -30,7 +32,7 @@ namespace HeartlandArtifact.Views
             else
             {
                 viewModel.ItemsUserControlIsVisible = false;
-                viewModel.HomeIsVisible = true;
+                viewModel.CategoryUserControlIsVisible = true;
             }
         }
 
