@@ -199,7 +199,6 @@ namespace HeartlandArtifact.ViewModels
             {
                 IsWorking = true;
                 FacebookUser = facebookUser;
-                // HttpClient client = new HttpClient();
                 if (string.IsNullOrEmpty(FacebookUser.Email))
                 {
                     App.FacebookUserDetails = new UserSocialMediaDetailsModel()
@@ -382,30 +381,14 @@ namespace HeartlandArtifact.ViewModels
                         var navParams = new NavigationParameters();
                         navParams.Add("IsFbEmailVerification", true);
                         await NavigationService.NavigateAsync("EnterOtpPage", navParams);
-
                     }
                     else
                     {
                         toast.LongAlert(response.message);
                     }
-                    //var response = await new ApiData().PutData<UserModel>("User/UpdateFacebookSignUpEmail?FacebookId=" + FacebookUser.Id + "&Email=" + FacebookEmailId, true);
-                    //if (response != null && response.data != null)
-                    //{
-                    //    FacebookEmailPopupIsVisible = false;
-                    //    string newString = new String(response.data.FirstName.Select((ch, index) => (index == 0) ? Char.ToUpper(ch) : Char.ToLower(ch)).ToArray());
-                    //    IsLogedIn = true;
-                    //    Application.Current.Properties["IsLogedIn"] = true;
-                    //    Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
-                    //    Application.Current.Properties["UserName"] = newString;
-                    //    await Application.Current.SavePropertiesAsync();
-                    //    toast.LongAlert("Welcome to Relic Collector.");
-                    //    await NavigationService.NavigateAsync("/HomePage");
-                    //}
                     IsWorking = false;
                 }
-
             }
-
             catch (Exception e)
             {
 

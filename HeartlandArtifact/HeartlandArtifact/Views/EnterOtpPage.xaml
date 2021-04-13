@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:converter="clr-namespace:HeartlandArtifact.Converters"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:converter="clr-namespace:HeartlandArtifact.Converters"
              x:Class="HeartlandArtifact.Views.EnterOtpPage"
-
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -12,19 +12,18 @@
     <ContentPage.Content>
         <Grid>
             <StackLayout VerticalOptions="FillAndExpand">
-                  <StackLayout.Margin>
-<OnPlatform x:TypeArguments="Thickness">
-<On Platform="iOS" Value="25,60,25,30" />
-<On Platform="Android" Value="25,30,25,30" />
-</OnPlatform>
-</StackLayout.Margin>
+                <StackLayout.Margin>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS" Value="25,60,25,30" />
+                        <On Platform="Android" Value="25,30,25,30" />
+                    </OnPlatform>
+                </StackLayout.Margin>
                 <StackLayout Spacing="30">
                     <StackLayout Orientation="Horizontal">
                         <Label Text="&lt;" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Start" VerticalOptions="Start" TextColor="Black" TextTransform="Uppercase" FontSize="16"/>
                         <Label Text="BACK" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Center" TextColor="Black" TextTransform="Uppercase" FontSize="18"/>
                         <StackLayout.GestureRecognizers>
-                            <!--<TapGestureRecognizer Command="{Binding GoBackCommand}"/>-->
-                             <TapGestureRecognizer Tapped="Goback_Tapped"/>
+                            <TapGestureRecognizer Tapped="Goback_Tapped"/>
                         </StackLayout.GestureRecognizers>
                     </StackLayout>
                     <Label Text="Enter Verification Code" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" FontSize="30" TextColor="Black"/>
@@ -46,13 +45,10 @@
                         </Label>
                         <Label Text="{Binding TimerText }" FontFamily="{StaticResource HelveticaRegular}" HorizontalOptions="CenterAndExpand" FontSize="20" TextColor="#823E21" />
                     </StackLayout>
-                    <!--<Button Text="Submit" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" TextTransform="None" BackgroundColor="Transparent" BorderColor="Black" BorderWidth="1" 
-                        CornerRadius="30" FontSize="20" Command="{Binding SubmitBtnCommand}"/>-->
                     <Grid  Margin="15,0,15,0" HorizontalOptions="CenterAndExpand">
                         <Image Source="Button.png"/>
                         <Label Text="Submit" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,3" FontFamily="{StaticResource HelveticaBold}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent"/>
                         <Grid.GestureRecognizers>
-                            <!--<TapGestureRecognizer Command="{Binding SubmitBtnCommand}"/>-->
                             <TapGestureRecognizer Tapped="SubmitBtn_Tapped"/>
                         </Grid.GestureRecognizers>
                     </Grid>

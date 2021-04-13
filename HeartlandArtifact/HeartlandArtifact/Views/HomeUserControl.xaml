@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="HeartlandArtifact.Views.HomeUserControl"
-             >
+             x:Class="HeartlandArtifact.Views.HomeUserControl"             >
     <ContentView.Content>
         <StackLayout Padding="40,0,40,50"  VerticalOptions="FillAndExpand">
             <Label Text="Home" FontFamily="{StaticResource HelveticaRegular}" HorizontalTextAlignment="Center" TextColor="Black" FontSize="30"/>
@@ -25,7 +24,6 @@
                     <Image Source="Button.png"/>
                     <Label Text="My Profile" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="25" Margin="0,0,0,3" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
                     <Grid.GestureRecognizers>
-                        <!--<TapGestureRecognizer Tapped="MyProfile_Tapped"/>-->
                     </Grid.GestureRecognizers>
                 </Grid>
                 <Grid HorizontalOptions="CenterAndExpand">
@@ -35,9 +33,9 @@
                 <Grid HorizontalOptions="CenterAndExpand">
                     <Image Source="Button.png"/>
                     <Label Text="Data Reports" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="25" Margin="0,0,0,3" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
-                </Grid>                
+                </Grid>
             </StackLayout>
-            <Image Source="SplashImg.png" HeightRequest="50" VerticalOptions="End"/>           
+            <Image Source="SplashImg.png" HeightRequest="50" VerticalOptions="End"/>
             <Grid HorizontalOptions="CenterAndExpand">
                 <Image Source="Group.png"/>
                 <Label Text="View Auctions" FontFamily="{StaticResource HelveticaRegular}" TextColor="White" FontSize="25" Margin="0,0,0,3" HorizontalTextAlignment="Center" VerticalOptions="Center"/>

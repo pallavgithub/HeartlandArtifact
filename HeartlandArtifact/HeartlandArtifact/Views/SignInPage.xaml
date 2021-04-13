@@ -1,8 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:custom="clr-namespace:HeartlandArtifact.CustomRenderers" xmlns:converter="clr-namespace:HeartlandArtifact.Converters"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:custom="clr-namespace:HeartlandArtifact.CustomRenderers" 
+             xmlns:converter="clr-namespace:HeartlandArtifact.Converters"
              x:Class="HeartlandArtifact.Views.SignInPage"          
-             NavigationPage.HasNavigationBar="False" FlowDirection="LeftToRight">
+             NavigationPage.HasNavigationBar="False" 
+             FlowDirection="LeftToRight">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converter:InverseBoolConverter x:Key="InverseBoolConverter"></converter:InverseBoolConverter>
@@ -34,18 +37,6 @@
                                 <TapGestureRecognizer Command="{Binding GoogleLoginCommand}"/>
                             </Grid.GestureRecognizers>
                         </Grid>
-                        <!--<OnPlatform>
-                            <On Platform="iOS">
-                                <Grid>
-                                    <Image Source="AppleCircle.png"/>
-                                    <Image Source="apple.png" Margin="30,22,30,30"/>
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding AppleLoginCommand}"/>
-                                    </Grid.GestureRecognizers>
-
-                                </Grid>
-                            </On>
-                        </OnPlatform>-->
                         <Grid>
                             <Image Source="AppleCircle.png"/>
                             <Image Source="apple.png" Margin="30,22,30,30"/>
@@ -56,7 +47,6 @@
                                 <OnPlatform x:TypeArguments="x:Boolean" iOS="True" Android="False"/>
                             </Grid.IsVisible>
                         </Grid>
-                        <!--<Button Text="applebtn" Command="{Binding AppleLoginCommand}" />-->
                     </StackLayout>
                     <StackLayout Spacing="0" Margin="0,20,0,0">
                         <Label Text="Email" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>

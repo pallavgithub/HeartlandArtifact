@@ -211,36 +211,50 @@ namespace HeartlandArtifact.ViewModels
             {
                 IsBusy = true;
                 FacebookUser = facebookUser;
-                HttpClient client = new HttpClient();
-                MultipartFormDataContent form = new MultipartFormDataContent();
-                form.Add(new StringContent(FacebookUser.Id), "FacebookId");
-                form.Add(new StringContent(FacebookUser.FirstName), "FirstName");
-                form.Add(new StringContent(FacebookUser.LastName), "LastName");
-                form.Add(new StringContent(FacebookUser.Email ?? ""), "EmailId");
-                form.Add(new StringContent("Facebook"), "Platform");
-                form.Add(new StringContent(string.Empty), "ContactNumber");
-                var response = await new ApiData().PostFormData<UserModel>("user/SocialMediaLogin", form, true);
-                if (response != null && response.data != null)
+                if (string.IsNullOrEmpty(FacebookUser.Email))
                 {
-                    if (response.status == "400")
+                    App.FacebookUserDetails = new UserSocialMediaDetailsModel()
                     {
-                        FacebookEmailPopupIsVisible = true;
-                    }
-                    else
-                    {
-                        string newString = new String(response.data.FirstName.Select((ch, index) => (index == 0) ? Char.ToUpper(ch) : Char.ToLower(ch)).ToArray());
-                        IsLogedIn = true;
-                        Application.Current.Properties["IsLogedIn"] = true;
-                        Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
-                        Application.Current.Properties["UserName"] = newString;
-                        await Application.Current.SavePropertiesAsync();
-                        toast.LongAlert("Welcome to Relic Collector.");
-                        await NavigationService.NavigateAsync("HomePage");
-                    }
+                        FirstName = FacebookUser.FirstName,
+                        LastName = FacebookUser.LastName,
+                        EmailId = string.Empty,
+                        FacebookId = FacebookUser.Id,
+                        Platform = "Facebook"
+                    };
+                    FacebookEmailPopupIsVisible = true;
                 }
                 else
                 {
-                    toast.LongAlert(response.message);
+                    MultipartFormDataContent form = new MultipartFormDataContent();
+                    form.Add(new StringContent(FacebookUser.Id), "FacebookId");
+                    form.Add(new StringContent(FacebookUser.FirstName), "FirstName");
+                    form.Add(new StringContent(FacebookUser.LastName), "LastName");
+                    form.Add(new StringContent(FacebookUser.Email ?? ""), "EmailId");
+                    form.Add(new StringContent("Facebook"), "Platform");
+                    form.Add(new StringContent(string.Empty), "ContactNumber");
+                    var response = await new ApiData().PostFormData<UserModel>("user/SocialMediaLogin", form, true);
+                    if (response != null && response.data != null)
+                    {
+                        if (response.status == "400")
+                        {
+                            // FacebookEmailPopupIsVisible = true;
+                        }
+                        else
+                        {
+                            string newString = new String(response.data.FirstName.Select((ch, index) => (index == 0) ? Char.ToUpper(ch) : Char.ToLower(ch)).ToArray());
+                            IsLogedIn = true;
+                            Application.Current.Properties["IsLogedIn"] = true;
+                            Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
+                            Application.Current.Properties["UserName"] = newString;
+                            await Application.Current.SavePropertiesAsync();
+                            toast.LongAlert("Welcome to Relic Collector.");
+                            await NavigationService.NavigateAsync("HomePage");
+                        }
+                    }
+                    else
+                    {
+                        toast.LongAlert(response.message);
+                    }
                 }
                 IsBusy = false;
             }
@@ -387,31 +401,41 @@ namespace HeartlandArtifact.ViewModels
             {
                 toast.LongAlert("Please enter your email address."); return;
             }
+            if (!Regex.IsMatch(FacebookEmailId.Trim(), @"^((?:[a-zA-Z0-9]+)|(([a-zA-Z0-9]+(\.|\+|\-|_))+[a-zA-Z0-9]+))@(([a-zA-Z0-9]+(\.|\-))+[a-zA-Z]{2,4})$", RegexOptions.IgnoreCase))
+            {
+                toast.LongAlert("Oops, this email address doesn't look right."); return;
+            }
             else
             {
                 IsBusy = true;
-                var response = await new ApiData().PutData<UserModel>("User/UpdateFacebookSignUpEmail?FacebookId=" + FacebookUser.Id + "&Email=" + FacebookEmailId, true);
-                if (response != null && response.data != null)
+                try
                 {
-                    // toast.LongAlert(response.message);
-                    FacebookEmailPopupIsVisible = false;
-                    string newString = new String(response.data.FirstName.Select((ch, index) => (index == 0) ? Char.ToUpper(ch) : Char.ToLower(ch)).ToArray());
-                    IsLogedIn = true;
-                    Application.Current.Properties["IsLogedIn"] = true;
-                    Application.Current.Properties["LogedInUserId"] = response.data.CmsUserId;
-                    Application.Current.Properties["UserName"] = newString;
-                    await Application.Current.SavePropertiesAsync();
-                    toast.LongAlert("Welcome to Relic Collector.");
-                    await NavigationService.NavigateAsync("/HomePage");
+                    var response = await new ApiData().PostData<UserModel>("User/VerifyFBEmail?Email=" + FacebookEmailId + "&otp=" + string.Empty, true);
+                    if (response != null && response.data != null)
+                    {
+                        App.FacebookUserDetails.Otp = response.data.Otp;
+                        App.FacebookUserDetails.EmailId = FacebookEmailId;
+                        FacebookEmailId = string.Empty;
+                        var navParams = new NavigationParameters();
+                        navParams.Add("IsFbEmailVerification", true);
+                        await NavigationService.NavigateAsync("EnterOtpPage", navParams);
+                    }
+                    else
+                    {
+                        toast.LongAlert(response.message);
+                    }
+                }
+                catch (Exception e)
+                {
+
                 }
                 IsBusy = false;
             }
-
         }
         public void CloseEmailPopup()
         {
             FacebookEmailPopupIsVisible = false;
-
+            FacebookEmailId = string.Empty;
         }
         public void ToggleCheckbox()
         {

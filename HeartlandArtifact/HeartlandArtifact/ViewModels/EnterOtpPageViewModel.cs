@@ -60,13 +60,7 @@ namespace HeartlandArtifact.ViewModels
             get { return _timerText; }
             set { SetProperty(ref _timerText, value); }
         }
-
-        // public bool FromResetPassword
-        // public DelegateCommand GoBackCommand { get; set; }
-        // public DelegateCommand SubmitBtnCommand { get; set; }
-
         public INavigationService _nav;
-
         public EnterOtpPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             _nav = navigationService;
@@ -102,19 +96,6 @@ namespace HeartlandArtifact.ViewModels
                 }
             }
         }
-        //public async void GoBack()
-        //{
-        //    try
-        //    {
-        //        var k = await NavigationService.GoBackAsync();
-        //    }
-        //    catch(Exception e)
-        //    {
-
-        //    }
-        //}
-
-
         public async void SubmitButtonClicked()
         {
             string OTP = Text1 + Text2 + Text3 + Text4;
@@ -263,6 +244,5 @@ namespace HeartlandArtifact.ViewModels
                 IsBusy = false;
             }
         }
-
     }
 }

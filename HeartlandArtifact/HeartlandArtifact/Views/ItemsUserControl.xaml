@@ -61,9 +61,9 @@
                                                     <Image Source="{Binding ImageUrl}" HorizontalOptions="EndAndExpand"/>
                                                 </StackLayout>
                                                 <StackLayout Grid.Column="1" Margin="15,0,0,0" VerticalOptions="Center" Spacing="0">
-                                                <Label Text="{Binding Title}" TextColor="Black" FontFamily="{StaticResource HelveticaBold}" FontSize="15"/>
-                                                <Label Text="{Binding Length}" TextColor="Black" FontFamily="{StaticResource HelveticaBold}" FontSize="15"/>
-                                                <Label Text="{Binding State}" TextColor="Black" FontFamily="{StaticResource HelveticaBold}" FontSize="15"/>
+                                                    <Label Text="{Binding Title}" TextColor="Black" FontFamily="{StaticResource HelveticaBold}" FontSize="15"/>
+                                                    <Label Text="{Binding Length}" TextColor="Black" FontFamily="{StaticResource HelveticaBold}" FontSize="15"/>
+                                                    <Label Text="{Binding State}" TextColor="Black" FontFamily="{StaticResource HelveticaBold}" FontSize="15"/>
                                                 </StackLayout>
                                             </Grid>
                                         </Frame>

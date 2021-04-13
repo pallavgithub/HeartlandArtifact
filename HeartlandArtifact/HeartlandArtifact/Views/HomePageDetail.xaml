@@ -5,46 +5,6 @@
              Title="Home" 
              FlowDirection="LeftToRight"
              NavigationPage.HasNavigationBar="False">
-    <StackLayout >
-        <!--<Grid Padding="20,10,20,20" HeightRequest="40" ColumnSpacing="15">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Image Source="ProfileIcon.png" Grid.Column="0" HeightRequest="40" WidthRequest="40"/>
-            <Label Text="Hi, Tucker" Grid.Column="1" VerticalOptions="CenterAndExpand" TextColor="Black" FontSize="20"/>
-            <Image Source="BellIcon.png" Grid.Column="2" HeightRequest="30" WidthRequest="20"/>
-            <Image Source="MenuIcon.png" Grid.Column="3" HeightRequest="20" WidthRequest="30">
-                <Image.GestureRecognizers>
-                    --><!--<TapGestureRecognizer Tapped="Menu_Tapped"/>--><!--
-                </Image.GestureRecognizers>
-            </Image>
-        </Grid>-->
-        <!--<StackLayout Padding="40,0,40,50"  VerticalOptions="FillAndExpand">
-            <Label Text="Home" HorizontalTextAlignment="Center" TextColor="Black" FontSize="25"/>
-            <StackLayout Spacing="15" VerticalOptions="StartAndExpand">
-                <Frame BorderColor="Black" HasShadow="True" CornerRadius="35" HeightRequest="50" Padding="0">
-                    <Label Text="+ Add Item" TextColor="Black" FontSize="25" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
-                </Frame>
-                <Frame BorderColor="Black" HasShadow="True" CornerRadius="35" HeightRequest="50" Padding="0">
-                    <Label Text="My Collection" TextColor="Black" FontSize="25" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
-                </Frame>
-                <Frame BorderColor="Black" HasShadow="True" CornerRadius="35" HeightRequest="50" Padding="0">
-                    <Label Text="My Profile" TextColor="Black" FontSize="25" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
-                </Frame>
-                <Frame BorderColor="Black" HasShadow="True" CornerRadius="35" HeightRequest="50" Padding="0">
-                    <Label Text="Request Certificate" TextColor="Black" FontSize="25" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
-                </Frame>
-                <Frame BorderColor="Black" HasShadow="True" CornerRadius="35" HeightRequest="50" Padding="0">
-                    <Label Text="Data Reports" TextColor="Black" FontSize="25" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
-                </Frame>
-            </StackLayout>
-            <Image Source="SplashImg.png" HeightRequest="50" VerticalOptions="End"/>
-            <Frame HasShadow="True" CornerRadius="35" HeightRequest="50" Padding="0" VerticalOptions="End" BackgroundColor="#823E21">
-                <Label Text="View Auctions" TextColor="White" FontSize="25" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
-            </Frame>
-        </StackLayout>-->
+    <StackLayout>
     </StackLayout>
 </ContentPage>
