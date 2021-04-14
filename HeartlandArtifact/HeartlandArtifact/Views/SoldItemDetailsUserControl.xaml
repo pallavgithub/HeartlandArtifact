@@ -1,12 +1,101 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converter="clr-namespace:HeartlandArtifact.Converters"
              x:Class="HeartlandArtifact.Views.SoldItemDetailsUserControl"
              NavigationPage.HasNavigationBar="False"
-             x:Name="SoldItemDetails">
+             x:Name="SoldItemDetails">    
     <ContentView.Content>
         <StackLayout>
-            <Label Text="hello"/>
+            <ScrollView VerticalScrollBarVisibility="Never">
+                <StackLayout Padding="25,5,25,30">
+                    <Label Text="My Item" HorizontalOptions="Center" TextColor="Black" FontSize="22" FontFamily="{StaticResource HelveticaBold}"/>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                        <Label Text="&lt;" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Center" Margin="0,0,0,3" TextColor="Black" TextTransform="Uppercase" FontSize="14"/>
+                        <Label Text="BACK" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Center" TextColor="Black" TextTransform="Uppercase" FontSize="16"/>
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="GoBack_Tapped"/>
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                    <Grid HeightRequest="200" HorizontalOptions="FillAndExpand" VerticalOptions="Start" BackgroundColor="Gray" Margin="0,0,0,20">
+                        <StackLayout>
+                            <CarouselView IndicatorView="indicatorView" HeightRequest="200" ItemsSource="{Binding ItemImagesForCarousel}" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand">
+                                <CarouselView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Image Source="{Binding ImageUrl}" Aspect="Fill"/>
+                                            <Label Text="Sold" TextTransform="Uppercase" TextColor="Green" HorizontalOptions="End" FontFamily="{StaticResource HelveticaRegular}" VerticalOptions="Start" FontSize="30"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CarouselView.ItemTemplate>
+                            </CarouselView>
+                            <IndicatorView x:Name="indicatorView" IndicatorColor="LightGray" SelectedIndicatorColor="Black" HorizontalOptions="Center" Margin="0,-30,0,0"/>
+                        </StackLayout>
+                    </Grid>
+                    <Label Text="{Binding ItemTitle}" HorizontalOptions="Center" TextColor="Black" FontSize="22" FontFamily="{StaticResource HelveticaBold}"/>
+                    <Grid ColumnSpacing="20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Text="Material" Grid.Row="0" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="{Binding ItemMaterial}" Grid.Row="0" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="FoundBy" Grid.Row="1" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="{Binding ItemFoundBy}" Grid.Row="1" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="Ex Collection" Grid.Row="2" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="{Binding ItemExCollection}" Grid.Row="2" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="Perceived Value" Grid.Row="3" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="{Binding ItemPerceivedValue}" Grid.Row="3" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="Cost" Grid.Row="4" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="{Binding ItemCost}" Grid.Row="4" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="Length" Grid.Row="5" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="{Binding ItemLength}" Grid.Row="5" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="Country" Grid.Row="6" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="{Binding ItemCountry}" Grid.Row="6" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="State" Grid.Row="7" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="{Binding ItemState}" Grid.Row="7" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
+                    </Grid>
+                    <Label Text="Notes" TextColor="Black" FontFamily="{StaticResource HelveticaBold}" FontSize="14" Padding="10,10,10,0"/>
+                    <Label Text="{Binding ItemNotes}" TextColor="Black" FontFamily="{StaticResource HelveticaRegular}" FontSize="18" Padding="30,0,0,0"/>
+                    <Grid ColumnSpacing="20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Text="Sold Price ($)" Grid.Row="0" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="{Binding ItemSoldPrice}" Grid.Row="0" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="Cost ($)" Grid.Row="1" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="{Binding ItemCost}" Grid.Row="1" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="Perceived Value ($)" Grid.Row="2" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="{Binding ItemPerceivedValue}" Grid.Row="2" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
+                        <Label Text="Date Sold" Grid.Row="3" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="{Binding ItemSoldDate}" Grid.Row="3" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
+                    </Grid>
+                    <Grid HorizontalOptions="CenterAndExpand" HeightRequest="70" VerticalOptions="End" Margin="0,10,0,0">
+                        <Image Source="Button.png"/>
+                        <Label Text="+ Add Another Item" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,3" FontFamily="{StaticResource HelveticaRegular}" FontSize="20" TextColor="Black" TextTransform="None" BackgroundColor="Transparent"/>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer />
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </StackLayout>
+            </ScrollView>
         </StackLayout>
     </ContentView.Content>
 </ContentView>

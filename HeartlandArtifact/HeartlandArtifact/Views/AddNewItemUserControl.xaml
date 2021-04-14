@@ -108,7 +108,7 @@
                             <Label Text="Perceived Value ($)" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
                             <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-                                <custom:BorderLessEntry Text="{Binding PerceivedValue}" 
+                                <custom:BorderLessEntry Text="{Binding PerceivedValue}" Keyboard="Numeric"
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="16"/>
                             </Frame>
@@ -117,7 +117,7 @@
                             <Label Text="Cost ($)" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
                             <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-                                <custom:BorderLessEntry Text="{Binding Cost}" 
+                                <custom:BorderLessEntry Text="{Binding Cost}" Keyboard="Numeric"
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="16"/>
                             </Frame>
@@ -126,7 +126,7 @@
                             <Label Text="Length (Inches)" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
                             <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-                                <custom:BorderLessEntry Text="{Binding Length}" 
+                                <custom:BorderLessEntry Text="{Binding Length}" Keyboard="Numeric"
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
                                           FontSize="16"/>
                             </Frame>

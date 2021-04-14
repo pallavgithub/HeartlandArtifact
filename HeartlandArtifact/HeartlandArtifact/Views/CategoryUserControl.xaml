@@ -35,7 +35,7 @@
                 </Grid>
             </Grid>
             <Label Text="Category not found." TextColor="Black" FontSize="16" HorizontalOptions="Center" IsVisible="{Binding CategoryNotFoundLblIsVisible}"/>
-            <ListView ItemsSource="{Binding AllCategories}" SelectionMode="None" SeparatorVisibility="None" HasUnevenRows="True">
+            <ListView ItemsSource="{Binding AllCategories}" VerticalScrollBarVisibility="Never" SelectionMode="None" SeparatorVisibility="None" HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

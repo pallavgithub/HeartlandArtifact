@@ -37,7 +37,7 @@
                 </StackLayout>
             </Grid>
             <Label Text="Item not found." TextColor="Black" FontSize="16" HorizontalOptions="Center" IsVisible="{Binding ItemNotFoundLblIsVisible}"/>
-            <ListView ItemsSource="{Binding AllItems}" SelectionMode="None" SeparatorVisibility="None" HasUnevenRows="True">
+            <ListView ItemsSource="{Binding AllItems}" SelectionMode="None" SeparatorVisibility="None" VerticalScrollBarVisibility="Never" HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

@@ -20,6 +20,11 @@ namespace HeartlandArtifact.Views
             {
                 viewModel.MarkAsSoldDetailsIsVisible = false;
             }
+            if (viewModel.AllItems == null)
+            {
+                viewModel.ItemDetailsUserControlIsVisible = false;
+                viewModel.HomeIsVisible = true;
+            }
             else
             {
                 viewModel.DeleteItemIconIsVisible = false;
@@ -52,7 +57,7 @@ namespace HeartlandArtifact.Views
             var _vm = BindingContext as HomePageViewModel;
             if (Date_Picker.Date != null)
             {
-                _vm.SoldDate = Date_Picker.Date.ToString("MM-dd-yyyy");
+                _vm.ItemSoldDate = Date_Picker.Date.ToString("MM-dd-yyyy");
                 _vm.DateLabelIsVisible = true;
             }
             Date_Picker.IsVisible = false;
@@ -61,7 +66,7 @@ namespace HeartlandArtifact.Views
         private void Date_Picker_DateSelected(object sender, DateChangedEventArgs e)
         {
             var _vm = BindingContext as HomePageViewModel;
-            _vm.SoldDate = Date_Picker.Date.ToString("MM-dd-yyyy");
+            _vm.ItemSoldDate = Date_Picker.Date.ToString("MM-dd-yyyy");
             _vm.DateLabelIsVisible = true;
         }
 

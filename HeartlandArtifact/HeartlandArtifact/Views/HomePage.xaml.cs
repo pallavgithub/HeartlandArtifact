@@ -34,6 +34,20 @@ namespace HeartlandArtifact.Views
         protected override bool OnBackButtonPressed()
         {
             var _vm = BindingContext as HomePageViewModel;
+            if (_vm.HomeIsVisible)
+            {
+                var Toast = DependencyService.Get<IMessage>();
+                long currentTime = DateTime.UtcNow.Ticks / TimeSpan.TicksPerMillisecond;
+                if (currentTime - lastPress > 3000)
+                {
+                    Toast.ShortAlert("Press again to exit.");
+                    lastPress = currentTime;
+                }
+                else
+                {
+                    return false;
+                }
+            }
             if (_vm.MyCollectionVisible)
             {
                 _vm.DeleteCollectionPopupIsVisible = false;
@@ -61,8 +75,25 @@ namespace HeartlandArtifact.Views
             }
             if (_vm.ItemDetailsUserControlIsVisible)
             {
-                _vm.ItemDetailsUserControlIsVisible = false;
-                _vm.ItemsUserControlIsVisible = true;
+                if (_vm.MarkAsSoldDetailsIsVisible)
+                {
+                    _vm.MarkAsSoldDetailsIsVisible = false;
+                }
+                if (_vm.AllItems == null)
+                {
+                    _vm.ItemDetailsUserControlIsVisible = false;
+                    _vm.HomeIsVisible = true;                    
+                }
+                else
+                {
+                    _vm.ItemDetailsUserControlIsVisible = false;
+                    _vm.ItemsUserControlIsVisible = true;
+                }
+            }
+            if (_vm.SoldItemDetailsUserControlIsVisible)
+            {
+                _vm.SoldItemDetailsUserControlIsVisible = false;
+                _vm.ItemDetailsUserControlIsVisible = true;
             }
             if (_vm.AddNewItemUserControlIsVisible)
             {
@@ -72,6 +103,7 @@ namespace HeartlandArtifact.Views
                 }
                 else
                 {
+                    _vm.EmptyAddItemForm();
                     _vm.AddNewItemUserControlIsVisible = false;
                     if (_vm.GoBackFromAddItem == "ItemDetailsUserControl")
                     {
@@ -87,24 +119,12 @@ namespace HeartlandArtifact.Views
                     }
                 }
             }
-            else if (_vm.HomeIsVisible)
-            {
-                var Toast = DependencyService.Get<IMessage>();
-                long currentTime = DateTime.UtcNow.Ticks / TimeSpan.TicksPerMillisecond;               
-                if (currentTime - lastPress > 3000)
-                {
-                    Toast.ShortAlert("Press again to exit.");
-                    lastPress = currentTime;
-                }
-                else
-                {
-                    return false;
-                }
-            }
+           
             return true;
         }
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
+            var _vm = BindingContext as HomePageViewModel;
             var item = e.SelectedItem as HomePageMasterMenuItem;
             if (item == null)
                 return;
@@ -115,19 +135,19 @@ namespace HeartlandArtifact.Views
             // Detail = new NavigationPage(page);
             if (item.Title == "Home")
             {
-                (BindingContext as HomePageViewModel).MyCollectionVisible = false;
-                (BindingContext as HomePageViewModel).AddNewItemUserControlIsVisible = false;
-                (BindingContext as HomePageViewModel).CategoryUserControlIsVisible = false;
-                (BindingContext as HomePageViewModel).SoldItemsIsVisible = false;
-                (BindingContext as HomePageViewModel).HomeIsVisible = true;
+                _vm.MyCollectionVisible = false;
+                _vm.AddNewItemUserControlIsVisible = false;
+                _vm.CategoryUserControlIsVisible = false;
+                _vm.SoldItemsIsVisible = false;
+                _vm.HomeIsVisible = true;
             }
             if (item.Title == "Sold Items")
             {
-                //(BindingContext as HomePageViewModel).HomeIsVisible = false;
-                //(BindingContext as HomePageViewModel).SoldItemsIsVisible = true;
+                // _vm.HomeIsVisible = false;
+                // _vm.SoldItemsIsVisible = true;
+                //_vm.GetUserSoldItems();
             }
             IsPresented = false;
-
             MasterPage.ListView.SelectedItem = null;
         }
         private void Menu_Tapped(object sender, EventArgs e)

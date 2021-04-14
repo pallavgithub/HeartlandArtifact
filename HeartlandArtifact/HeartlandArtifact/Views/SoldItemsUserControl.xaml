@@ -1,10 +1,80 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="HeartlandArtifact.Views.SoldItemsUserControl">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:converter="clr-namespace:HeartlandArtifact.Converters"
+             x:Class="HeartlandArtifact.Views.SoldItemsUserControl"
+             x:Name="SoldItems">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converter:InverseBoolConverter x:Key="InverseBoolConverter"></converter:InverseBoolConverter>
+        </ResourceDictionary>
+    </ContentView.Resources>
   <ContentView.Content>
-      <StackLayout>
-          <Label Text="Hello Xamarin.Forms!" />
-      </StackLayout>
+        <StackLayout Padding="20,0,20,0">
+            <Label Text="Sold Items" HorizontalOptions="Center" TextColor="Green" FontSize="22" FontFamily="{StaticResource HelveticaBold}"/>
+            <Grid ColumnSpacing="0" HeightRequest="50" Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                    <Label Text="&lt;" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Center" Margin="0,0,0,3" TextColor="Black" TextTransform="Uppercase" FontSize="14"/>
+                    <Label Text="BACK" FontFamily="{StaticResource HelveticaRegular}" VerticalTextAlignment="Center" TextColor="Black" TextTransform="Uppercase" FontSize="16"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="GoBack_Tapped"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <Grid IsVisible="{Binding DeleteSoldItemIconIsVisible, Converter={StaticResource InverseBoolConverter}}" Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="60">
+                    <Image Source="Button.png"/>
+                    <Label Text="Delete Item" VerticalOptions="Center" FontSize="16" HorizontalOptions="Center" Margin="0,0,0,3" TextColor="Black" TextTransform="Uppercase"/>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="DeleteSoldItemBtn_Tapped"/>
+                    </Grid.GestureRecognizers>
+                </Grid>
+                <Label Text="Search" Grid.Column="2" HorizontalOptions="End" TextColor="Black" FontSize="16"/>
+            </Grid>
+            <Label Text="Item not found." TextColor="Black" FontSize="16" HorizontalOptions="Center" IsVisible="{Binding SoldItemNotFoundLblIsVisible}"/>
+            <ListView ItemsSource="{Binding AllSoldItems}" VerticalScrollBarVisibility="Never" SelectionMode="None" SeparatorVisibility="None" HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout HeightRequest="100" Margin="0,7,0,7">
+                                <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand">
+                                    <StackLayout Margin="0,2,2,2" IsVisible="{Binding BindingContext.DeleteSoldItemIconIsVisible, Source={x:Reference SoldItems}}" VerticalOptions="CenterAndExpand">
+                                        <Image Source="Trash.png" HeightRequest="16" WidthRequest="16" VerticalOptions="FillAndExpand">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer />
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </StackLayout>
+                                    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                        <Frame HasShadow="False" Padding="0" BackgroundColor="Transparent" OutlineColor="LightGray" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                            <Grid VerticalOptions="FillAndExpand">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackLayout Grid.Column="0" BackgroundColor="LightGray">
+                                                    <Image Source="{Binding ImageUrl}" HorizontalOptions="EndAndExpand"/>
+                                                </StackLayout>
+                                                <StackLayout Grid.Column="1" Margin="15,0,0,0" VerticalOptions="Center" Spacing="0">
+                                                    <Label Text="{Binding Title}" TextColor="Black" FontFamily="{StaticResource HelveticaBold}" FontSize="15"/>
+                                                    <Label Text="{Binding Length}" TextColor="Black" FontFamily="{StaticResource HelveticaBold}" FontSize="15"/>
+                                                    <Label Text="{Binding State}" TextColor="Black" FontFamily="{StaticResource HelveticaBold}" FontSize="15"/>
+                                                </StackLayout>
+                                            </Grid>
+                                        </Frame>
+                                    </StackLayout>
+                                </StackLayout>
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer />
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
   </ContentView.Content>
 </ContentView>

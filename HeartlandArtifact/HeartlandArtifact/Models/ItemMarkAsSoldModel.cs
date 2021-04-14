@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace HeartlandArtifact.Models
+﻿namespace HeartlandArtifact.Models
 {
     public class ItemMarkAsSoldModel
     {

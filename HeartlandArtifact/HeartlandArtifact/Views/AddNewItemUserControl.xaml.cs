@@ -16,31 +16,38 @@ namespace HeartlandArtifact.Views
         public AddNewItemUserControl()
         {
             InitializeComponent();
+            //SetImages();
         }
+        //public void SetImages()
+        //{
+        //    try {
+        //        var _vm = BindingContext as HomePageViewModel;
+        //        _vm.newItemImage = pic;
+        //        _vm.newItemImage_one = pic1;
+        //        _vm.newItemImage_two = pic2;
+        //        _vm.newItemImage_three = pic3;
+        //    }
+        //    catch(Exception e)
+        //    {
+
+        //    }
+        //}
         private void GoBack_Tapped(object sender, EventArgs e)
         {
-            var viewModel = BindingContext as HomePageViewModel;
+            var viewModel = BindingContext as HomePageViewModel;          
+
             if (viewModel.AddMultipleItemPhotosIsVisible)
             {
+                pic1.Source = string.Empty;
+                pic2.Source = string.Empty;
+                pic3.Source = string.Empty;
                 viewModel.AddMultipleItemPhotosIsVisible = false;
             }
             else
             {
-                viewModel.CollectionNameForNewItem = string.Empty;
-                viewModel.CategoryNameForNewItem = string.Empty;
-                viewModel.Title = string.Empty;
-                viewModel.Material = string.Empty;
-                viewModel.PerceivedValue = string.Empty;
-                viewModel.Cost = string.Empty;
-                viewModel.FoundBy = string.Empty;
-                viewModel.ExCollection = string.Empty;
-                viewModel.Length = string.Empty;
-                viewModel.Country = string.Empty;
-                viewModel.State = string.Empty;
-                viewModel.Notes = string.Empty;
-                pic.Source = string.Empty;
+                viewModel.EmptyAddItemForm();
                 viewModel.AddNewItemUserControlIsVisible = false;
-                if(viewModel.GoBackFromAddItem== "ItemDetailsUserControl")
+                if (viewModel.GoBackFromAddItem == "ItemDetailsUserControl")
                 {
                     viewModel.ItemDetailsUserControlIsVisible = true;
                 }
@@ -128,9 +135,20 @@ namespace HeartlandArtifact.Views
         }
         private void AddMultiplePhotos_Tapped(object sender, EventArgs e)
         {
-            var ViewModel = BindingContext as HomePageViewModel;
-            var Toast = DependencyService.Get<IMessage>();
-            ViewModel.AddMultipleItemPhotosIsVisible = true;
+            try
+            {
+                var ViewModel = BindingContext as HomePageViewModel;
+                ViewModel.newItemImage = pic;
+                ViewModel.newItemImage_one = pic1;
+                ViewModel.newItemImage_two = pic2;
+                ViewModel.newItemImage_three = pic3;
+                var Toast = DependencyService.Get<IMessage>();
+                ViewModel.AddMultipleItemPhotosIsVisible = true;
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
         private async void AddNewPhoto_Tapped(object sender, EventArgs e)
         {

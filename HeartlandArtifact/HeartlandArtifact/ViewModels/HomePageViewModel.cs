@@ -20,6 +20,10 @@ namespace HeartlandArtifact.ViewModels
 {
     public class HomePageViewModel : ViewModelBase
     {
+        public Image newItemImage = new Image();
+        public Image newItemImage_one = new Image();
+        public Image newItemImage_two = new Image();
+        public Image newItemImage_three = new Image();
         private string _userName;
         public string UserName
         {
@@ -31,7 +35,7 @@ namespace HeartlandArtifact.ViewModels
         {
             get { return _addNewItemUserControlIsVisible; }
             set { SetProperty(ref _addNewItemUserControlIsVisible, value); }
-        } 
+        }
         private bool _soldItemDetailsUserControlIsVisible;
         public bool SoldItemDetailsUserControlIsVisible
         {
@@ -134,6 +138,12 @@ namespace HeartlandArtifact.ViewModels
             get { return _notFoundLblIsVisible; }
             set { SetProperty(ref _notFoundLblIsVisible, value); }
         }
+        private bool _soldItemNotFoundLblIsVisible;
+        public bool SoldItemNotFoundLblIsVisible
+        {
+            get { return _soldItemNotFoundLblIsVisible; }
+            set { SetProperty(ref _soldItemNotFoundLblIsVisible, value); }
+        }
         private bool _categoryNotFoundLblIsVisible;
         public bool CategoryNotFoundLblIsVisible
         {
@@ -157,6 +167,12 @@ namespace HeartlandArtifact.ViewModels
         {
             get { return _deleteItemIconIsVisible; }
             set { SetProperty(ref _deleteItemIconIsVisible, value); }
+        }
+        private bool _deleteSoldItemIconIsVisible;
+        public bool DeleteSoldItemIconIsVisible
+        {
+            get { return _deleteSoldItemIconIsVisible; }
+            set { SetProperty(ref _deleteSoldItemIconIsVisible, value); }
         }
         private bool _editCategoryPopupIsVisible;
         public bool EditCategoryPopupIsVisible
@@ -193,7 +209,7 @@ namespace HeartlandArtifact.ViewModels
         {
             get { return _markAsSoldDetailsIsVisible; }
             set { SetProperty(ref _markAsSoldDetailsIsVisible, value); }
-        }   
+        }
         private bool _dateLabelIsVisible;
         public bool DateLabelIsVisible
         {
@@ -311,10 +327,10 @@ namespace HeartlandArtifact.ViewModels
             get { return _itemImageSource; }
             set { SetProperty(ref _itemImageSource, value); }
         }
-       
+
 
         // Item Properties
-       
+
         private string _itemTitle;
         public string ItemTitle
         {
@@ -375,17 +391,17 @@ namespace HeartlandArtifact.ViewModels
             get { return _itemNotes; }
             set { SetProperty(ref _itemNotes, value); }
         }
-        private string _soldPrice;
-        public string SoldPrice
+        private string _itemSoldPrice;
+        public string ItemSoldPrice
         {
-            get { return _soldPrice; }
-            set { SetProperty(ref _soldPrice, value); }
+            get { return _itemSoldPrice; }
+            set { SetProperty(ref _itemSoldPrice, value); }
         }
-        private string _soldDate;
-        public string SoldDate
+        private string _itemSoldDate;
+        public string ItemSoldDate
         {
-            get { return _soldDate; }
-            set { SetProperty(ref _soldDate, value); }
+            get { return _itemSoldDate; }
+            set { SetProperty(ref _itemSoldDate, value); }
         }
         private ObservableCollection<CategoryModel> _allUserCategories;
         public ObservableCollection<CategoryModel> AllUserCategories
@@ -428,6 +444,12 @@ namespace HeartlandArtifact.ViewModels
         {
             get { return _itemImagesForCarousel; }
             set { SetProperty(ref _itemImagesForCarousel, value); }
+        }
+        private ObservableCollection<ItemMarkAsSoldModel> _allSoldItems;
+        public ObservableCollection<ItemMarkAsSoldModel> AllSoldItems
+        {
+            get { return _allSoldItems; }
+            set { SetProperty(ref _allSoldItems, value); }
         }
         public DelegateCommand LogoutCommand { get; set; }
         public DelegateCommand EditCollectionCommand { get; set; }
@@ -945,19 +967,8 @@ namespace HeartlandArtifact.ViewModels
                     GetItemDetailsById(response.data.item.ItemId);
                     ItemDetailsUserControlIsVisible = true;
                     AddNewItemUserControlIsVisible = false;
-                    CollectionNameForNewItem = string.Empty;
-                    CategoryNameForNewItem = string.Empty;
-                    Title = string.Empty;
-                    Material = string.Empty;
-                    PerceivedValue = string.Empty;
-                    Cost = string.Empty;
-                    FoundBy = string.Empty;
-                    ExCollection = string.Empty;
-                    Length = string.Empty;
-                    Country = string.Empty;
-                    State = string.Empty;
-                    Notes = string.Empty;
-                    ItemImageSource = string.Empty;
+                    EmptyAddItemForm();
+                    Base64ItemImagesList = new List<string>();
                 }
                 else
                 {
@@ -980,7 +991,7 @@ namespace HeartlandArtifact.ViewModels
                     var Item = await new ApiData().GetData<ApiItemModel>("Artifact/GeItemDetailByItemId?itemId=" + ItemID, true);
                     if (Item != null)
                     {
-                        var ItemDetails = Item.data;                      
+                        var ItemDetails = Item.data;
                         ItemId = ItemDetails.item.ItemId;
                         ItemTitle = ItemDetails.item.Title ?? "";
                         ItemMaterial = ItemDetails.item.Material ?? "";
@@ -1029,40 +1040,95 @@ namespace HeartlandArtifact.ViewModels
         public async void ItemMarkAsSold()
         {
             var Toast = DependencyService.Get<IMessage>();
-            if (string.IsNullOrEmpty(SoldPrice))
+            if (string.IsNullOrEmpty(ItemSoldPrice))
             {
                 Toast.LongAlert("Please enter sold price."); return;
             }
-            if (string.IsNullOrEmpty(SoldDate))
+            if (string.IsNullOrEmpty(ItemSoldDate))
             {
                 Toast.LongAlert("Please enter sold date."); return;
             }
             else
             {
-                if (ItemId > 0)
+                try
                 {
-                    IsBusy = true;
-                    MultipartFormDataContent form = new MultipartFormDataContent();
-                    form.Add(new StringContent("0"), "Id");
-                    form.Add(new StringContent(ItemId.ToString()), "ItemId");
-                    form.Add(new StringContent(PerceivedValue ?? ""), "PerceivedValue");
-                    form.Add(new StringContent(Cost ?? ""), "Cost");
-                    form.Add(new StringContent(SoldPrice), "SoldPrice");
-                    form.Add(new StringContent(SoldDate), "SoldDate");
-                    var response = await new ApiData().PostFormData<ItemMarkAsSoldModel>("Artifact/MarkItemAsSold", form, true);
-                    if (response != null && response.data != null)
+                    if (ItemId > 0)
                     {
-                        Toast.LongAlert(response.message);
+                        IsBusy = true;
+                        MultipartFormDataContent form = new MultipartFormDataContent();
+                        form.Add(new StringContent("0"), "Id");
+                        form.Add(new StringContent(ItemId.ToString()), "ItemId");
+                        form.Add(new StringContent(ItemPerceivedValue ?? ""), "PerceivedValue");
+                        form.Add(new StringContent(ItemCost ?? ""), "Cost");
+                        form.Add(new StringContent(ItemSoldPrice), "SoldPrice");
+                        form.Add(new StringContent(ItemSoldDate), "SoldDate");
+                        var response = await new ApiData().PostFormData<ItemMarkAsSoldModel>("Artifact/MarkItemAsSold", form, true);
+                        if (response != null && response.data != null)
+                        {
+                            Toast.LongAlert(response.message);
+                            MarkAsSoldDetailsIsVisible = false;
+                            ItemDetailsUserControlIsVisible = false;
+                            SoldItemDetailsUserControlIsVisible = true;
+                            //GetSoldItemDetailsById();
+                        }
+                        else
+                        {
+                            Toast.LongAlert(response.message);
+                        }
+                        IsBusy = false;
+                    }
+                }
+                catch (Exception e)
+                {
 
-                       // SoldItemDetailsUserControlIsVisible = true;
-                    }
-                    else
-                    {
-                        Toast.LongAlert(response.message);
-                    }
-                    IsBusy = false;
                 }
             }
+        }
+        public void GetSoldItemDetailsById()
+        {
+
+        }
+        public async void GetUserSoldItems()
+        {
+            try
+            {
+                IsBusy = true;
+                var UserId = Application.Current.Properties["LogedInUserId"];
+                var response = await new ApiData().GetData<List<ItemMarkAsSoldModel>>("Artifact/GetUserSoldItems?userId=" + UserId, true);
+                if (response != null)
+                {
+                    AllSoldItems = new ObservableCollection<ItemMarkAsSoldModel>(response.data);
+                }
+                SoldItemNotFoundLblIsVisible = AllSoldItems.Count > 0 ? false : true;
+                IsBusy = false;
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+        public void EmptyAddItemForm()
+        {
+            newItemImage.Source = string.Empty;
+            newItemImage_one.Source = string.Empty;
+            newItemImage_two.Source = string.Empty;
+            newItemImage_three.Source = string.Empty;
+            ItemImageSource = string.Empty;
+            CollectionIdForNewItem = 0;
+            CategoryIdForNewItem = 0;
+            CollectionNameForNewItem = string.Empty;
+            CategoryNameForNewItem = string.Empty;
+            Title = string.Empty;
+            Material = string.Empty;
+            PerceivedValue = string.Empty;
+            Cost = string.Empty;
+            FoundBy = string.Empty;
+            ExCollection = string.Empty;
+            Length = string.Empty;
+            Country = string.Empty;
+            State = string.Empty;
+            Notes = string.Empty;
+            Base64ItemImagesList = new List<string>();
         }
     }
 }
