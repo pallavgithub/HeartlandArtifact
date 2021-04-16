@@ -699,11 +699,6 @@ namespace HeartlandArtifact.ViewModels
         public async void CreateNewCategory()
         {
             var Toast = DependencyService.Get<IMessage>();
-            //if (string.IsNullOrEmpty(NewCategoryName))
-            //{
-            //    Toast.LongAlert("Please enter a category name.");
-            //    return;
-            //}
             if (NewCategoryName.Length == 0 || NewCategoryName.Length > 30)
             {
                 Toast.LongAlert("Category name must be between 1 to 30 characters long.");
@@ -725,6 +720,10 @@ namespace HeartlandArtifact.ViewModels
                     if (response != null && response.data != null)
                     {
                         AllCategories.Insert(0, response.data);
+                    }
+                    else if (response.status == "404")
+                    {
+                        Toast.LongAlert(response.message);
                     }
                     else
                     {
@@ -750,11 +749,6 @@ namespace HeartlandArtifact.ViewModels
         public async void UpdateCollectionName()
         {
             var Toast = DependencyService.Get<IMessage>();
-            //if (string.IsNullOrEmpty(NewCollectionName))
-            //{
-            //    Toast.LongAlert("Please enter a collection name.");
-            //    return;
-            //}
             if (NewCollectionName.Length == 0 || NewCollectionName.Length > 30)
             {
                 Toast.LongAlert("Collection name must be between 1 to 30 characters long.");
@@ -779,7 +773,11 @@ namespace HeartlandArtifact.ViewModels
                         AllCollections.Remove(CollectionData);
                         AllCollections.Insert(0, response.data);
                         AllCollections = new ObservableCollection<CollectionModel>(AllCollections);
-                        // GetUserCollections();
+                    }
+                    else if (response.status == "404")
+                    {
+                        Toast.LongAlert(response.message);
+                        GetUserCollections();
                     }
                     else
                     {
@@ -800,11 +798,6 @@ namespace HeartlandArtifact.ViewModels
         public async void UpdateCategoryName()
         {
             var Toast = DependencyService.Get<IMessage>();
-            //if (string.IsNullOrEmpty(NewCategoryName))
-            //{
-            //    Toast.LongAlert("Please enter a category name.");
-            //    return;
-            //}
             if (NewCategoryName.Length == 0 || NewCategoryName.Length > 30)
             {
                 Toast.LongAlert("Category name must be between 1 to 30 characters long.");
@@ -831,6 +824,11 @@ namespace HeartlandArtifact.ViewModels
                         AllCategories.Insert(0, response.data);
                         AllCategories = new ObservableCollection<CategoryModel>(AllCategories);
                     }
+                    else if (response.status == "404")
+                    {
+                        Toast.LongAlert(response.message);
+                        GetUserCategories(CollectionData);
+                    }
                     else
                     {
                         Toast.LongAlert(response.message);
@@ -847,30 +845,47 @@ namespace HeartlandArtifact.ViewModels
         }
         public async void DeleteCollection()
         {
+            var Toast = DependencyService.Get<IMessage>();
             IsEditIconVisible = false;
             IsBusy = true;
             var response = await new ApiData().DeleteData<string>("Collections/DeleteCollectionById?collectionId=" + CollectionData.CollectionId, true);
             if (response != null)
             {
-                AllCollections.Remove(CollectionData);
-                GetUserCollections();
-            }
-            NotFoundLblIsVisible = AllCollections.Count > 0 ? false : true;
+                if (response.status == "success")
+                {
+                    AllCollections.Remove(CollectionData);
+                    GetUserCollections();
+                    NotFoundLblIsVisible = AllCollections.Count > 0 ? false : true;
+                }
+                else if (response.status == "404")
+                {
+                    Toast.LongAlert(response.message);
+                    GetUserCollections();
+                }
+            }            
             DeleteCollectionPopupIsVisible = false;
             IsBusy = false;
         }
         public async void DeleteCategory()
         {
+            var Toast = DependencyService.Get<IMessage>();
             IsEditCategoryIconVisible = false;
             IsBusy = true;
             var response = await new ApiData().DeleteData<string>("Category/DeleteCategoryById?categoryId=" + CategoryData.CategoryId, true);
             if (response != null)
             {
-                AllCategories.Remove(CategoryData);
-                AllCategories = new ObservableCollection<CategoryModel>(AllCategories);
-                //RefreshCategoryList();
+                if (response.status == "success")
+                {
+                    AllCategories.Remove(CategoryData);
+                    AllCategories = new ObservableCollection<CategoryModel>(AllCategories);
+                    CategoryNotFoundLblIsVisible = AllCategories.Count > 0 ? false : true;
+                }
+                else if (response.status == "404")
+                {
+                    Toast.LongAlert(response.message);
+                    GetUserCategories(CollectionData);
+                }
             }
-            CategoryNotFoundLblIsVisible = AllCategories.Count > 0 ? false : true;
             DeleteCategoryPopupIsVisible = !DeleteCategoryPopupIsVisible;
             IsBusy = false;
         }
@@ -1020,15 +1035,24 @@ namespace HeartlandArtifact.ViewModels
         }
         public async void DeleteItem()
         {
+            var Toast = DependencyService.Get<IMessage>();
             DeleteItemIconIsVisible = false;
             IsBusy = true;
             var response = await new ApiData().DeleteData<string>("Artifact/DeleteItemById?itemId=" + ItemData.ItemId, true);
             if (response != null)
             {
-                AllItems.Remove(ItemData);
-                AllItems = new ObservableCollection<MyItemModel>(AllItems);
+                if (response.status == "success")
+                {
+                    AllItems.Remove(ItemData);
+                    AllItems = new ObservableCollection<MyItemModel>(AllItems);
+                    ItemNotFoundLblIsVisible = AllItems.Count > 0 ? false : true;
+                }
+                else if (response.status == "404")
+                {
+                    Toast.LongAlert(response.message);
+                    GetUserItems(CategoryData);
+                }
             }
-            ItemNotFoundLblIsVisible = AllItems.Count > 0 ? false : true;
             DeleteItemPopupIsVisible = !DeleteItemPopupIsVisible;
             IsBusy = false;
         }
