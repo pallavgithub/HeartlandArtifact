@@ -1,4 +1,5 @@
-﻿using HeartlandArtifact.ViewModels;
+﻿using HeartlandArtifact.Models;
+using HeartlandArtifact.ViewModels;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -30,6 +31,27 @@ namespace HeartlandArtifact.Views
                 _vm.SoldItemsIsVisible = false;
                 _vm.HomeIsVisible = true;
             }
+        }
+        private void SoldItem_Tapped(object sender, EventArgs e)
+        {
+            var selectedItem = ((TappedEventArgs)e).Parameter as MySoldItemModel;
+            var viewModel = BindingContext as HomePageViewModel;
+            viewModel.GoBackFromSoldItemDetail = "SoldItems";
+            viewModel.GetSoldItemDetailsById(selectedItem.Id);
+            if (viewModel.DeleteSoldItemIconIsVisible)
+            {
+                viewModel.DeleteSoldItemIconIsVisible = false;
+            }
+            viewModel.SoldItemDetailsUserControlIsVisible = true;
+            viewModel.SoldItemsIsVisible = false;
+        }
+        private void DeleteIcon_Tapped(object sender, EventArgs e)
+        {
+            var selectedItem = ((TappedEventArgs)e).Parameter as MySoldItemModel;
+            var viewModel = BindingContext as HomePageViewModel;
+            viewModel.SoldItemData = new MySoldItemModel();
+            viewModel.SoldItemData = selectedItem;
+            viewModel.DeleteSoldItemPopupIsVisible = true;
         }
     }
 }

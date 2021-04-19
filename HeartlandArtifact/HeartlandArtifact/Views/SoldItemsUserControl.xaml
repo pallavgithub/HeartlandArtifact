@@ -44,7 +44,7 @@
                                     <StackLayout Margin="0,2,2,2" IsVisible="{Binding BindingContext.DeleteSoldItemIconIsVisible, Source={x:Reference SoldItems}}" VerticalOptions="CenterAndExpand">
                                         <Image Source="Trash.png" HeightRequest="16" WidthRequest="16" VerticalOptions="FillAndExpand">
                                             <Image.GestureRecognizers>
-                                                <TapGestureRecognizer />
+                                                <TapGestureRecognizer Tapped="DeleteIcon_Tapped" CommandParameter="{Binding .}"/>
                                             </Image.GestureRecognizers>
                                         </Image>
                                     </StackLayout>
@@ -68,7 +68,7 @@
                                     </StackLayout>
                                 </StackLayout>
                                 <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer />
+                                    <TapGestureRecognizer Tapped="SoldItem_Tapped" CommandParameter="{Binding .}"/>
                                 </StackLayout.GestureRecognizers>
                             </StackLayout>
                         </ViewCell>

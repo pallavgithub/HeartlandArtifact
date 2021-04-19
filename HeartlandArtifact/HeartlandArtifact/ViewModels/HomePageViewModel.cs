@@ -198,6 +198,12 @@ namespace HeartlandArtifact.ViewModels
             get { return _deleteItemPopupIsVisible; }
             set { SetProperty(ref _deleteItemPopupIsVisible, value); }
         }
+        private bool _deleteSoldItemPopupIsVisible;
+        public bool DeleteSoldItemPopupIsVisible
+        {
+            get { return _deleteSoldItemPopupIsVisible; }
+            set { SetProperty(ref _deleteSoldItemPopupIsVisible, value); }
+        }
         private bool _addMultipleItemPhotosIsVisible;
         public bool AddMultipleItemPhotosIsVisible
         {
@@ -445,8 +451,8 @@ namespace HeartlandArtifact.ViewModels
             get { return _itemImagesForCarousel; }
             set { SetProperty(ref _itemImagesForCarousel, value); }
         }
-        private ObservableCollection<ItemMarkAsSoldModel> _allSoldItems;
-        public ObservableCollection<ItemMarkAsSoldModel> AllSoldItems
+        private ObservableCollection<MySoldItemModel> _allSoldItems;
+        public ObservableCollection<MySoldItemModel> AllSoldItems
         {
             get { return _allSoldItems; }
             set { SetProperty(ref _allSoldItems, value); }
@@ -472,17 +478,21 @@ namespace HeartlandArtifact.ViewModels
         public DelegateCommand ConfirmLogoutCommand { get; set; }
         public DelegateCommand DeleteItemCommand { get; set; }
         public DelegateCommand CancelDeleteItemCommand { get; set; }
+        public DelegateCommand DeleteSoldItemCommand { get; set; }
+        public DelegateCommand CancelDeleteSoldItemCommand { get; set; }
         public DelegateCommand AddNewItemCommand { get; set; }
         public INavigationService _nav;
         public CollectionModel CollectionData { get; set; }
         public CategoryModel CategoryData { get; set; }
         public MyItemModel ItemData { get; set; }
+        public MySoldItemModel SoldItemData { get; set; }
         public int ItemId { get; set; }
         private readonly IGoogleManager _googleManager;
         private readonly IFacebookManager _facebookManager;
         public Stream ImageStream { get; set; }
         public List<string> Base64ItemImagesList { get; set; }
         public string GoBackFromAddItem { get; set; }
+        public string GoBackFromSoldItemDetail { get; set; }
         public HomePageViewModel(INavigationService navigationService) : base(navigationService)
         {
             _nav = navigationService;
@@ -515,6 +525,8 @@ namespace HeartlandArtifact.ViewModels
             AddNewItemCommand = new DelegateCommand(AddNewItem);
             DeleteItemCommand = new DelegateCommand(DeleteItem);
             CancelDeleteItemCommand = new DelegateCommand(CloseDeleteItemPopup);
+            DeleteSoldItemCommand = new DelegateCommand(DeleteSoldItem);
+            CancelDeleteSoldItemCommand = new DelegateCommand(CloseDeleteSoldItemPopup);
         }
         public async void Logout()
         {
@@ -724,6 +736,9 @@ namespace HeartlandArtifact.ViewModels
                     else if (response.status == "404")
                     {
                         Toast.LongAlert(response.message);
+                        GetUserCollections();
+                        CategoryUserControlIsVisible = false;
+                        HomeIsVisible = true;
                     }
                     else
                     {
@@ -862,7 +877,7 @@ namespace HeartlandArtifact.ViewModels
                     Toast.LongAlert(response.message);
                     GetUserCollections();
                 }
-            }            
+            }
             DeleteCollectionPopupIsVisible = false;
             IsBusy = false;
         }
@@ -1056,10 +1071,45 @@ namespace HeartlandArtifact.ViewModels
             DeleteItemPopupIsVisible = !DeleteItemPopupIsVisible;
             IsBusy = false;
         }
+        public async void DeleteSoldItem()
+        {
+            var Toast = DependencyService.Get<IMessage>();
+            IsBusy = true;
+            DeleteItemIconIsVisible = false;
+            try
+            {
+                var response = await new ApiData().DeleteData<string>("Artifact/DeleteSoldItemById?Id=" + SoldItemData.Id, true);
+                if (response != null)
+                {
+                    if (response.status == "success")
+                    {
+                        AllSoldItems.Remove(SoldItemData);
+                        AllSoldItems = new ObservableCollection<MySoldItemModel>(AllSoldItems);
+                        SoldItemNotFoundLblIsVisible = AllSoldItems.Count > 0 ? false : true;
+                    }
+                    else if (response.status == "404")
+                    {
+                        Toast.LongAlert(response.message);
+                        GetUserSoldItems();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+            DeleteSoldItemPopupIsVisible = !DeleteSoldItemPopupIsVisible;
+            IsBusy = false;
+        }
         public void CloseDeleteItemPopup()
         {
             DeleteItemIconIsVisible = false;
             DeleteItemPopupIsVisible = !DeleteItemPopupIsVisible;
+        }
+        public void CloseDeleteSoldItemPopup()
+        {
+            DeleteSoldItemIconIsVisible = false;
+            DeleteSoldItemPopupIsVisible = !DeleteSoldItemPopupIsVisible;
         }
         public async void ItemMarkAsSold()
         {
@@ -1092,8 +1142,9 @@ namespace HeartlandArtifact.ViewModels
                             Toast.LongAlert(response.message);
                             MarkAsSoldDetailsIsVisible = false;
                             ItemDetailsUserControlIsVisible = false;
+                            GoBackFromSoldItemDetail = "ItemDetails";
                             SoldItemDetailsUserControlIsVisible = true;
-                            //GetSoldItemDetailsById();
+                            GetSoldItemDetailsById(response.data.Id);
                         }
                         else
                         {
@@ -1108,20 +1159,82 @@ namespace HeartlandArtifact.ViewModels
                 }
             }
         }
-        public void GetSoldItemDetailsById()
+        public async void GetSoldItemDetailsById(int Id)
         {
+            try
+            {
+                if (Id != 0)
+                {
+                    IsBusy = true;
+                    var SoldItem = await new ApiData().GetData<ApiSoldItemModel>("Artifact/GetSoldItemFullDetailById?id=" + Id, true);
+                    if (SoldItem != null)
+                    {
+                        var ItemDetails = SoldItem.data.ItemDetail;
+                        ItemId = ItemDetails.item.ItemId;
+                        ItemTitle = ItemDetails.item.Title ?? "";
+                        ItemMaterial = ItemDetails.item.Material ?? "";
+                        ItemFoundBy = ItemDetails.item.FoundBy ?? "";
+                        ItemExCollection = ItemDetails.item.ExCollection ?? "";
+                        ItemPerceivedValue = ItemDetails.item.PerceivedValue ?? "";
+                        ItemCost = ItemDetails.item.Cost ?? "";
+                        ItemLength = ItemDetails.item.Length ?? "";
+                        ItemCountry = ItemDetails.item.Country ?? "";
+                        ItemState = ItemDetails.item.State ?? "";
+                        ItemNotes = ItemDetails.item.Notes ?? "";
+                        ItemImagesForCarousel = new ObservableCollection<MyItemModel>();
+                        if (ItemDetails.images.Count > 0)
+                            foreach (var i in ItemDetails.images)
+                            {
+                                ItemImagesForCarousel.Add(new MyItemModel { ImageUrl = i });
+                            }
+                        ItemSoldDate = SoldItem.data.SoldItemDetail == null ? "" : SoldItem.data.SoldItemDetail.SoldDate;
+                        ItemSoldPrice = SoldItem.data.SoldItemDetail == null ? "" : SoldItem.data.SoldItemDetail.SoldPrice.ToString();
+                    }
+                    IsBusy = false;
+                }
+            }
+            catch (Exception e)
+            {
 
+            }
         }
         public async void GetUserSoldItems()
         {
             try
             {
                 IsBusy = true;
+                AllSoldItems = new ObservableCollection<MySoldItemModel>();
                 var UserId = Application.Current.Properties["LogedInUserId"];
-                var response = await new ApiData().GetData<List<ItemMarkAsSoldModel>>("Artifact/GetUserSoldItems?userId=" + UserId, true);
-                if (response != null)
+                var response = await new ApiData().GetData<List<ApiSoldItemModel>>("Artifact/GetUserSoldItems?userId=" + UserId, true);
+                if (response != null && response.data != null)
                 {
-                    AllSoldItems = new ObservableCollection<ItemMarkAsSoldModel>(response.data);
+                    foreach (var soldItem in response.data)
+                    {
+                        var data = new MySoldItemModel();
+                        data.Id = soldItem.SoldItemDetail.Id;
+                        data.ItemId = soldItem.ItemDetail.item.ItemId;
+                        data.CollectionId = soldItem.ItemDetail.item.CollectionId;
+                        data.CategoryId = soldItem.ItemDetail.item.CategoryId;
+                        data.Title = soldItem.ItemDetail.item.Title;
+                        data.Material = soldItem.ItemDetail.item.Material ?? "";
+                        data.IsItemSold = soldItem.ItemDetail.item.IsItemSold;
+                        data.FoundBy = soldItem.ItemDetail.item.FoundBy ?? "";
+                        data.ExCollection = soldItem.ItemDetail.item.ExCollection ?? "";
+                        data.PerceivedValue = soldItem.ItemDetail.item.PerceivedValue ?? "";
+                        data.Cost = soldItem.ItemDetail.item.Cost ?? "";
+                        data.Length = soldItem.ItemDetail.item.Length ?? "";
+                        data.Country = soldItem.ItemDetail.item.Country ?? "";
+                        data.State = soldItem.ItemDetail.item.State ?? "";
+                        data.Notes = soldItem.ItemDetail.item.Notes ?? "";
+                        data.CreateDate = soldItem.ItemDetail.item.CreateDate;
+                        data.LastModDate = soldItem.ItemDetail.item.LastModDate;
+                        data.CreatorId = soldItem.ItemDetail.item.CreatorId;
+                        data.ModifierId = soldItem.ItemDetail.item.ModifierId;
+                        data.ImageUrl = soldItem.ItemDetail.images.Count > 0 ? soldItem.ItemDetail.images[0] : "";
+                        data.SoldDate = soldItem.SoldItemDetail.SoldDate;
+                        data.SoldPrice = soldItem.SoldItemDetail.SoldPrice;
+                        AllSoldItems.Add(data);
+                    }
                 }
                 SoldItemNotFoundLblIsVisible = AllSoldItems.Count > 0 ? false : true;
                 IsBusy = false;

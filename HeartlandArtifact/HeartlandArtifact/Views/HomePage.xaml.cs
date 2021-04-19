@@ -82,7 +82,7 @@ namespace HeartlandArtifact.Views
                 if (_vm.AllItems == null)
                 {
                     _vm.ItemDetailsUserControlIsVisible = false;
-                    _vm.HomeIsVisible = true;                    
+                    _vm.HomeIsVisible = true;
                 }
                 else
                 {
@@ -93,7 +93,10 @@ namespace HeartlandArtifact.Views
             if (_vm.SoldItemDetailsUserControlIsVisible)
             {
                 _vm.SoldItemDetailsUserControlIsVisible = false;
-                _vm.ItemDetailsUserControlIsVisible = true;
+                if (_vm.GoBackFromSoldItemDetail == "SoldItems")
+                    _vm.SoldItemsIsVisible = true;
+                if (_vm.GoBackFromSoldItemDetail == "ItemDetails")
+                    _vm.ItemDetailsUserControlIsVisible = true;
             }
             if (_vm.AddNewItemUserControlIsVisible)
             {
@@ -119,7 +122,17 @@ namespace HeartlandArtifact.Views
                     }
                 }
             }
-           
+            if (_vm.SoldItemsIsVisible)
+            {
+                if (_vm.DeleteSoldItemIconIsVisible)
+                    _vm.DeleteSoldItemIconIsVisible = false;
+                else
+                {
+                    _vm.SoldItemsIsVisible = false;
+                    _vm.HomeIsVisible = true;
+                }
+            }
+
             return true;
         }
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -143,9 +156,9 @@ namespace HeartlandArtifact.Views
             }
             if (item.Title == "Sold Items")
             {
-                // _vm.HomeIsVisible = false;
-                // _vm.SoldItemsIsVisible = true;
-                //_vm.GetUserSoldItems();
+                _vm.HomeIsVisible = false;
+                _vm.SoldItemsIsVisible = true;
+                _vm.GetUserSoldItems();
             }
             IsPresented = false;
             MasterPage.ListView.SelectedItem = null;

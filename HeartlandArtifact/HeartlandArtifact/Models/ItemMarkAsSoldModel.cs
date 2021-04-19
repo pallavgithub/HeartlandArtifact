@@ -9,4 +9,10 @@
         public int SoldPrice { get; set; }
         public string SoldDate { get; set; }
     }
+    public class ApiSoldItemModel
+    {
+        public ItemMarkAsSoldModel SoldItemDetail { get; set; }
+        public ApiItemModel ItemDetail { get; set; }
+    }
+
 }

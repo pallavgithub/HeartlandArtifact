@@ -16,8 +16,10 @@ namespace HeartlandArtifact.Views
         {
             var _vm = BindingContext as HomePageViewModel;
             _vm.SoldItemDetailsUserControlIsVisible = false;
-            // _vm.SoldItemsIsVisible = true;
-            _vm.ItemDetailsUserControlIsVisible = true;
+            if (_vm.GoBackFromSoldItemDetail == "SoldItems")
+                _vm.SoldItemsIsVisible = true;
+            if (_vm.GoBackFromSoldItemDetail == "ItemDetails")
+                _vm.ItemDetailsUserControlIsVisible = true;
         }
     }
 }
