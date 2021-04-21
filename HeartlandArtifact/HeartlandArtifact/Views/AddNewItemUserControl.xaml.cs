@@ -5,6 +5,7 @@ using Plugin.Media;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -58,6 +59,10 @@ namespace HeartlandArtifact.Views
                 else if (viewModel.GoBackFromAddItem == "HomeUserControl")
                 {
                     viewModel.HomeIsVisible = true;
+                } 
+                else if (viewModel.GoBackFromAddItem == "EditItem")
+                {
+                    viewModel.ItemDetailsUserControlIsVisible = true;
                 }
             }
         }
@@ -112,6 +117,7 @@ namespace HeartlandArtifact.Views
         }
         public void GetListForDropdown(CollectionModel selectedCollection)
         {
+            var UserId = Application.Current.Properties["LogedInUserId"];
             var viewModel = BindingContext as HomePageViewModel;
             try
             {
@@ -121,12 +127,19 @@ namespace HeartlandArtifact.Views
                     foreach (var item in viewModel.AllUserCategories)
                     {
                         if (item.CollectionId == selectedCollection.CollectionId)
-                            viewModel.CategoryList.Add(item);
+                            viewModel.CategoryList.Add(item);                        
                     }
-                    viewModel.CategoryList = new ObservableCollection<CategoryModel>(viewModel.CategoryList);
+                    if (!viewModel.CategoryList.Contains(viewModel.CategoryList.Where(i => i.CategoryName == "Default").FirstOrDefault()))
+                    {
+                        viewModel.CategoryList.Add(new CategoryModel { CollectionId = 0, CategoryName = "Default", CreatorId = (int)UserId, ModifierId = (int)UserId });
+                    }
+                    //viewModel.CategoryList = new ObservableCollection<CategoryModel>(viewModel.CategoryList);
                 }
-
-                //CategoryDropdownList.ItemsSource = viewModel.CategoryList;
+                else
+                {
+                    viewModel.CategoryList.Add(new CategoryModel { CollectionId = 0, CategoryName = "Default", CreatorId = (int)UserId, ModifierId = (int)UserId });
+                }
+                viewModel.CategoryList = new ObservableCollection<CategoryModel>(viewModel.CategoryList);
             }
             catch (Exception e)
             {
@@ -220,11 +233,11 @@ namespace HeartlandArtifact.Views
             }
             else
             {
-                if (_vm.CollectionIdForNewItem == 0)
+                if (string.IsNullOrEmpty(_vm.CollectionNameForNewItem))
                 {
                     Toast.LongAlert("Please select collection name."); return;
                 }
-                if (_vm.CategoryIdForNewItem == 0)
+                if (string.IsNullOrEmpty(_vm.CategoryNameForNewItem))
                 {
                     Toast.LongAlert("Please select category name."); return;
                 }

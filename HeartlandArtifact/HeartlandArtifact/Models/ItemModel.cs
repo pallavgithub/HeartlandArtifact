@@ -18,7 +18,7 @@ namespace HeartlandArtifact.Models
         public bool IsItemSold { get; set; }
         public string FoundBy { get; set; }
         public string ExCollection { get; set; }
-        public string PerceivedValue { get; set; }
+        public string PercievedValue { get; set; }
         public string Cost { get; set; }
         public string Length { get; set; }
         public string Country { get; set; }

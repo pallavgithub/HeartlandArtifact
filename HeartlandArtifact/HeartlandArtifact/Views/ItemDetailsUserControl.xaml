@@ -31,7 +31,7 @@
                             <Image Source="Button.png"/>
                             <Label Text="Edit Item" VerticalOptions="Center" FontSize="16" HorizontalOptions="Center" Margin="0,0,0,3" TextColor="Black" TextTransform="Uppercase"/>
                             <Grid.GestureRecognizers>
-                                <TapGestureRecognizer />
+                                <TapGestureRecognizer Command="{Binding EditItemCommand}"/>
                             </Grid.GestureRecognizers>
                         </Grid>
                     </Grid>

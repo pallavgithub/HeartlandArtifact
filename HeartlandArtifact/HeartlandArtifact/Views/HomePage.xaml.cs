@@ -120,6 +120,10 @@ namespace HeartlandArtifact.Views
                     {
                         _vm.HomeIsVisible = true;
                     }
+                    else if (_vm.GoBackFromAddItem == "EditItem")
+                    {
+                        _vm.ItemDetailsUserControlIsVisible = true;
+                    }
                 }
             }
             if (_vm.SoldItemsIsVisible)

@@ -481,11 +481,13 @@ namespace HeartlandArtifact.ViewModels
         public DelegateCommand DeleteSoldItemCommand { get; set; }
         public DelegateCommand CancelDeleteSoldItemCommand { get; set; }
         public DelegateCommand AddNewItemCommand { get; set; }
+        public DelegateCommand EditItemCommand { get; set; }
         public INavigationService _nav;
         public CollectionModel CollectionData { get; set; }
         public CategoryModel CategoryData { get; set; }
         public MyItemModel ItemData { get; set; }
         public MySoldItemModel SoldItemData { get; set; }
+        public ApiItemModel EditItemData { get; set; }
         public int ItemId { get; set; }
         private readonly IGoogleManager _googleManager;
         private readonly IFacebookManager _facebookManager;
@@ -527,6 +529,7 @@ namespace HeartlandArtifact.ViewModels
             CancelDeleteItemCommand = new DelegateCommand(CloseDeleteItemPopup);
             DeleteSoldItemCommand = new DelegateCommand(DeleteSoldItem);
             CancelDeleteSoldItemCommand = new DelegateCommand(CloseDeleteSoldItemPopup);
+            EditItemCommand = new DelegateCommand(EditItem);
         }
         public async void Logout()
         {
@@ -551,7 +554,18 @@ namespace HeartlandArtifact.ViewModels
                 if (response != null)
                 {
                     AllCollections = new ObservableCollection<CollectionModel>(response.data);
+                    CollectionList = new ObservableCollection<CollectionModel>(response.data);
+                    if (CollectionList == null || CollectionList.Count == 0)
+                        CollectionList.Add(new CollectionModel { CollectionId = 0, CollectionName = "Default", CreatorId = (int)UserId, ModifierId = (int)UserId });
+                    else
+                    {
+                        if (!CollectionList.Contains(CollectionList.Where(i => i.CollectionName == "Default").FirstOrDefault()))
+                        {
+                            CollectionList.Add(new CollectionModel { CollectionId = 0, CollectionName = "Default", CreatorId = (int)UserId, ModifierId = (int)UserId });
+                        }
+                    }
                 }
+                GetAllUserCategories();
                 NotFoundLblIsVisible = AllCollections.Count > 0 ? false : true;
                 IsBusy = false;
             }
@@ -634,7 +648,7 @@ namespace HeartlandArtifact.ViewModels
                                 IsItemSold = item.item.IsItemSold,
                                 FoundBy = item.item.FoundBy,
                                 ExCollection = item.item.ExCollection,
-                                PerceivedValue = item.item.PerceivedValue,
+                                PerceivedValue = item.item.PercievedValue,
                                 Cost = item.item.Cost,
                                 Length = item.item.Length,
                                 Country = item.item.Country,
@@ -980,7 +994,7 @@ namespace HeartlandArtifact.ViewModels
                 newItem.Material = Material;
                 newItem.FoundBy = FoundBy;
                 newItem.ExCollection = ExCollection;
-                newItem.PerceivedValue = PerceivedValue;
+                newItem.PercievedValue = PerceivedValue;
                 newItem.Cost = Cost;
                 newItem.Length = Length;
                 newItem.Country = Country;
@@ -1027,7 +1041,7 @@ namespace HeartlandArtifact.ViewModels
                         ItemMaterial = ItemDetails.item.Material ?? "";
                         ItemFoundBy = ItemDetails.item.FoundBy ?? "";
                         ItemExCollection = ItemDetails.item.ExCollection ?? "";
-                        ItemPerceivedValue = ItemDetails.item.PerceivedValue ?? "";
+                        ItemPerceivedValue = ItemDetails.item.PercievedValue ?? "";
                         ItemCost = ItemDetails.item.Cost ?? "";
                         ItemLength = ItemDetails.item.Length ?? "";
                         ItemCountry = ItemDetails.item.Country ?? "";
@@ -1175,7 +1189,7 @@ namespace HeartlandArtifact.ViewModels
                         ItemMaterial = ItemDetails.item.Material ?? "";
                         ItemFoundBy = ItemDetails.item.FoundBy ?? "";
                         ItemExCollection = ItemDetails.item.ExCollection ?? "";
-                        ItemPerceivedValue = ItemDetails.item.PerceivedValue ?? "";
+                        ItemPerceivedValue = ItemDetails.item.PercievedValue ?? "";
                         ItemCost = ItemDetails.item.Cost ?? "";
                         ItemLength = ItemDetails.item.Length ?? "";
                         ItemCountry = ItemDetails.item.Country ?? "";
@@ -1220,7 +1234,7 @@ namespace HeartlandArtifact.ViewModels
                         data.IsItemSold = soldItem.ItemDetail.item.IsItemSold;
                         data.FoundBy = soldItem.ItemDetail.item.FoundBy ?? "";
                         data.ExCollection = soldItem.ItemDetail.item.ExCollection ?? "";
-                        data.PerceivedValue = soldItem.ItemDetail.item.PerceivedValue ?? "";
+                        data.PerceivedValue = soldItem.ItemDetail.item.PercievedValue ?? "";
                         data.Cost = soldItem.ItemDetail.item.Cost ?? "";
                         data.Length = soldItem.ItemDetail.item.Length ?? "";
                         data.Country = soldItem.ItemDetail.item.Country ?? "";
@@ -1266,6 +1280,57 @@ namespace HeartlandArtifact.ViewModels
             State = string.Empty;
             Notes = string.Empty;
             Base64ItemImagesList = new List<string>();
+        }
+        public async void EditItem()
+        {
+            try
+            {
+                if (ItemId > 0)
+                {
+                    IsBusy = true;
+                    var response = await new ApiData().GetData<ApiItemModel>("Artifact/GeItemDetailByItemId?itemId=" + ItemId, true);
+                    if (response != null && response.data != null)
+                    {
+                        EditItemData = new ApiItemModel();
+                        EditItemData = response.data;
+                        var ItemDetails = response.data.item;
+                        CollectionIdForNewItem = ItemDetails.CollectionId;
+                        CollectionNameForNewItem = AllCollections.Where(i => i.CollectionId == ItemDetails.CollectionId).FirstOrDefault().CollectionName;
+                        CategoryIdForNewItem = ItemDetails.CategoryId;
+                        CategoryNameForNewItem = AllUserCategories.Where(i => i.CategoryId == ItemDetails.CategoryId).FirstOrDefault().CategoryName;
+                        Title = ItemDetails.Title;
+                        Material = ItemDetails.Material ?? "";
+                        FoundBy = ItemDetails.FoundBy ?? "";
+                        ExCollection = ItemDetails.ExCollection ?? "";
+                        PerceivedValue = ItemDetails.PercievedValue ?? "";
+                        Cost = ItemDetails.Cost ?? "";
+                        Length = ItemDetails.Length ?? "";
+                        Country = ItemDetails.Country ?? "";
+                        State = ItemDetails.State ?? "";
+                        Notes = ItemDetails.Notes ?? "";
+
+                        newItemImage.Source = response.data.images[0];
+                        newItemImage_one.Source = response.data.images[0];
+                        if (response.data.images.Count == 2)
+                            newItemImage_two.Source = response.data.images[1];
+                        else if (response.data.images.Count == 3)
+                        {
+                            newItemImage_two.Source = response.data.images[1];
+                            newItemImage_three.Source = response.data.images[2];
+                        }
+                        //newItem.base64ItemImages = new List<string>();
+                        //newItem.base64ItemImages = Base64ItemImagesList;
+                        ItemDetailsUserControlIsVisible = false;
+                        AddNewItemUserControlIsVisible = true;
+                        GoBackFromAddItem = "EditItem";
+                    }
+                    IsBusy = false;
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
         }
     }
 }

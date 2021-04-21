@@ -173,7 +173,7 @@
                         </ContentView>
                         <Grid Grid.Row="4" Grid.RowSpan="3" x:Name="CollectionDropdown" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Transparent" IsVisible="{Binding CollectionDropdownIsVisible}">
                             <Frame HasShadow="False" OutlineColor="Gray">
-                                <ListView ItemsSource="{Binding AllCollections}" SelectionMode="None" BackgroundColor="White" VerticalScrollBarVisibility="Never">
+                                <ListView ItemsSource="{Binding CollectionList}" SelectionMode="None" BackgroundColor="White" VerticalScrollBarVisibility="Never">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
                                             <ViewCell>
