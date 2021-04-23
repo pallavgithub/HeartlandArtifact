@@ -17,6 +17,8 @@ namespace HeartlandArtifact.Views
         {
             var _vm = (BindingContext as HomePageViewModel);
             _vm.GoBackFromAddItem = "HomeUserControl";
+            _vm.GetUserCollections();
+            _vm.GetAllUserCategories();
             _vm.AddNewItemUserControlIsVisible = true;
             _vm.HomeIsVisible = false;
         }

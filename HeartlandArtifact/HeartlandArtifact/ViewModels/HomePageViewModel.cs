@@ -529,7 +529,7 @@ namespace HeartlandArtifact.ViewModels
             CancelDeleteItemCommand = new DelegateCommand(CloseDeleteItemPopup);
             DeleteSoldItemCommand = new DelegateCommand(DeleteSoldItem);
             CancelDeleteSoldItemCommand = new DelegateCommand(CloseDeleteSoldItemPopup);
-            EditItemCommand = new DelegateCommand(EditItem);
+            //EditItemCommand = new DelegateCommand(EditItem);
         }
         public async void Logout()
         {
@@ -565,7 +565,7 @@ namespace HeartlandArtifact.ViewModels
                         }
                     }
                 }
-                GetAllUserCategories();
+               // GetAllUserCategories();
                 NotFoundLblIsVisible = AllCollections.Count > 0 ? false : true;
                 IsBusy = false;
             }
@@ -985,40 +985,52 @@ namespace HeartlandArtifact.ViewModels
             var Toast = DependencyService.Get<IMessage>();
             try
             {
-                IsBusy = true;
-                var newItem = new ItemModel();
-                newItem.ItemId = 0;
-                newItem.CollectionId = CollectionIdForNewItem;
-                newItem.CategoryId = CategoryIdForNewItem;
-                newItem.Title = Title;
-                newItem.Material = Material;
-                newItem.FoundBy = FoundBy;
-                newItem.ExCollection = ExCollection;
-                newItem.PercievedValue = PerceivedValue;
-                newItem.Cost = Cost;
-                newItem.Length = Length;
-                newItem.Country = Country;
-                newItem.State = State;
-                newItem.Notes = Notes;
-                newItem.CreatorId = (int)Application.Current.Properties["LogedInUserId"];
-                newItem.ModifierId = (int)Application.Current.Properties["LogedInUserId"];
-                newItem.base64ItemImages = new List<string>();
-                newItem.base64ItemImages = Base64ItemImagesList;
-                var response = await new ApiData().PostData<ApiItemModel>("Artifact/AddNewItem", newItem, true);
-                if (response != null && response.data != null)
+                if (GoBackFromAddItem == "EditItem")
                 {
-                    Toast.LongAlert("Item added successfully.");
-                    GetItemDetailsById(response.data.item.ItemId);
-                    ItemDetailsUserControlIsVisible = true;
-                    AddNewItemUserControlIsVisible = false;
-                    EmptyAddItemForm();
-                    Base64ItemImagesList = new List<string>();
+                    if (EditItemData != null)
+                    {
+                        IsBusy = true;
+
+                        IsBusy = false;
+                    }
                 }
                 else
                 {
-                    Toast.LongAlert(response.message);
+                    IsBusy = true;
+                    var newItem = new ItemModel();
+                    newItem.ItemId = 0;
+                    newItem.CollectionId = CollectionIdForNewItem;
+                    newItem.CategoryId = CategoryIdForNewItem;
+                    newItem.Title = Title;
+                    newItem.Material = Material;
+                    newItem.FoundBy = FoundBy;
+                    newItem.ExCollection = ExCollection;
+                    newItem.PercievedValue = PerceivedValue;
+                    newItem.Cost = Cost;
+                    newItem.Length = Length;
+                    newItem.Country = Country;
+                    newItem.State = State;
+                    newItem.Notes = Notes;
+                    newItem.CreatorId = (int)Application.Current.Properties["LogedInUserId"];
+                    newItem.ModifierId = (int)Application.Current.Properties["LogedInUserId"];
+                    newItem.base64ItemImages = new List<string>();
+                    newItem.base64ItemImages = Base64ItemImagesList;
+                    var response = await new ApiData().PostData<ApiItemModel>("Artifact/AddNewItem", newItem, true);
+                    if (response != null && response.data != null)
+                    {
+                        Toast.LongAlert("Item added successfully.");
+                        GetItemDetailsById(response.data.item.ItemId);
+                        ItemDetailsUserControlIsVisible = true;
+                        AddNewItemUserControlIsVisible = false;
+                        EmptyAddItemForm();
+                        Base64ItemImagesList = new List<string>();
+                    }
+                    else
+                    {
+                        Toast.LongAlert(response.message);
+                    }
+                    IsBusy = false;
                 }
-                IsBusy = false;
             }
             catch (Exception e)
             {

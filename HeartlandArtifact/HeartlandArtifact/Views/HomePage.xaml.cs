@@ -150,11 +150,14 @@ namespace HeartlandArtifact.Views
             // page.Title = item.Title;
 
             // Detail = new NavigationPage(page);
+            _vm.MyCollectionVisible = false;
+            _vm.AddNewItemUserControlIsVisible = false;
+            _vm.CategoryUserControlIsVisible = false;
+            _vm.ItemDetailsUserControlIsVisible = false;
+            _vm.ItemsUserControlIsVisible = false;
+            _vm.SoldItemDetailsUserControlIsVisible = false;
             if (item.Title == "Home")
             {
-                _vm.MyCollectionVisible = false;
-                _vm.AddNewItemUserControlIsVisible = false;
-                _vm.CategoryUserControlIsVisible = false;
                 _vm.SoldItemsIsVisible = false;
                 _vm.HomeIsVisible = true;
             }

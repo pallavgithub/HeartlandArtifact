@@ -2,6 +2,7 @@
 using HeartlandArtifact.Models;
 using HeartlandArtifact.ViewModels;
 using Plugin.Media;
+using Plugin.Media.Abstractions;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -178,7 +179,7 @@ namespace HeartlandArtifact.Views
                 }
                 var file = await CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
                 {
-                    PhotoSize = Plugin.Media.Abstractions.PhotoSize.MaxWidthHeight,
+                    PhotoSize = PhotoSize.Small,
                 });
                 if (file == null)
                     return;

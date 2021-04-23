@@ -18,6 +18,18 @@ namespace HeartlandArtifact.Views
         {
             var _vm = BindingContext as HomePageViewModel;
             _vm.GoBackFromAddItem = "ItemUserControl";
+            _vm.GetUserCollections();
+            _vm.GetAllUserCategories();
+            if (_vm.CollectionData != null)
+            {
+                _vm.CollectionIdForNewItem = _vm.CollectionData.CollectionId;
+                _vm.CollectionNameForNewItem = _vm.CollectionData.CollectionName;
+            }
+            if (_vm.CategoryData != null)
+            {
+                _vm.CategoryIdForNewItem = _vm.CategoryData.CategoryId;
+                _vm.CategoryNameForNewItem = _vm.CategoryData.CategoryName;
+            }
             _vm.ItemsUserControlIsVisible = false;
             _vm.AddNewItemUserControlIsVisible = true;
         }

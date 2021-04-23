@@ -43,7 +43,7 @@
                         </StackLayout>
                         <Grid Grid.Row="2" BackgroundColor="LightSteelBlue" HeightRequest="180" WidthRequest="70" Margin="0,0,0,5">
                             <Label Text="+ Add Photo" TextTransform="Uppercase" TextColor="Black" FontSize="16" FontFamily="{StaticResource HelveticaRegular}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
-                            <Image Source="{Binding ItemImageSource}" x:Name="pic" Aspect="Fill"/>
+                            <Image Source="{Binding ItemImageSource}" x:Name="pic" Aspect="AspectFill"/>
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="AddMultiplePhotos_Tapped"/>
                             </Grid.GestureRecognizers>
@@ -220,21 +220,21 @@
                         </StackLayout>
                         <Grid BackgroundColor="LightSteelBlue" HeightRequest="180" WidthRequest="70" Margin="0,0,0,5">
                             <Label Text="+ Add Photo" TextTransform="Uppercase" TextColor="Black" FontSize="16" FontFamily="{StaticResource HelveticaRegular}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
-                            <Image Source="" x:Name="pic1" Aspect="Fill"/>
+                            <Image Source="" x:Name="pic1" Aspect="AspectFill"/>
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="AddNewPhoto_Tapped"/>
                             </Grid.GestureRecognizers>
                         </Grid>
                         <Grid BackgroundColor="LightSteelBlue" HeightRequest="180" WidthRequest="70" Margin="0,0,0,5">
                             <Label Text="+ Add Photo" TextTransform="Uppercase" TextColor="Black" FontSize="16" FontFamily="{StaticResource HelveticaRegular}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
-                            <Image Source="" x:Name="pic2" Aspect="Fill"/>
+                            <Image Source="" x:Name="pic2" Aspect="AspectFill"/>
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="AddNewPhoto_Tapped"/>
                             </Grid.GestureRecognizers>
                         </Grid>
                         <Grid BackgroundColor="LightSteelBlue" HeightRequest="180" WidthRequest="70" Margin="0,0,0,5">
                             <Label Text="+ Add Photo" TextTransform="Uppercase" TextColor="Black" FontSize="16" FontFamily="{StaticResource HelveticaRegular}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
-                            <Image Source="" x:Name="pic3" Aspect="Fill"/>
+                            <Image Source="" x:Name="pic3" Aspect="AspectFill"/>
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="AddNewPhoto_Tapped"/>
                             </Grid.GestureRecognizers>
