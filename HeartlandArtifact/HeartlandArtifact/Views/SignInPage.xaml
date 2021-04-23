@@ -5,7 +5,7 @@
              xmlns:converter="clr-namespace:HeartlandArtifact.Converters"
              x:Class="HeartlandArtifact.Views.SignInPage"          
              NavigationPage.HasNavigationBar="False" 
-             FlowDirection="LeftToRight">
+             FlowDirection="LeftToRight" BackgroundColor="White">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converter:InverseBoolConverter x:Key="InverseBoolConverter"></converter:InverseBoolConverter>

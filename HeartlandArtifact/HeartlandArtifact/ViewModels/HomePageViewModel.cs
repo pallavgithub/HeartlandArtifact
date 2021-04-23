@@ -537,11 +537,14 @@ namespace HeartlandArtifact.ViewModels
             LogoutPopupIsVisible = false;
             _facebookManager.Logout();
             _googleManager.Logout();
+            HomeIsVisible = false;
             Application.Current.Properties["IsLogedIn"] = false;
             Application.Current.Properties["LogedInUserId"] = 0;
             Application.Current.Properties["UserName"] = string.Empty;
             await Application.Current.SavePropertiesAsync();
-            await _nav.NavigateAsync("SignInPage");
+            //await _nav.NavigateAsync("SignInPage");
+            //await _nav.GoBackAsync();
+            await _nav.NavigateAsync("/SignInPage");
             IsBusy = false;
         }
         public async void GetUserCollections()
