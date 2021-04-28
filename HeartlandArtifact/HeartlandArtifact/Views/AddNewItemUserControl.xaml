@@ -43,7 +43,9 @@
                         </StackLayout>
                         <Grid Grid.Row="2" BackgroundColor="LightSteelBlue" HeightRequest="180" WidthRequest="70" Margin="0,0,0,5">
                             <Label Text="+ Add Photo" TextTransform="Uppercase" TextColor="Black" FontSize="16" FontFamily="{StaticResource HelveticaRegular}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
-                            <Image Source="{Binding ItemImageSource}" x:Name="pic" Aspect="AspectFill"/>
+                            <Frame BackgroundColor="Transparent" HasShadow="False" Padding="1" OutlineColor="Black">
+                                <Image Source="{Binding ItemImageSource}" x:Name="pic" Aspect="AspectFill"/>
+                            </Frame>
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="AddMultiplePhotos_Tapped"/>
                             </Grid.GestureRecognizers>
@@ -218,25 +220,47 @@
                                 <TapGestureRecognizer Tapped="GoBack_Tapped"/>
                             </StackLayout.GestureRecognizers>
                         </StackLayout>
+                        <Grid BackgroundColor="LightSteelBlue" HeightRequest="180" WidthRequest="70" Margin="0,0,0,5">                            
+                            <Label Text="+ Add Photo" TextTransform="Uppercase" TextColor="Black" FontSize="16" FontFamily="{StaticResource HelveticaRegular}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
+                            <Frame BackgroundColor="Transparent" HasShadow="False" Padding="1" OutlineColor="Black">
+                                <Image Source="" x:Name="pic1" Aspect="AspectFill"/>
+                            </Frame>
+                            <Image Source="CrossIcon.png" x:Name="cross1" IsVisible="False" HorizontalOptions="End" Margin="0,-12,-12,0" VerticalOptions="Start" HeightRequest="35" WidthRequest="35">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="RemoveImage1_Tapped"/>
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="AddImage1_Tapped"/>
+                            </Grid.GestureRecognizers>
+                            </Grid>
+                        
                         <Grid BackgroundColor="LightSteelBlue" HeightRequest="180" WidthRequest="70" Margin="0,0,0,5">
                             <Label Text="+ Add Photo" TextTransform="Uppercase" TextColor="Black" FontSize="16" FontFamily="{StaticResource HelveticaRegular}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
-                            <Image Source="" x:Name="pic1" Aspect="AspectFill"/>
+                            <Frame BackgroundColor="Transparent" HasShadow="False" Padding="1" OutlineColor="Black">
+                                <Image Source="" x:Name="pic2" Aspect="AspectFill"/>
+                            </Frame>
+                            <Image Source="CrossIcon.png" x:Name="cross2" IsVisible="False" HorizontalOptions="End" Margin="0,-10,-10,0" VerticalOptions="Start" HeightRequest="35" WidthRequest="35">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="RemoveImage2_Tapped"/>
+                                </Image.GestureRecognizers>
+                            </Image>
                             <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="AddNewPhoto_Tapped"/>
+                                <TapGestureRecognizer Tapped="AddImage2_Tapped"/>
                             </Grid.GestureRecognizers>
                         </Grid>
                         <Grid BackgroundColor="LightSteelBlue" HeightRequest="180" WidthRequest="70" Margin="0,0,0,5">
                             <Label Text="+ Add Photo" TextTransform="Uppercase" TextColor="Black" FontSize="16" FontFamily="{StaticResource HelveticaRegular}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
-                            <Image Source="" x:Name="pic2" Aspect="AspectFill"/>
+                            <Frame BackgroundColor="Transparent" HasShadow="False" Padding="1" OutlineColor="Black">
+                                <Image Source="" x:Name="pic3" Aspect="AspectFill"/>
+                            </Frame>
+                            <Image Source="CrossIcon.png" x:Name="cross3" IsVisible="False" HorizontalOptions="End" Margin="0,-10,-10,0" VerticalOptions="Start" HeightRequest="35" WidthRequest="35">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="RemoveImage3_Tapped"/>
+                                </Image.GestureRecognizers>
+                            </Image>
                             <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="AddNewPhoto_Tapped"/>
-                            </Grid.GestureRecognizers>
-                        </Grid>
-                        <Grid BackgroundColor="LightSteelBlue" HeightRequest="180" WidthRequest="70" Margin="0,0,0,5">
-                            <Label Text="+ Add Photo" TextTransform="Uppercase" TextColor="Black" FontSize="16" FontFamily="{StaticResource HelveticaRegular}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center"/>
-                            <Image Source="" x:Name="pic3" Aspect="AspectFill"/>
-                            <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="AddNewPhoto_Tapped"/>
+                                <TapGestureRecognizer Tapped="AddImage3_Tapped"/>
                             </Grid.GestureRecognizers>
                         </Grid>
                         <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="0,15,0,30">

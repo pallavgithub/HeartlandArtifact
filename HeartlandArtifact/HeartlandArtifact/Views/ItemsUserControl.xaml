@@ -58,7 +58,7 @@
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
                                                 <StackLayout Grid.Column="0" BackgroundColor="LightGray">
-                                                    <Image Source="{Binding ImageUrl}" HorizontalOptions="EndAndExpand"/>
+                                                    <Image Source="{Binding ImageUrl}" Aspect="AspectFill" VerticalOptions="FillAndExpand"/>
                                                 </StackLayout>
                                                 <StackLayout Grid.Column="1" Margin="15,0,0,0" VerticalOptions="Center" Spacing="0">
                                                     <Label Text="{Binding Title}" TextColor="Black" FontFamily="{StaticResource HelveticaBold}" FontSize="15"/>

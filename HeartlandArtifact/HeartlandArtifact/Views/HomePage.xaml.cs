@@ -2,6 +2,7 @@
 using HeartlandArtifact.Services.Contracts;
 using HeartlandArtifact.ViewModels;
 using System;
+using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -102,7 +103,12 @@ namespace HeartlandArtifact.Views
             {
                 if (_vm.AddMultipleItemPhotosIsVisible)
                 {
+                    _vm.newItemImage.Source = string.Empty;
+                    _vm.newItemImage_one.Source = string.Empty;
+                    _vm.newItemImage_two.Source = string.Empty;
+                    _vm.newItemImage_three.Source = string.Empty;
                     _vm.AddMultipleItemPhotosIsVisible = false;
+                    _vm.Base64ItemImagesList = new List<string>();
                 }
                 else
                 {

@@ -4,6 +4,7 @@ using HeartlandArtifact.ViewModels;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -36,14 +37,19 @@ namespace HeartlandArtifact.Views
         //}
         private void GoBack_Tapped(object sender, EventArgs e)
         {
-            var viewModel = BindingContext as HomePageViewModel;          
+            var viewModel = BindingContext as HomePageViewModel;
 
             if (viewModel.AddMultipleItemPhotosIsVisible)
             {
+                pic.Source = string.Empty;
                 pic1.Source = string.Empty;
                 pic2.Source = string.Empty;
                 pic3.Source = string.Empty;
+                cross1.IsVisible = false;
+                cross2.IsVisible = false;
+                cross3.IsVisible = false;
                 viewModel.AddMultipleItemPhotosIsVisible = false;
+                viewModel.Base64ItemImagesList = new List<string>();
             }
             else
             {
@@ -60,7 +66,7 @@ namespace HeartlandArtifact.Views
                 else if (viewModel.GoBackFromAddItem == "HomeUserControl")
                 {
                     viewModel.HomeIsVisible = true;
-                } 
+                }
                 else if (viewModel.GoBackFromAddItem == "EditItem")
                 {
                     viewModel.ItemDetailsUserControlIsVisible = true;
@@ -93,6 +99,8 @@ namespace HeartlandArtifact.Views
                 var selectedCollection = ((TappedEventArgs)e).Parameter as CollectionModel;
                 (BindingContext as HomePageViewModel).CollectionIdForNewItem = selectedCollection.CollectionId;
                 (BindingContext as HomePageViewModel).CollectionNameForNewItem = selectedCollection.CollectionName;
+                (BindingContext as HomePageViewModel).CategoryIdForNewItem = 0;
+                (BindingContext as HomePageViewModel).CategoryNameForNewItem = string.Empty;
                 (BindingContext as HomePageViewModel).CollectionDropdownIsVisible = false;
                 GetListForDropdown(selectedCollection);
             }
@@ -128,7 +136,7 @@ namespace HeartlandArtifact.Views
                     foreach (var item in viewModel.AllUserCategories)
                     {
                         if (item.CollectionId == selectedCollection.CollectionId)
-                            viewModel.CategoryList.Add(item);                        
+                            viewModel.CategoryList.Add(item);
                     }
                     if (!viewModel.CategoryList.Contains(viewModel.CategoryList.Where(i => i.CategoryName == "Default").FirstOrDefault()))
                     {
@@ -152,6 +160,12 @@ namespace HeartlandArtifact.Views
             try
             {
                 var ViewModel = BindingContext as HomePageViewModel;
+                if (ViewModel.Base64ItemImagesList == null || ViewModel.Base64ItemImagesList.Count == 0)
+                {
+                    cross1.IsVisible = false;
+                    cross2.IsVisible = false;
+                    cross3.IsVisible = false;
+                }
                 ViewModel.newItemImage = pic;
                 ViewModel.newItemImage_one = pic1;
                 ViewModel.newItemImage_two = pic2;
@@ -159,7 +173,7 @@ namespace HeartlandArtifact.Views
                 var Toast = DependencyService.Get<IMessage>();
                 ViewModel.AddMultipleItemPhotosIsVisible = true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -183,7 +197,7 @@ namespace HeartlandArtifact.Views
                 });
                 if (file == null)
                     return;
-                ((sender as Grid).Children[1] as Image).Source = ImageSource.FromStream(() =>
+                (((sender as Grid).Children[1] as Frame).Children[0] as Image).Source = ImageSource.FromStream(() =>
                 {
                     var stream = file.GetStream();
                     return stream;
@@ -253,7 +267,242 @@ namespace HeartlandArtifact.Views
                 else
                 {
                     _vm.AddNewItem();
+                    cross1.IsVisible = false;
+                    cross2.IsVisible = false;
+                    cross3.IsVisible = false;
                 }
+            }
+        }
+
+        private async void AddImage1_Tapped(object sender, EventArgs e)
+        {
+            try
+            {
+                var ViewModel = BindingContext as HomePageViewModel;
+                var Toast = DependencyService.Get<IMessage>();
+                await CrossMedia.Current.Initialize();
+                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                {
+                    //DisplayAlert("No Camera", ":( No camera available.", "OK");
+                    Toast.LongAlert("No Camera available");
+                    return;
+                }
+                var file = await CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
+                {
+                    PhotoSize = PhotoSize.Small,
+                });
+                if (file == null)
+                    return;
+                (((sender as Grid).Children[1] as Frame).Children[0] as Image).Source = ImageSource.FromStream(() =>
+                {
+                    var stream = file.GetStream();
+                    return stream;
+                });
+                ((sender as Grid).Children[2] as Image).IsVisible = true;
+                var st = file.GetStream();
+                FileStream fs = st as FileStream;
+                pic.Source = ImageSource.FromStream(() =>
+                {
+                    var stream = file.GetStream();
+                    return stream;
+                });
+
+                ViewModel.ImageStream = st;
+                byte[] byteArray = ConvertToByteArrayFromStream();
+                string base64Img = Convert.ToBase64String(byteArray);
+                if (ViewModel.Base64ItemImagesList == null || ViewModel.Base64ItemImagesList.Count == 0)
+                {
+                    ViewModel.Base64ItemImagesList = new List<string>();
+                    ViewModel.Base64ItemImagesList.Add(base64Img);
+                }
+                else
+                {
+                    ViewModel.Base64ItemImagesList[0] = base64Img;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private async void AddImage2_Tapped(object sender, EventArgs e)
+        {
+            var Toast = DependencyService.Get<IMessage>();
+            var ViewModel = BindingContext as HomePageViewModel;
+            if (ViewModel.Base64ItemImagesList == null || ViewModel.Base64ItemImagesList.Count == 0)
+                Toast.LongAlert("Please add first Image.");
+            else
+            {
+                try
+                {
+                    await CrossMedia.Current.Initialize();
+                    if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                    {
+                        Toast.LongAlert("No Camera available");
+                        return;
+                    }
+                    var file = await CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
+                    {
+                        PhotoSize = PhotoSize.Small,
+                    });
+                    if (file == null)
+                        return;
+                    (((sender as Grid).Children[1] as Frame).Children[0] as Image).Source = ImageSource.FromStream(() =>
+                    {
+                        var stream = file.GetStream();
+                        return stream;
+                    });
+                    ((sender as Grid).Children[2] as Image).IsVisible = true;
+                    var st = file.GetStream();
+                    FileStream fs = st as FileStream;
+
+
+                    ViewModel.ImageStream = st;
+                    byte[] byteArray = ConvertToByteArrayFromStream();
+                    string base64Img = Convert.ToBase64String(byteArray);
+                    if (ViewModel.Base64ItemImagesList.Count > 1)
+                        ViewModel.Base64ItemImagesList[1] = base64Img;
+                    else
+                        ViewModel.Base64ItemImagesList.Insert(1, base64Img);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+        }
+
+        private async void AddImage3_Tapped(object sender, EventArgs e)
+        {
+            var Toast = DependencyService.Get<IMessage>();
+            var ViewModel = BindingContext as HomePageViewModel;
+            if (ViewModel.Base64ItemImagesList == null || ViewModel.Base64ItemImagesList.Count == 0)
+                Toast.LongAlert("Please add first Image.");
+            else if (ViewModel.Base64ItemImagesList != null && ViewModel.Base64ItemImagesList.Count == 1)
+                Toast.LongAlert("Please add second Image.");
+            else
+            {
+                try
+                {
+                    await CrossMedia.Current.Initialize();
+                    if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                    {
+                        Toast.LongAlert("No Camera available");
+                        return;
+                    }
+                    var file = await CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
+                    {
+                        PhotoSize = PhotoSize.Small,
+                    });
+                    if (file == null)
+                        return;
+                    (((sender as Grid).Children[1] as Frame).Children[0] as Image).Source = ImageSource.FromStream(() =>
+                    {
+                        var stream = file.GetStream();
+                        return stream;
+                    });
+                    ((sender as Grid).Children[2] as Image).IsVisible = true;
+                    var st = file.GetStream();
+                    FileStream fs = st as FileStream;
+
+
+                    ViewModel.ImageStream = st;
+                    byte[] byteArray = ConvertToByteArrayFromStream();
+                    string base64Img = Convert.ToBase64String(byteArray);
+                    if (ViewModel.Base64ItemImagesList.Count > 2)
+                        ViewModel.Base64ItemImagesList[2] = base64Img;
+                    else
+                        ViewModel.Base64ItemImagesList.Insert(2, base64Img);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+        }
+
+        private void RemoveImage1_Tapped(object sender, EventArgs e)
+        {
+            try
+            {
+                var _vm = BindingContext as HomePageViewModel;
+                if (_vm.Base64ItemImagesList.Count == 1)
+                {
+                    _vm.Base64ItemImagesList.RemoveAt(0);
+                    pic1.Source = string.Empty;
+                    cross1.IsVisible = false;
+                    pic.Source = string.Empty;
+                }
+                else if (_vm.Base64ItemImagesList.Count == 2)
+                {
+                    _vm.Base64ItemImagesList[0] = _vm.Base64ItemImagesList[1];
+                    _vm.Base64ItemImagesList.RemoveAt(1);
+                    pic1.Source = pic2.Source;
+                    pic2.Source = string.Empty;
+                    cross2.IsVisible = false;
+                    pic.Source = pic1.Source;
+                }
+                else
+                {
+                    _vm.Base64ItemImagesList[0] = _vm.Base64ItemImagesList[1];
+                    _vm.Base64ItemImagesList[1] = _vm.Base64ItemImagesList[2];
+                    _vm.Base64ItemImagesList.RemoveAt(2);
+                    pic1.Source = pic2.Source;
+                    pic2.Source = pic3.Source;
+                    pic3.Source = string.Empty;
+                    cross3.IsVisible = false;
+                    pic.Source = pic1.Source;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void RemoveImage2_Tapped(object sender, EventArgs e)
+        {
+            try
+            {
+                var _vm = BindingContext as HomePageViewModel;
+
+                if (_vm.Base64ItemImagesList.Count == 2)
+                {
+                    _vm.Base64ItemImagesList.RemoveAt(1);
+                    pic2.Source = string.Empty;
+                    cross2.IsVisible = false;
+                }
+                else if (_vm.Base64ItemImagesList.Count == 3)
+                {
+                    _vm.Base64ItemImagesList[1] = _vm.Base64ItemImagesList[2];
+                    _vm.Base64ItemImagesList.RemoveAt(2);
+                    pic2.Source = pic3.Source;
+                    pic3.Source = string.Empty;
+                    cross3.IsVisible = false;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void RemoveImage3_Tapped(object sender, EventArgs e)
+        {
+            try
+            {
+                var _vm = BindingContext as HomePageViewModel;
+                if (_vm.Base64ItemImagesList.Count == 3)
+                {
+                    _vm.Base64ItemImagesList.RemoveAt(2);
+                    pic3.Source = string.Empty;
+                    cross3.IsVisible = false;
+                }
+            }
+            catch (Exception ex)
+            {
+
             }
         }
     }
