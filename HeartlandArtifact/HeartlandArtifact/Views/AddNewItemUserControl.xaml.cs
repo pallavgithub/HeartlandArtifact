@@ -148,7 +148,7 @@ namespace HeartlandArtifact.Views
                 {
                     viewModel.CategoryList.Add(new CategoryModel { CollectionId = 0, CategoryName = "Default", CreatorId = (int)UserId, ModifierId = (int)UserId });
                 }
-                viewModel.CategoryList = new ObservableCollection<CategoryModel>(viewModel.CategoryList);
+                viewModel.CategoryList = new ObservableCollection<CategoryModel>(viewModel.CategoryList.OrderBy(x=>x.CategoryName).ToList());
             }
             catch (Exception e)
             {

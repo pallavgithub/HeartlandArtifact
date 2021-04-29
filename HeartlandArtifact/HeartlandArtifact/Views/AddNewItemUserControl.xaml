@@ -13,7 +13,7 @@
     <ContentView.Content>
         <Grid>
             <ScrollView VerticalScrollBarVisibility="Never">
-                <Grid Padding="27,0,27,0">
+                <Grid Padding="27,0,27,30">
                     <Grid IsVisible="{Binding AddMultipleItemPhotosIsVisible, Converter={StaticResource InverseBoolConverter}}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -153,7 +153,7 @@
                         </StackLayout>
                         <StackLayout Spacing="0" Grid.Row="14">
                             <Label Text="Notes" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
-                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" HeightRequest="20"
+                            <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" 
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
                                 <custom:BorderLessEntry Text="{Binding Notes}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
@@ -161,7 +161,7 @@
                             </Frame>
                         </StackLayout>
                         <Label Grid.Row="15" Text="* Indicates required fields" FontFamily="{StaticResource HelveticaRegular}" HorizontalOptions="Center" TextColor="Black" FontSize="14"/>
-                        <Grid Grid.Row="16" HorizontalOptions="CenterAndExpand" VerticalOptions="Start">
+                        <Grid Grid.Row="16" HorizontalOptions="Center" VerticalOptions="Start" WidthRequest="250">
                             <Image Source="Button.png"/>
                             <Label Text="save" TextTransform="Uppercase" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,3" FontFamily="{StaticResource HelveticaRegular}" FontSize="24" TextColor="Black" BackgroundColor="Transparent"/>
                             <Grid.GestureRecognizers>

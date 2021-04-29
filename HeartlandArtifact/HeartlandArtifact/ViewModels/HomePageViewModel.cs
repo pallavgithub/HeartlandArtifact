@@ -556,8 +556,8 @@ namespace HeartlandArtifact.ViewModels
                 var response = await new ApiData().GetData<List<CollectionModel>>("Collections/GetUserCollections?userId=" + UserId, true);
                 if (response != null)
                 {
-                    AllCollections = new ObservableCollection<CollectionModel>(response.data);
-                    CollectionList = new ObservableCollection<CollectionModel>(response.data);
+                    AllCollections = new ObservableCollection<CollectionModel>(response.data.OrderBy(x => x.CollectionName).ToList());
+                    CollectionList = new ObservableCollection<CollectionModel>(response.data.OrderBy(x => x.CollectionName).ToList());
                     if (CollectionList == null || CollectionList.Count == 0)
                         CollectionList.Add(new CollectionModel { CollectionId = 0, CollectionName = "Default", CreatorId = (int)UserId, ModifierId = (int)UserId });
                     else
@@ -568,7 +568,6 @@ namespace HeartlandArtifact.ViewModels
                         }
                     }
                 }
-               // GetAllUserCategories();
                 NotFoundLblIsVisible = AllCollections.Count > 0 ? false : true;
                 IsBusy = false;
             }
@@ -614,7 +613,7 @@ namespace HeartlandArtifact.ViewModels
                         if (item.CollectionId == CollectionData.CollectionId)
                             AllCategories.Add(item);
                     }
-                    //AllCategories = new ObservableCollection<CategoryModel>(response.data.Where(i => i.CollectionId == CollectionData.CollectionId));
+                    AllCategories = new ObservableCollection<CategoryModel>(AllCategories.OrderBy(x => x.CategoryName).ToList());
                 }
                 CategoryNotFoundLblIsVisible = AllCategories.Count > 0 ? false : true;
                 IsBusy = false;
@@ -665,6 +664,7 @@ namespace HeartlandArtifact.ViewModels
                             });
                         }
                     }
+                    AllItems = new ObservableCollection<MyItemModel>(AllItems.OrderBy(x => x.Title).ToList());
                 }
                 ItemNotFoundLblIsVisible = AllItems.Count > 0 ? false : true;
                 IsBusy = false;
