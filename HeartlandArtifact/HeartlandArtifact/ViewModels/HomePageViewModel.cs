@@ -13,7 +13,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Text;
 using Xamarin.Forms;
 
 namespace HeartlandArtifact.ViewModels
@@ -445,8 +447,8 @@ namespace HeartlandArtifact.ViewModels
             get { return _categoryList; }
             set { SetProperty(ref _categoryList, value); }
         }
-        private ObservableCollection<MyItemModel> _itemImagesForCarousel;
-        public ObservableCollection<MyItemModel> ItemImagesForCarousel
+        private ObservableCollection<CarouselModel> _itemImagesForCarousel;
+        public ObservableCollection<CarouselModel> ItemImagesForCarousel
         {
             get { return _itemImagesForCarousel; }
             set { SetProperty(ref _itemImagesForCarousel, value); }
@@ -493,8 +495,10 @@ namespace HeartlandArtifact.ViewModels
         private readonly IFacebookManager _facebookManager;
         public Stream ImageStream { get; set; }
         public List<string> Base64ItemImagesList { get; set; }
+        public List<Stream> ImageStreamList { get; set; }
         public string GoBackFromAddItem { get; set; }
         public string GoBackFromSoldItemDetail { get; set; }
+
         public HomePageViewModel(INavigationService navigationService) : base(navigationService)
         {
             _nav = navigationService;
@@ -529,7 +533,7 @@ namespace HeartlandArtifact.ViewModels
             CancelDeleteItemCommand = new DelegateCommand(CloseDeleteItemPopup);
             DeleteSoldItemCommand = new DelegateCommand(DeleteSoldItem);
             CancelDeleteSoldItemCommand = new DelegateCommand(CloseDeleteSoldItemPopup);
-            //EditItemCommand = new DelegateCommand(EditItem);
+            EditItemCommand = new DelegateCommand(EditItem);
         }
         public async void Logout()
         {
@@ -993,7 +997,36 @@ namespace HeartlandArtifact.ViewModels
                     if (EditItemData != null)
                     {
                         IsBusy = true;
-
+                        var updatedItem = new ItemModel();
+                        updatedItem.ItemId = EditItemData.item.ItemId;
+                        updatedItem.CollectionId = CollectionIdForNewItem;
+                        updatedItem.CategoryId = CategoryIdForNewItem;
+                        updatedItem.Title = Title;
+                        updatedItem.Material = Material;
+                        updatedItem.FoundBy = FoundBy;
+                        updatedItem.ExCollection = ExCollection;
+                        updatedItem.PercievedValue = PerceivedValue;
+                        updatedItem.Cost = Cost;
+                        updatedItem.Length = Length;
+                        updatedItem.Country = Country;
+                        updatedItem.State = State;
+                        updatedItem.Notes = Notes;
+                        updatedItem.CreatorId = EditItemData.item.CreatorId;
+                        updatedItem.ModifierId = (int)Application.Current.Properties["LogedInUserId"];
+                        updatedItem.CreateDate = EditItemData.item.CreateDate;
+                        updatedItem.LastModDate = DateTime.Now;
+                        if (Base64ItemImagesList != null || Base64ItemImagesList.Count != 0)
+                            updatedItem.base64ItemImages = new List<string>(Base64ItemImagesList);
+                        var response = await new ApiData().PutData<ApiItemModel>("Artifact/UpdateItem", updatedItem, true);
+                        if (response != null && response.data != null)
+                        {
+                            Toast.LongAlert("Item updated successfully.");
+                            GetItemDetailsById(response.data.item.ItemId);
+                            ItemDetailsUserControlIsVisible = true;
+                            AddNewItemUserControlIsVisible = false;
+                            EmptyAddItemForm();
+                            Base64ItemImagesList = new List<string>();
+                        }
                         IsBusy = false;
                     }
                 }
@@ -1051,6 +1084,12 @@ namespace HeartlandArtifact.ViewModels
                     if (Item != null)
                     {
                         var ItemDetails = Item.data;
+                        ItemImagesForCarousel = new ObservableCollection<CarouselModel>();
+                        if (ItemDetails.images.Count > 0)
+                            foreach (var i in ItemDetails.images)
+                            {
+                                ItemImagesForCarousel.Add(new CarouselModel { ImageUrl = i });
+                            }
                         ItemId = ItemDetails.item.ItemId;
                         ItemTitle = ItemDetails.item.Title ?? "";
                         ItemMaterial = ItemDetails.item.Material ?? "";
@@ -1062,12 +1101,6 @@ namespace HeartlandArtifact.ViewModels
                         ItemCountry = ItemDetails.item.Country ?? "";
                         ItemState = ItemDetails.item.State ?? "";
                         ItemNotes = ItemDetails.item.Notes ?? "";
-                        ItemImagesForCarousel = new ObservableCollection<MyItemModel>();
-                        if (ItemDetails.images.Count > 0)
-                            foreach (var i in ItemDetails.images)
-                            {
-                                ItemImagesForCarousel.Add(new MyItemModel { ImageUrl = i });
-                            }
                     }
                     IsBusy = false;
                 }
@@ -1210,11 +1243,11 @@ namespace HeartlandArtifact.ViewModels
                         ItemCountry = ItemDetails.item.Country ?? "";
                         ItemState = ItemDetails.item.State ?? "";
                         ItemNotes = ItemDetails.item.Notes ?? "";
-                        ItemImagesForCarousel = new ObservableCollection<MyItemModel>();
+                        ItemImagesForCarousel = new ObservableCollection<CarouselModel>();
                         if (ItemDetails.images.Count > 0)
                             foreach (var i in ItemDetails.images)
                             {
-                                ItemImagesForCarousel.Add(new MyItemModel { ImageUrl = i });
+                                ItemImagesForCarousel.Add(new CarouselModel { ImageUrl = i });
                             }
                         ItemSoldDate = SoldItem.data.SoldItemDetail == null ? "" : SoldItem.data.SoldItemDetail.SoldDate;
                         ItemSoldPrice = SoldItem.data.SoldItemDetail == null ? "" : SoldItem.data.SoldItemDetail.SoldPrice.ToString();
@@ -1298,11 +1331,16 @@ namespace HeartlandArtifact.ViewModels
         }
         public async void EditItem()
         {
+            MessagingCenter.Send("message", "SetImageSources");
             try
             {
                 if (ItemId > 0)
                 {
+                    ItemDetailsUserControlIsVisible = false;
+                    AddNewItemUserControlIsVisible = true;
+                    GoBackFromAddItem = "EditItem";
                     IsBusy = true;
+                    ImageStreamList = new List<Stream>();
                     var response = await new ApiData().GetData<ApiItemModel>("Artifact/GeItemDetailByItemId?itemId=" + ItemId, true);
                     if (response != null && response.data != null)
                     {
@@ -1333,11 +1371,12 @@ namespace HeartlandArtifact.ViewModels
                             newItemImage_two.Source = response.data.images[1];
                             newItemImage_three.Source = response.data.images[2];
                         }
-                        //newItem.base64ItemImages = new List<string>();
-                        //newItem.base64ItemImages = Base64ItemImagesList;
-                        ItemDetailsUserControlIsVisible = false;
-                        AddNewItemUserControlIsVisible = true;
-                        GoBackFromAddItem = "EditItem";
+                        Base64ItemImagesList = new List<string>();
+                        foreach (var img in response.data.images)
+                        {
+                            string base64 = ConvertImageURLToBase64(img);
+                            Base64ItemImagesList.Add(base64);
+                        }
                     }
                     IsBusy = false;
                 }
@@ -1346,6 +1385,44 @@ namespace HeartlandArtifact.ViewModels
             {
 
             }
+        }
+        public String ConvertImageURLToBase64(String url)
+        {
+            StringBuilder _sb = new StringBuilder();
+
+            Byte[] _byte = this.GetImage(url);
+            _sb.Append(Convert.ToBase64String(_byte, 0, _byte.Length));
+
+            return _sb.ToString();
+        }
+        private byte[] GetImage(string url)
+        {
+            Stream stream = null;
+            byte[] buf;
+
+            try
+            {
+                WebProxy myProxy = new WebProxy();
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+
+                HttpWebResponse response = (HttpWebResponse)req.GetResponse();
+                stream = response.GetResponseStream();
+                using (BinaryReader br = new BinaryReader(stream))
+                {
+                    int len = (int)(response.ContentLength);
+                    buf = br.ReadBytes(len);
+                    br.Close();
+                }
+
+                stream.Close();
+                response.Close();
+            }
+            catch (Exception exp)
+            {
+                buf = null;
+            }
+
+            return (buf);
         }
     }
 }

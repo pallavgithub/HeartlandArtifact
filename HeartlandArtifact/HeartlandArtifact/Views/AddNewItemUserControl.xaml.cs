@@ -19,6 +19,14 @@ namespace HeartlandArtifact.Views
         public AddNewItemUserControl()
         {
             InitializeComponent();
+            MessagingCenter.Subscribe<string>(this, "SetImageSources", async (message) =>
+            {
+                var viewModel = BindingContext as HomePageViewModel;
+                viewModel.newItemImage = pic;
+                viewModel.newItemImage_one = pic1;
+                viewModel.newItemImage_two = pic2;
+                viewModel.newItemImage_three = pic3;
+            });
             //SetImages();
         }
         //public void SetImages()
@@ -41,18 +49,21 @@ namespace HeartlandArtifact.Views
 
             if (viewModel.AddMultipleItemPhotosIsVisible)
             {
-                pic.Source = string.Empty;
-                pic1.Source = string.Empty;
-                pic2.Source = string.Empty;
-                pic3.Source = string.Empty;
-                cross1.IsVisible = false;
-                cross2.IsVisible = false;
-                cross3.IsVisible = false;
+                //pic.Source = string.Empty;
+                //pic1.Source = string.Empty;
+                //pic2.Source = string.Empty;
+                //pic3.Source = string.Empty;
+                //cross1.IsVisible = false;
+                //cross2.IsVisible = false;
+                //cross3.IsVisible = false;
                 viewModel.AddMultipleItemPhotosIsVisible = false;
-                viewModel.Base64ItemImagesList = new List<string>();
+                //viewModel.Base64ItemImagesList = new List<string>();
             }
             else
             {
+                cross1.IsVisible = false;
+                cross2.IsVisible = false;
+                cross3.IsVisible = false;
                 viewModel.EmptyAddItemForm();
                 viewModel.AddNewItemUserControlIsVisible = false;
                 if (viewModel.GoBackFromAddItem == "ItemDetailsUserControl")
@@ -148,7 +159,7 @@ namespace HeartlandArtifact.Views
                 {
                     viewModel.CategoryList.Add(new CategoryModel { CollectionId = 0, CategoryName = "Default", CreatorId = (int)UserId, ModifierId = (int)UserId });
                 }
-                viewModel.CategoryList = new ObservableCollection<CategoryModel>(viewModel.CategoryList.OrderBy(x=>x.CategoryName).ToList());
+                viewModel.CategoryList = new ObservableCollection<CategoryModel>(viewModel.CategoryList.OrderBy(x => x.CategoryName).ToList());
             }
             catch (Exception e)
             {
@@ -166,10 +177,21 @@ namespace HeartlandArtifact.Views
                     cross2.IsVisible = false;
                     cross3.IsVisible = false;
                 }
-                ViewModel.newItemImage = pic;
-                ViewModel.newItemImage_one = pic1;
-                ViewModel.newItemImage_two = pic2;
-                ViewModel.newItemImage_three = pic3;
+                else
+                {
+                    cross1.IsVisible = true;
+                    if (ViewModel.Base64ItemImagesList.Count == 2)
+                        cross2.IsVisible = true;
+                    else if (ViewModel.Base64ItemImagesList.Count == 3)
+                    {
+                        cross2.IsVisible = true;
+                        cross3.IsVisible = true;
+                    }
+                }
+                //ViewModel.newItemImage = pic;
+                //ViewModel.newItemImage_one = pic1;
+                //ViewModel.newItemImage_two = pic2;
+                //ViewModel.newItemImage_three = pic3;
                 var Toast = DependencyService.Get<IMessage>();
                 ViewModel.AddMultipleItemPhotosIsVisible = true;
             }
@@ -289,7 +311,7 @@ namespace HeartlandArtifact.Views
                 }
                 var file = await CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
                 {
-                    PhotoSize = PhotoSize.Small,
+                    PhotoSize = PhotoSize.MaxWidthHeight,
                 });
                 if (file == null)
                     return;
@@ -344,7 +366,7 @@ namespace HeartlandArtifact.Views
                     }
                     var file = await CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
                     {
-                        PhotoSize = PhotoSize.Small,
+                        PhotoSize = PhotoSize.MaxWidthHeight,
                     });
                     if (file == null)
                         return;
@@ -393,7 +415,7 @@ namespace HeartlandArtifact.Views
                     }
                     var file = await CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
                     {
-                        PhotoSize = PhotoSize.Small,
+                        PhotoSize = PhotoSize.MaxWidthHeight,
                     });
                     if (file == null)
                         return;

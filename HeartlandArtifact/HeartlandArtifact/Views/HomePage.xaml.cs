@@ -80,10 +80,11 @@ namespace HeartlandArtifact.Views
                 {
                     _vm.MarkAsSoldDetailsIsVisible = false;
                 }
-                if (_vm.AllItems == null)
+                if (_vm.AllItems == null || _vm.GoBackFromAddItem == "EditItem")
                 {
                     _vm.ItemDetailsUserControlIsVisible = false;
                     _vm.HomeIsVisible = true;
+                    _vm.GoBackFromAddItem = string.Empty;
                 }
                 else
                 {
@@ -103,12 +104,12 @@ namespace HeartlandArtifact.Views
             {
                 if (_vm.AddMultipleItemPhotosIsVisible)
                 {
-                    _vm.newItemImage.Source = string.Empty;
-                    _vm.newItemImage_one.Source = string.Empty;
-                    _vm.newItemImage_two.Source = string.Empty;
-                    _vm.newItemImage_three.Source = string.Empty;
+                    //_vm.newItemImage.Source = string.Empty;
+                    //_vm.newItemImage_one.Source = string.Empty;
+                    //_vm.newItemImage_two.Source = string.Empty;
+                    //_vm.newItemImage_three.Source = string.Empty;
                     _vm.AddMultipleItemPhotosIsVisible = false;
-                    _vm.Base64ItemImagesList = new List<string>();
+                    //_vm.Base64ItemImagesList = new List<string>();
                 }
                 else
                 {

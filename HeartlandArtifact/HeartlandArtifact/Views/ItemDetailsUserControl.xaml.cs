@@ -20,10 +20,11 @@ namespace HeartlandArtifact.Views
             {
                 viewModel.MarkAsSoldDetailsIsVisible = false;
             }
-            if (viewModel.AllItems == null)
+            if (viewModel.AllItems == null || viewModel.GoBackFromAddItem == "EditItem")
             {
                 viewModel.ItemDetailsUserControlIsVisible = false;
                 viewModel.HomeIsVisible = true;
+                viewModel.GoBackFromAddItem = string.Empty;
             }
             else
             {

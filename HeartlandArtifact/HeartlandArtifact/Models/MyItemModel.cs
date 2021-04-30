@@ -20,10 +20,14 @@ namespace HeartlandArtifact.Models
         public string State { get; set; }
         public string Notes { get; set; }
         public DateTime CreateDate { get; set; }
-        public DateTime LastModDate { get; set; }        
+        public DateTime LastModDate { get; set; }
         public int CreatorId { get; set; }
         public int ModifierId { get; set; }
         public string ImageUrl { get; set; }
 
+    }
+    public class CarouselModel
+    {
+        public string ImageUrl { get; set; }
     }
 }
