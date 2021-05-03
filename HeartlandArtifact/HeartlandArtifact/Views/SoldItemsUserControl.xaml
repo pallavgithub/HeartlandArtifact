@@ -49,7 +49,7 @@
                                         </Image>
                                     </StackLayout>
                                     <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                        <Frame HasShadow="False" Padding="0" BackgroundColor="Transparent" OutlineColor="LightGray" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                        <Frame HasShadow="False" Padding="0" BackgroundColor="Transparent" OutlineColor="Black" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                             <Grid VerticalOptions="FillAndExpand">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*"/>

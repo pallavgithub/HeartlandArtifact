@@ -14,11 +14,11 @@ namespace HeartlandArtifact.Views
             InitializeComponent();
         }
 
-        private void GoToCategoryList_Tapped(object sender, EventArgs e)
+        private async void GoToCategoryList_Tapped(object sender, EventArgs e)
         {
             var selectedCollection = (((TappedEventArgs)e).Parameter) as CollectionModel;
             var viewModel = BindingContext as HomePageViewModel;
-            viewModel.GetUserCategories(selectedCollection);
+            await viewModel.GetUserCategories(selectedCollection);
             if (viewModel.IsEditIconVisible)
             {
                 viewModel.IsEditIconVisible = false;

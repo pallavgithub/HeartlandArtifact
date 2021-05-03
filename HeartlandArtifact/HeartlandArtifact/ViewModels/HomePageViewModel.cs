@@ -11,11 +11,13 @@ using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace HeartlandArtifact.ViewModels
@@ -482,7 +484,6 @@ namespace HeartlandArtifact.ViewModels
         public DelegateCommand CancelDeleteItemCommand { get; set; }
         public DelegateCommand DeleteSoldItemCommand { get; set; }
         public DelegateCommand CancelDeleteSoldItemCommand { get; set; }
-        public DelegateCommand AddNewItemCommand { get; set; }
         public DelegateCommand EditItemCommand { get; set; }
         public INavigationService _nav;
         public CollectionModel CollectionData { get; set; }
@@ -528,7 +529,6 @@ namespace HeartlandArtifact.ViewModels
             DeleteCategoryCommand = new DelegateCommand(DeleteCategory);
             CancelDeleteCategoryCommand = new DelegateCommand(CloseDeleteCategoryPopup);
             ConfirmLogoutCommand = new DelegateCommand(Logout);
-            AddNewItemCommand = new DelegateCommand(AddNewItem);
             DeleteItemCommand = new DelegateCommand(DeleteItem);
             CancelDeleteItemCommand = new DelegateCommand(CloseDeleteItemPopup);
             DeleteSoldItemCommand = new DelegateCommand(DeleteSoldItem);
@@ -551,7 +551,7 @@ namespace HeartlandArtifact.ViewModels
             await _nav.NavigateAsync("/SignInPage");
             IsBusy = false;
         }
-        public async void GetUserCollections()
+        public async Task GetUserCollections()
         {
             try
             {
@@ -580,7 +580,7 @@ namespace HeartlandArtifact.ViewModels
 
             }
         }
-        public async void GetAllUserCategories()
+        public async Task GetAllUserCategories()
         {
             try
             {
@@ -591,7 +591,30 @@ namespace HeartlandArtifact.ViewModels
                 if (response != null)
                 {
                     AllUserCategories = new ObservableCollection<CategoryModel>(response.data);
+                    if (CategoryIdForNewItem != 0 && CollectionIdForNewItem != 0)
+                    {
+                        CategoryList = new ObservableCollection<CategoryModel>();
+                        if (AllUserCategories != null && AllUserCategories.Count > 0)
+                        {
+                            foreach (var item in AllUserCategories)
+                            {
+                                if (item.CollectionId == CollectionIdForNewItem)
+                                    CategoryList.Add(item);
+                            }
+                            if (!CategoryList.Contains(CategoryList.Where(i => i.CategoryName == "Default").FirstOrDefault()))
+                            {
+                                CategoryList.Add(new CategoryModel { CollectionId = 0, CategoryName = "Default", CreatorId = (int)UserId, ModifierId = (int)UserId });
+                            }
+                        }
+                        else
+                        {
+                            CategoryList.Add(new CategoryModel { CollectionId = 0, CategoryName = "Default", CreatorId = (int)UserId, ModifierId = (int)UserId });
+                        }
+                        CategoryList = new ObservableCollection<CategoryModel>(CategoryList.OrderBy(x => x.CategoryName).ToList());
+                    }
                 }
+                else
+                    CategoryList = new ObservableCollection<CategoryModel>();
                 IsBusy = false;
             }
             catch (Exception e)
@@ -599,7 +622,7 @@ namespace HeartlandArtifact.ViewModels
 
             }
         }
-        public async void GetUserCategories(CollectionModel collection)
+        public async Task GetUserCategories(CollectionModel collection)
         {
             try
             {
@@ -627,7 +650,7 @@ namespace HeartlandArtifact.ViewModels
 
             }
         }
-        public async void GetUserItems(CategoryModel category)
+        public async Task GetUserItems(CategoryModel category)
         {
             try
             {
@@ -757,7 +780,7 @@ namespace HeartlandArtifact.ViewModels
                     else if (response.status == "404")
                     {
                         Toast.LongAlert(response.message);
-                        GetUserCollections();
+                        await GetUserCollections();
                         CategoryUserControlIsVisible = false;
                         HomeIsVisible = true;
                     }
@@ -813,7 +836,7 @@ namespace HeartlandArtifact.ViewModels
                     else if (response.status == "404")
                     {
                         Toast.LongAlert(response.message);
-                        GetUserCollections();
+                        await GetUserCollections();
                     }
                     else
                     {
@@ -863,7 +886,7 @@ namespace HeartlandArtifact.ViewModels
                     else if (response.status == "404")
                     {
                         Toast.LongAlert(response.message);
-                        GetUserCategories(CollectionData);
+                        await GetUserCategories(CollectionData);
                     }
                     else
                     {
@@ -890,13 +913,13 @@ namespace HeartlandArtifact.ViewModels
                 if (response.status == "success")
                 {
                     AllCollections.Remove(CollectionData);
-                    GetUserCollections();
+                    await GetUserCollections();
                     NotFoundLblIsVisible = AllCollections.Count > 0 ? false : true;
                 }
                 else if (response.status == "404")
                 {
                     Toast.LongAlert(response.message);
-                    GetUserCollections();
+                    await GetUserCollections();
                 }
             }
             DeleteCollectionPopupIsVisible = false;
@@ -919,7 +942,7 @@ namespace HeartlandArtifact.ViewModels
                 else if (response.status == "404")
                 {
                     Toast.LongAlert(response.message);
-                    GetUserCategories(CollectionData);
+                    await GetUserCategories(CollectionData);
                 }
             }
             DeleteCategoryPopupIsVisible = !DeleteCategoryPopupIsVisible;
@@ -989,6 +1012,7 @@ namespace HeartlandArtifact.ViewModels
         }
         public async void AddNewItem()
         {
+            MessagingCenter.Send("message", "SetImageSources");
             var Toast = DependencyService.Get<IMessage>();
             try
             {
@@ -1020,8 +1044,8 @@ namespace HeartlandArtifact.ViewModels
                         var response = await new ApiData().PutData<ApiItemModel>("Artifact/UpdateItem", updatedItem, true);
                         if (response != null && response.data != null)
                         {
+                            await GetItemDetailsById(response.data.item.ItemId);
                             Toast.LongAlert("Item updated successfully.");
-                            GetItemDetailsById(response.data.item.ItemId);
                             ItemDetailsUserControlIsVisible = true;
                             AddNewItemUserControlIsVisible = false;
                             EmptyAddItemForm();
@@ -1054,8 +1078,9 @@ namespace HeartlandArtifact.ViewModels
                     var response = await new ApiData().PostData<ApiItemModel>("Artifact/AddNewItem", newItem, true);
                     if (response != null && response.data != null)
                     {
+                        GoBackFromAddItem = "AddItem";
+                        await GetItemDetailsById(response.data.item.ItemId);
                         Toast.LongAlert("Item added successfully.");
-                        GetItemDetailsById(response.data.item.ItemId);
                         ItemDetailsUserControlIsVisible = true;
                         AddNewItemUserControlIsVisible = false;
                         EmptyAddItemForm();
@@ -1073,7 +1098,7 @@ namespace HeartlandArtifact.ViewModels
 
             }
         }
-        public async void GetItemDetailsById(int ItemID)
+        public async Task GetItemDetailsById(int ItemID)
         {
             try
             {
@@ -1101,6 +1126,8 @@ namespace HeartlandArtifact.ViewModels
                         ItemCountry = ItemDetails.item.Country ?? "";
                         ItemState = ItemDetails.item.State ?? "";
                         ItemNotes = ItemDetails.item.Notes ?? "";
+                        ItemSoldDate = string.Empty;
+                        ItemSoldPrice = string.Empty;
                     }
                     IsBusy = false;
                 }
@@ -1127,7 +1154,7 @@ namespace HeartlandArtifact.ViewModels
                 else if (response.status == "404")
                 {
                     Toast.LongAlert(response.message);
-                    GetUserItems(CategoryData);
+                    await GetUserItems(CategoryData);
                 }
             }
             DeleteItemPopupIsVisible = !DeleteItemPopupIsVisible;
@@ -1152,7 +1179,7 @@ namespace HeartlandArtifact.ViewModels
                     else if (response.status == "404")
                     {
                         Toast.LongAlert(response.message);
-                        GetUserSoldItems();
+                        await GetUserSoldItems();
                     }
                 }
             }
@@ -1206,7 +1233,7 @@ namespace HeartlandArtifact.ViewModels
                             ItemDetailsUserControlIsVisible = false;
                             GoBackFromSoldItemDetail = "ItemDetails";
                             SoldItemDetailsUserControlIsVisible = true;
-                            GetSoldItemDetailsById(response.data.Id);
+                            await GetSoldItemDetailsById(response.data.Id);
                         }
                         else
                         {
@@ -1221,7 +1248,7 @@ namespace HeartlandArtifact.ViewModels
                 }
             }
         }
-        public async void GetSoldItemDetailsById(int Id)
+        public async Task GetSoldItemDetailsById(int Id)
         {
             try
             {
@@ -1249,7 +1276,10 @@ namespace HeartlandArtifact.ViewModels
                             {
                                 ItemImagesForCarousel.Add(new CarouselModel { ImageUrl = i });
                             }
-                        ItemSoldDate = SoldItem.data.SoldItemDetail == null ? "" : SoldItem.data.SoldItemDetail.SoldDate;
+                        var dt = SoldItem.data.SoldItemDetail.SoldDate;
+                        DateTime date = DateTime.Parse(dt);
+                        //DateTime date = DateTime.ParseExact(dt, "MM-dd-yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+                        ItemSoldDate = SoldItem.data.SoldItemDetail == null ? "" : date.ToString("MM-dd-yyyy");
                         ItemSoldPrice = SoldItem.data.SoldItemDetail == null ? "" : SoldItem.data.SoldItemDetail.SoldPrice.ToString();
                     }
                     IsBusy = false;
@@ -1260,7 +1290,7 @@ namespace HeartlandArtifact.ViewModels
 
             }
         }
-        public async void GetUserSoldItems()
+        public async Task GetUserSoldItems()
         {
             try
             {
@@ -1377,6 +1407,7 @@ namespace HeartlandArtifact.ViewModels
                             string base64 = ConvertImageURLToBase64(img);
                             Base64ItemImagesList.Add(base64);
                         }
+                        await GetAllUserCategories();
                     }
                     IsBusy = false;
                 }

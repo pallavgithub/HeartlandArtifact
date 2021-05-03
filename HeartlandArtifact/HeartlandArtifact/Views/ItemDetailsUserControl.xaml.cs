@@ -20,7 +20,7 @@ namespace HeartlandArtifact.Views
             {
                 viewModel.MarkAsSoldDetailsIsVisible = false;
             }
-            if (viewModel.AllItems == null || viewModel.GoBackFromAddItem == "EditItem")
+            else if (viewModel.AllItems == null || viewModel.GoBackFromAddItem == "EditItem" || viewModel.GoBackFromAddItem == "AddItem")
             {
                 viewModel.ItemDetailsUserControlIsVisible = false;
                 viewModel.HomeIsVisible = true;
@@ -71,12 +71,11 @@ namespace HeartlandArtifact.Views
             _vm.DateLabelIsVisible = true;
         }
 
-        private void AddAnotherItemBtn_Tapped(object sender, EventArgs e)
+        private async void AddAnotherItemBtn_Tapped(object sender, EventArgs e)
         {
             var _vm = BindingContext as HomePageViewModel;
             _vm.GoBackFromAddItem = "ItemDetailsUserControl";
-            _vm.GetUserCollections();
-            _vm.GetAllUserCategories();
+            await _vm.GetUserCollections();
             if (_vm.CollectionData != null)
             {
                 _vm.CollectionIdForNewItem = _vm.CollectionData.CollectionId;
@@ -87,6 +86,7 @@ namespace HeartlandArtifact.Views
                 _vm.CategoryIdForNewItem = _vm.CategoryData.CategoryId;
                 _vm.CategoryNameForNewItem = _vm.CategoryData.CategoryName;
             }
+            await _vm.GetAllUserCategories();
             _vm.ItemDetailsUserControlIsVisible = false;
             _vm.AddNewItemUserControlIsVisible = true;
         }

@@ -53,11 +53,11 @@ namespace HeartlandArtifact.Views
             viewModel.CategoryData = selectedCategory;
             viewModel.DeleteCategoryPopupIsVisible = !viewModel.DeleteCategoryPopupIsVisible;
         }
-        private void GoToItemsList_Tapped(object sender, EventArgs e)
+        private async void GoToItemsList_Tapped(object sender, EventArgs e)
         {
             var selectedCategory = ((TappedEventArgs)e).Parameter as CategoryModel;
             var viewModel = BindingContext as HomePageViewModel;
-            viewModel.GetUserItems(selectedCategory);
+            await viewModel.GetUserItems(selectedCategory);
             if (viewModel.IsEditCategoryIconVisible)
             {
                 viewModel.IsEditCategoryIconVisible = false;

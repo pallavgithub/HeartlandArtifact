@@ -32,12 +32,12 @@ namespace HeartlandArtifact.Views
                 _vm.HomeIsVisible = true;
             }
         }
-        private void SoldItem_Tapped(object sender, EventArgs e)
+        private async void SoldItem_Tapped(object sender, EventArgs e)
         {
             var selectedItem = ((TappedEventArgs)e).Parameter as MySoldItemModel;
             var viewModel = BindingContext as HomePageViewModel;
             viewModel.GoBackFromSoldItemDetail = "SoldItems";
-            viewModel.GetSoldItemDetailsById(selectedItem.Id);
+            await viewModel.GetSoldItemDetailsById(selectedItem.Id);
             if (viewModel.DeleteSoldItemIconIsVisible)
             {
                 viewModel.DeleteSoldItemIconIsVisible = false;

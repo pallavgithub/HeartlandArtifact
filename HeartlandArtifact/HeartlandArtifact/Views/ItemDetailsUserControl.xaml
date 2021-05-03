@@ -35,9 +35,9 @@
                             </Grid.GestureRecognizers>
                         </Grid>
                     </Grid>
-                    <Grid HeightRequest="200" HorizontalOptions="FillAndExpand" VerticalOptions="Start" BackgroundColor="Gray" Margin="0,0,0,20">
+                    <Grid HeightRequest="160" HorizontalOptions="FillAndExpand" VerticalOptions="Start" BackgroundColor="Gray" Margin="0,0,0,20">
                         <StackLayout>
-                            <CarouselView IndicatorView="indicatorView" HeightRequest="200" ItemsSource="{Binding ItemImagesForCarousel}" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand">
+                            <CarouselView IndicatorView="indicatorView" HeightRequest="160" ItemsSource="{Binding ItemImagesForCarousel}" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand">
                                 <CarouselView.ItemTemplate>
                                     <DataTemplate>
                                         <Frame HasShadow="False" Padding="1" OutlineColor="Black">
@@ -71,11 +71,11 @@
                         <Label Text="{Binding ItemFoundBy}" Grid.Row="1" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
                         <Label Text="Ex Collection" Grid.Row="2" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
                         <Label Text="{Binding ItemExCollection}" Grid.Row="2" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
-                        <Label Text="Perceived Value" Grid.Row="3" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="Perceived Value ($)" Grid.Row="3" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
                         <Label Text="{Binding ItemPerceivedValue}" Grid.Row="3" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
-                        <Label Text="Cost" Grid.Row="4" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="Cost ($)" Grid.Row="4" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
                         <Label Text="{Binding ItemCost}" Grid.Row="4" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
-                        <Label Text="Length" Grid.Row="5" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="Length (Inches)" Grid.Row="5" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
                         <Label Text="{Binding ItemLength}" Grid.Row="5" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>
                         <Label Text="Country" Grid.Row="6" Grid.Column="0" FontFamily="{StaticResource HelveticaRegular}" TextColor="Black" FontSize="14" HorizontalOptions="EndAndExpand"/>
                         <Label Text="{Binding ItemCountry}" Grid.Row="6" Grid.Column="1" FontFamily="{StaticResource HelveticaBold}" TextColor="Black" FontSize="14" HorizontalOptions="StartAndExpand"/>

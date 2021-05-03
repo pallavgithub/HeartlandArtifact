@@ -27,37 +27,15 @@ namespace HeartlandArtifact.Views
                 viewModel.newItemImage_two = pic2;
                 viewModel.newItemImage_three = pic3;
             });
-            //SetImages();
         }
-        //public void SetImages()
-        //{
-        //    try {
-        //        var _vm = BindingContext as HomePageViewModel;
-        //        _vm.newItemImage = pic;
-        //        _vm.newItemImage_one = pic1;
-        //        _vm.newItemImage_two = pic2;
-        //        _vm.newItemImage_three = pic3;
-        //    }
-        //    catch(Exception e)
-        //    {
-
-        //    }
-        //}
+       
         private void GoBack_Tapped(object sender, EventArgs e)
         {
             var viewModel = BindingContext as HomePageViewModel;
 
             if (viewModel.AddMultipleItemPhotosIsVisible)
             {
-                //pic.Source = string.Empty;
-                //pic1.Source = string.Empty;
-                //pic2.Source = string.Empty;
-                //pic3.Source = string.Empty;
-                //cross1.IsVisible = false;
-                //cross2.IsVisible = false;
-                //cross3.IsVisible = false;
                 viewModel.AddMultipleItemPhotosIsVisible = false;
-                //viewModel.Base64ItemImagesList = new List<string>();
             }
             else
             {
@@ -69,6 +47,10 @@ namespace HeartlandArtifact.Views
                 if (viewModel.GoBackFromAddItem == "ItemDetailsUserControl")
                 {
                     viewModel.ItemDetailsUserControlIsVisible = true;
+                }
+                else if(viewModel.GoBackFromAddItem == "SoldItemDetailsUserControl")
+                {
+                    viewModel.SoldItemDetailsUserControlIsVisible = true;
                 }
                 else if (viewModel.GoBackFromAddItem == "ItemUserControl")
                 {

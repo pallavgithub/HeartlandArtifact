@@ -49,7 +49,7 @@ namespace HeartlandArtifact.Views
                     return false;
                 }
             }
-            if (_vm.MyCollectionVisible)
+            else if (_vm.MyCollectionVisible)
             {
                 _vm.DeleteCollectionPopupIsVisible = false;
                 _vm.AddCollectionPopupIsVisible = false;
@@ -58,7 +58,7 @@ namespace HeartlandArtifact.Views
                 _vm.MyCollectionVisible = false;
                 _vm.HomeIsVisible = true;
             }
-            if (_vm.CategoryUserControlIsVisible)
+            else if (_vm.CategoryUserControlIsVisible)
             {
                 _vm.DeleteCategoryPopupIsVisible = false;
                 _vm.AddCategoryPopupIsVisible = false;
@@ -67,20 +67,20 @@ namespace HeartlandArtifact.Views
                 _vm.CategoryUserControlIsVisible = false;
                 _vm.MyCollectionVisible = true;
             }
-            if (_vm.ItemsUserControlIsVisible)
+            else if (_vm.ItemsUserControlIsVisible)
             {
                 _vm.DeleteItemIconIsVisible = false;
                 _vm.DeleteItemPopupIsVisible = false;
                 _vm.ItemsUserControlIsVisible = false;
                 _vm.CategoryUserControlIsVisible = true;
             }
-            if (_vm.ItemDetailsUserControlIsVisible)
+            else if (_vm.ItemDetailsUserControlIsVisible)
             {
                 if (_vm.MarkAsSoldDetailsIsVisible)
                 {
                     _vm.MarkAsSoldDetailsIsVisible = false;
                 }
-                if (_vm.AllItems == null || _vm.GoBackFromAddItem == "EditItem")
+                else if (_vm.AllItems == null || _vm.GoBackFromAddItem == "EditItem"|| _vm.GoBackFromAddItem == "AddItem" || _vm.GoBackFromAddItem == "AddItem")
                 {
                     _vm.ItemDetailsUserControlIsVisible = false;
                     _vm.HomeIsVisible = true;
@@ -92,24 +92,22 @@ namespace HeartlandArtifact.Views
                     _vm.ItemsUserControlIsVisible = true;
                 }
             }
-            if (_vm.SoldItemDetailsUserControlIsVisible)
+            else if (_vm.SoldItemDetailsUserControlIsVisible)
             {
                 _vm.SoldItemDetailsUserControlIsVisible = false;
                 if (_vm.GoBackFromSoldItemDetail == "SoldItems")
                     _vm.SoldItemsIsVisible = true;
                 if (_vm.GoBackFromSoldItemDetail == "ItemDetails")
-                    _vm.ItemDetailsUserControlIsVisible = true;
+                {
+                    _vm.GetUserSoldItems();
+                    _vm.SoldItemsIsVisible = true;
+                }
             }
-            if (_vm.AddNewItemUserControlIsVisible)
+            else if (_vm.AddNewItemUserControlIsVisible)
             {
                 if (_vm.AddMultipleItemPhotosIsVisible)
                 {
-                    //_vm.newItemImage.Source = string.Empty;
-                    //_vm.newItemImage_one.Source = string.Empty;
-                    //_vm.newItemImage_two.Source = string.Empty;
-                    //_vm.newItemImage_three.Source = string.Empty;
                     _vm.AddMultipleItemPhotosIsVisible = false;
-                    //_vm.Base64ItemImagesList = new List<string>();
                 }
                 else
                 {
@@ -118,6 +116,10 @@ namespace HeartlandArtifact.Views
                     if (_vm.GoBackFromAddItem == "ItemDetailsUserControl")
                     {
                         _vm.ItemDetailsUserControlIsVisible = true;
+                    }
+                    else if (_vm.GoBackFromAddItem == "SoldItemDetailsUserControl")
+                    {
+                        _vm.SoldItemDetailsUserControlIsVisible = true;
                     }
                     else if (_vm.GoBackFromAddItem == "ItemUserControl")
                     {
@@ -133,7 +135,7 @@ namespace HeartlandArtifact.Views
                     }
                 }
             }
-            if (_vm.SoldItemsIsVisible)
+            else if (_vm.SoldItemsIsVisible)
             {
                 if (_vm.DeleteSoldItemIconIsVisible)
                     _vm.DeleteSoldItemIconIsVisible = false;

@@ -1,6 +1,7 @@
 ﻿using HeartlandArtifact.Models;
 using HeartlandArtifact.ViewModels;
 using System;
+using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,12 +15,12 @@ namespace HeartlandArtifact.Views
             InitializeComponent();
         }
 
-        private void AddItemBtn_Tapped(object sender, EventArgs e)
+        private async void AddItemBtn_Tapped(object sender, EventArgs e)
         {
             var _vm = BindingContext as HomePageViewModel;
             _vm.GoBackFromAddItem = "ItemUserControl";
-            _vm.GetUserCollections();
-            _vm.GetAllUserCategories();
+            await _vm.GetUserCollections();          
+           
             if (_vm.CollectionData != null)
             {
                 _vm.CollectionIdForNewItem = _vm.CollectionData.CollectionId;
@@ -30,6 +31,7 @@ namespace HeartlandArtifact.Views
                 _vm.CategoryIdForNewItem = _vm.CategoryData.CategoryId;
                 _vm.CategoryNameForNewItem = _vm.CategoryData.CategoryName;
             }
+            await _vm.GetAllUserCategories();
             _vm.ItemsUserControlIsVisible = false;
             _vm.AddNewItemUserControlIsVisible = true;
         }
@@ -54,11 +56,11 @@ namespace HeartlandArtifact.Views
             viewModel.DeleteItemIconIsVisible = !viewModel.DeleteItemIconIsVisible;
         }
 
-        private void GoToItemDetails_Tapped(object sender, EventArgs e)
+        private async void GoToItemDetails_Tapped(object sender, EventArgs e)
         {
             var selectedItem = ((TappedEventArgs)e).Parameter as MyItemModel;
             var viewModel = BindingContext as HomePageViewModel;
-            viewModel.GetItemDetailsById(selectedItem.ItemId);
+            await viewModel.GetItemDetailsById(selectedItem.ItemId);
             if (viewModel.DeleteItemIconIsVisible)
             {
                 viewModel.DeleteItemIconIsVisible = false;

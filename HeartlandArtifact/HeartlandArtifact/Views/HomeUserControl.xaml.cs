@@ -13,19 +13,19 @@ namespace HeartlandArtifact.Views
         {
             InitializeComponent();
         }
-        private void AddItem_Tapped(object sender, EventArgs e)
+        private async void AddItem_Tapped(object sender, EventArgs e)
         {
             var _vm = (BindingContext as HomePageViewModel);
             _vm.GoBackFromAddItem = "HomeUserControl";
-            _vm.GetUserCollections();
+            await _vm.GetUserCollections();
             _vm.GetAllUserCategories();
             _vm.AddNewItemUserControlIsVisible = true;
             _vm.HomeIsVisible = false;
         }
-        private void MyCollection_Tapped(object sender, EventArgs e)
+        private async void MyCollection_Tapped(object sender, EventArgs e)
         {
             var _vm = BindingContext as HomePageViewModel;
-            _vm.GetUserCollections();
+            await _vm.GetUserCollections();
             _vm.MyCollectionVisible = true;
             _vm.HomeIsVisible = false;
         }
