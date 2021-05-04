@@ -20,17 +20,40 @@ namespace HeartlandArtifact.Views
             {
                 viewModel.MarkAsSoldDetailsIsVisible = false;
             }
-            else if (viewModel.AllItems == null || viewModel.GoBackFromAddItem == "EditItem" || viewModel.GoBackFromAddItem == "AddItem")
+            //else if (viewModel.AllItems == null || viewModel.GoBackFromAddItem == "EditItem" || viewModel.GoBackFromAddItem == "AddItem")
+            //{
+            //    viewModel.ItemDetailsUserControlIsVisible = false;
+            //    viewModel.HomeIsVisible = true;
+            //    viewModel.GoBackFromAddItem = string.Empty;
+            //}
+            else if (viewModel.GoBackFromAddItem == "HomeUserControl")
             {
                 viewModel.ItemDetailsUserControlIsVisible = false;
                 viewModel.HomeIsVisible = true;
                 viewModel.GoBackFromAddItem = string.Empty;
             }
+            else if (viewModel.GoBackFromAddItem == "ItemDetailsUserControl" || viewModel.GoBackFromAddItem == "ItemUserControl" || viewModel.GoBackFromAddItem == "EditItem" || viewModel.GoBackFromAddItem == "SoldItemDetailsUserControl")
+            {
+                if (viewModel.CategoryData != null)
+                {
+                    viewModel.GetUserItems(viewModel.CategoryData);
+                    viewModel.ItemDetailsUserControlIsVisible = false;
+                    viewModel.ItemsUserControlIsVisible = true;
+                    viewModel.GoBackFromAddItem = string.Empty;
+                }
+                else
+                {
+                    viewModel.ItemDetailsUserControlIsVisible = false;
+                    viewModel.HomeIsVisible = true;
+                    viewModel.GoBackFromAddItem = string.Empty;
+                }
+            }           
             else
             {
                 viewModel.DeleteItemIconIsVisible = false;
                 viewModel.ItemDetailsUserControlIsVisible = false;
                 viewModel.ItemsUserControlIsVisible = true;
+                viewModel.GoBackFromAddItem = string.Empty;
             }
         }
 

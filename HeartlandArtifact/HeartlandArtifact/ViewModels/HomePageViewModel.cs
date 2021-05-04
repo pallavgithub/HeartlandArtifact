@@ -244,6 +244,18 @@ namespace HeartlandArtifact.ViewModels
             get { return _selectedCategoryName; }
             set { SetProperty(ref _selectedCategoryName, value); }
         }
+        private bool _searchBoxIsVisible;
+        public bool SearchBoxIsVisible
+        {
+            get { return _searchBoxIsVisible; }
+            set { SetProperty(ref _searchBoxIsVisible, value); }
+        } 
+        private string _searchText;
+        public string SearchText
+        {
+            get { return _searchText; }
+            set { SetProperty(ref _searchText, value); }
+        }
 
         //Add Item properties
 
@@ -437,6 +449,12 @@ namespace HeartlandArtifact.ViewModels
             get { return _allItems; }
             set { SetProperty(ref _allItems, value); }
         }
+        private ObservableCollection<MyItemModel> _items;
+        public ObservableCollection<MyItemModel> Items
+        {
+            get { return _items; }
+            set { SetProperty(ref _items, value); }
+        }
         private ObservableCollection<CollectionModel> _collectionList;
         public ObservableCollection<CollectionModel> CollectionList
         {
@@ -460,6 +478,12 @@ namespace HeartlandArtifact.ViewModels
         {
             get { return _allSoldItems; }
             set { SetProperty(ref _allSoldItems, value); }
+        }
+        private ObservableCollection<MySoldItemModel> _soldItems;
+        public ObservableCollection<MySoldItemModel> SoldItems
+        {
+            get { return _soldItems; }
+            set { SetProperty(ref _soldItems, value); }
         }
         public DelegateCommand LogoutCommand { get; set; }
         public DelegateCommand EditCollectionCommand { get; set; }
@@ -660,6 +684,7 @@ namespace HeartlandArtifact.ViewModels
                 SelectedCategoryName = category.CategoryName;
                 var UserId = Application.Current.Properties["LogedInUserId"];
                 AllItems = new ObservableCollection<MyItemModel>();
+                Items = new ObservableCollection<MyItemModel>();
                 var response = await new ApiData().GetData<List<ApiItemModel>>("Artifact/GetUserItems?userId=" + UserId, true);
                 if (response != null && response.data != null)
                 {
@@ -692,6 +717,7 @@ namespace HeartlandArtifact.ViewModels
                         }
                     }
                     AllItems = new ObservableCollection<MyItemModel>(AllItems.OrderBy(x => x.Title).ToList());
+                    Items = AllItems;
                 }
                 ItemNotFoundLblIsVisible = AllItems.Count > 0 ? false : true;
                 IsBusy = false;
@@ -1078,7 +1104,7 @@ namespace HeartlandArtifact.ViewModels
                     var response = await new ApiData().PostData<ApiItemModel>("Artifact/AddNewItem", newItem, true);
                     if (response != null && response.data != null)
                     {
-                        GoBackFromAddItem = "AddItem";
+                       // GoBackFromAddItem = "AddItem";
                         await GetItemDetailsById(response.data.item.ItemId);
                         Toast.LongAlert("Item added successfully.");
                         ItemDetailsUserControlIsVisible = true;
@@ -1296,6 +1322,7 @@ namespace HeartlandArtifact.ViewModels
             {
                 IsBusy = true;
                 AllSoldItems = new ObservableCollection<MySoldItemModel>();
+                SoldItems = new ObservableCollection<MySoldItemModel>();
                 var UserId = Application.Current.Properties["LogedInUserId"];
                 var response = await new ApiData().GetData<List<ApiSoldItemModel>>("Artifact/GetUserSoldItems?userId=" + UserId, true);
                 if (response != null && response.data != null)
@@ -1328,6 +1355,7 @@ namespace HeartlandArtifact.ViewModels
                         AllSoldItems.Add(data);
                     }
                 }
+                SoldItems = AllSoldItems;
                 SoldItemNotFoundLblIsVisible = AllSoldItems.Count > 0 ? false : true;
                 IsBusy = false;
             }

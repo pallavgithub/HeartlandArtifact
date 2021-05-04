@@ -124,7 +124,7 @@
                             <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="#979797" CornerRadius="1" HeightRequest="20"
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
                                 <Grid>
-                                    <DatePicker x:Name="Date_Picker" DateSelected="Date_Picker_DateSelected" Unfocused="Date_Picker_Unfocused" Format="MM/dd/yyyy" Date="{Binding SoldDate}" IsVisible="False"/>
+                                    <DatePicker x:Name="Date_Picker" DateSelected="Date_Picker_DateSelected" Unfocused="Date_Picker_Unfocused" Format="MM/dd/yyyy" Date="{Binding SoldDate}" WidthRequest="2" HorizontalOptions="Center" IsVisible="False"/>
                                     <Label Text="{Binding ItemSoldDate}" IsVisible="{Binding DateLabelIsVisible}" TextColor="Black"/>
                                     <Grid.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="DatePicker_Tapped"/>

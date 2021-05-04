@@ -2,6 +2,7 @@
 using HeartlandArtifact.ViewModels;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -19,8 +20,8 @@ namespace HeartlandArtifact.Views
         {
             var _vm = BindingContext as HomePageViewModel;
             _vm.GoBackFromAddItem = "ItemUserControl";
-            await _vm.GetUserCollections();          
-           
+            await _vm.GetUserCollections();
+
             if (_vm.CollectionData != null)
             {
                 _vm.CollectionIdForNewItem = _vm.CollectionData.CollectionId;
@@ -45,6 +46,8 @@ namespace HeartlandArtifact.Views
             }
             else
             {
+                viewModel.SearchBoxIsVisible = false;
+                viewModel.SearchText = string.Empty;
                 viewModel.ItemsUserControlIsVisible = false;
                 viewModel.CategoryUserControlIsVisible = true;
             }
@@ -60,6 +63,8 @@ namespace HeartlandArtifact.Views
         {
             var selectedItem = ((TappedEventArgs)e).Parameter as MyItemModel;
             var viewModel = BindingContext as HomePageViewModel;
+            viewModel.SearchBoxIsVisible = false;
+            viewModel.SearchText = string.Empty;
             await viewModel.GetItemDetailsById(selectedItem.ItemId);
             if (viewModel.DeleteItemIconIsVisible)
             {
@@ -76,6 +81,39 @@ namespace HeartlandArtifact.Views
             viewModel.ItemData = new MyItemModel();
             viewModel.ItemData = selectedItem;
             viewModel.DeleteItemPopupIsVisible = !viewModel.DeleteItemPopupIsVisible;
+        }
+
+        private void SearchBtn_Tapped(object sender, EventArgs e)
+        {
+            var _vm = BindingContext as HomePageViewModel;
+            _vm.SearchBoxIsVisible = !_vm.SearchBoxIsVisible;
+        }
+
+        private void SearchItem(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                var _vm = BindingContext as HomePageViewModel;
+                var searchText = _vm.SearchText;
+                _vm.AllItems = new ObservableCollection<MyItemModel>();
+                foreach (var item in _vm.Items)
+                {
+                    if (item.Title.Contains(searchText))
+                        _vm.AllItems.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void CloseSearch_Tapped(object sender, EventArgs e)
+        {
+            var _vm = BindingContext as HomePageViewModel;
+            _vm.AllItems = new ObservableCollection<MyItemModel>(_vm.Items);
+            _vm.SearchBoxIsVisible = !_vm.SearchBoxIsVisible;
+            _vm.SearchText = string.Empty;
         }
     }
 }

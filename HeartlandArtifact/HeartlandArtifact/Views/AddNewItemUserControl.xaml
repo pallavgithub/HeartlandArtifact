@@ -155,9 +155,11 @@
                             <Label Text="Notes" FontFamily="{StaticResource HelveticaRegular}" FontSize="16" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
                             <Frame Grid.Row="4" Padding="8" HasShadow="False" OutlineColor="Black" CornerRadius="1" 
                            HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-                                <custom:BorderLessEntry Text="{Binding Notes}" 
+                                <!--<custom:BorderLessEntry Text="{Binding Notes}" 
                                           HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
-                                          FontSize="16"/>
+                                          FontSize="16"/>-->
+                                <custom:BorderLessEditor Text="{Binding Notes}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                                          FontSize="16" AutoSize="TextChanges"/>
                             </Frame>
                         </StackLayout>
                         <Label Grid.Row="15" Text="* Indicates required fields" FontFamily="{StaticResource HelveticaRegular}" HorizontalOptions="Center" TextColor="Black" FontSize="14"/>

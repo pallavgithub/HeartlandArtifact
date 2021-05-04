@@ -69,6 +69,8 @@ namespace HeartlandArtifact.Views
             }
             else if (_vm.ItemsUserControlIsVisible)
             {
+                _vm.SearchBoxIsVisible = false;
+                _vm.SearchText = string.Empty;
                 _vm.DeleteItemIconIsVisible = false;
                 _vm.DeleteItemPopupIsVisible = false;
                 _vm.ItemsUserControlIsVisible = false;
@@ -80,16 +82,39 @@ namespace HeartlandArtifact.Views
                 {
                     _vm.MarkAsSoldDetailsIsVisible = false;
                 }
-                else if (_vm.AllItems == null || _vm.GoBackFromAddItem == "EditItem"|| _vm.GoBackFromAddItem == "AddItem" || _vm.GoBackFromAddItem == "AddItem")
+                //else if (_vm.AllItems == null || _vm.GoBackFromAddItem == "EditItem"|| _vm.GoBackFromAddItem == "AddItem" || _vm.GoBackFromAddItem == "AddItem")
+                //{
+                //    _vm.ItemDetailsUserControlIsVisible = false;
+                //    _vm.HomeIsVisible = true;
+                //    _vm.GoBackFromAddItem = string.Empty;
+                //}
+                else if (_vm.GoBackFromAddItem == "HomeUserControl")
                 {
                     _vm.ItemDetailsUserControlIsVisible = false;
                     _vm.HomeIsVisible = true;
                     _vm.GoBackFromAddItem = string.Empty;
                 }
+                else if (_vm.GoBackFromAddItem == "ItemDetailsUserControl" || _vm.GoBackFromAddItem == "ItemUserControl" || _vm.GoBackFromAddItem == "EditItem" || _vm.GoBackFromAddItem == "SoldItemDetailsUserControl")
+                {
+                    if (_vm.CategoryData != null)
+                    {
+                        _vm.GetUserItems(_vm.CategoryData);
+                        _vm.ItemDetailsUserControlIsVisible = false;
+                        _vm.ItemsUserControlIsVisible = true;
+                        _vm.GoBackFromAddItem = string.Empty;
+                    }
+                    else
+                    {
+                        _vm.ItemDetailsUserControlIsVisible = false;
+                        _vm.HomeIsVisible = true;
+                        _vm.GoBackFromAddItem = string.Empty;
+                    }
+                }
                 else
                 {
                     _vm.ItemDetailsUserControlIsVisible = false;
                     _vm.ItemsUserControlIsVisible = true;
+                    _vm.GoBackFromAddItem = string.Empty;
                 }
             }
             else if (_vm.SoldItemDetailsUserControlIsVisible)
@@ -141,6 +166,8 @@ namespace HeartlandArtifact.Views
                     _vm.DeleteSoldItemIconIsVisible = false;
                 else
                 {
+                    _vm.SearchBoxIsVisible = false;
+                    _vm.SearchText = string.Empty;
                     _vm.SoldItemsIsVisible = false;
                     _vm.HomeIsVisible = true;
                 }
